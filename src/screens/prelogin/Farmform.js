@@ -2,11 +2,22 @@ import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import {Logoborder} from '../../asstes/images';
+import Geolocation from '@react-native-community/geolocation';
 const Farmform = () => {
   const [formdata, setFormData] = useState({
     phonenumber: '',
     email: '',
   });
+  const getLocation = async () => {
+    try {
+      Geolocation.requestAuthorization();
+      Geolocation.getCurrentPosition(res => {
+        console.log(res);
+      });
+    } catch (err) {
+      return false;
+    }
+  };
   return (
     <View style={styles.farmformWrapper}>
       <View style={{alignItems: 'center', gap: 15}}>
@@ -41,7 +52,7 @@ const Farmform = () => {
           style={{textAlign: 'center', color: '#808A75'}}>
           or
         </Text>
-        <Pressable>
+        <Pressable onPress={getLocation} style={{alignItems: 'center'}}>
           <Text
             style={{color: '#6EAF1F', fontWeight: '900'}}
             variant="labelSmall">
