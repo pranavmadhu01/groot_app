@@ -7,7 +7,7 @@ const DiseaseInfo = () => {
   return (
     <View>
       <Image
-        source={require('../../asstes/images/grape_disease.png')}
+        source={require('../../assets/images/grape_disease.png')}
         style={styles.diseaseImage}
       />
       <View style={styles.diseaseDetailsWrapper}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
-import {GreenRipples, RedRipples} from '../asstes/images';
+import {GreenRipples, RedRipples} from '../assets/images';
 
 const DiseaseCard = ({isDetected}) => {
   return (

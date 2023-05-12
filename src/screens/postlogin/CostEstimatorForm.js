@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';

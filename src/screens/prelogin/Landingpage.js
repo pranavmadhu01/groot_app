@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import {Text} from 'react-native-paper';
-import {Landingpagebg, Logoborder} from '../../asstes/images';
+import {Landingpagebg, Logoborder} from '../../assets/images';
 import Custombutton from '../../components/Custombutton';
 const Landingpage = () => {
   return (

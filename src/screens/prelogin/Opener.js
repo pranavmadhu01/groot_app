@@ -1,5 +1,5 @@
 import {Image, StyleSheet, View} from 'react-native';
-import {Logo} from '../../asstes/images';
+import {Logo} from '../../assets/images';
 const Opener = () => {
   return (
     <View style={styles.openerwrapper}>

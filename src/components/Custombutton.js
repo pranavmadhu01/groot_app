@@ -17,6 +17,9 @@ const Custombutton = ({
   width,
   height,
   borderRadius,
+  padding,
+  alignSelf,
+  margin,
 }) => {
   // const navigation = useNavigation();
 
@@ -34,6 +37,10 @@ const Custombutton = ({
         height: height,
         justifyContent: 'center',
         borderRadius: borderRadius || 10,
+        padding: padding,
+        margin: margin,
+        alignSelf: alignSelf,
+        onPress: onPress,
       }}>
       {title}
     </Button>

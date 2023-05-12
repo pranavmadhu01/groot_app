@@ -1,6 +1,6 @@
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
-import {Logonoborder} from '../../asstes/images';
+import {Logonoborder} from '../../assets/images';
 const Addfarm = () => {
   return (
     <View style={styles.addfarmwrapper}>

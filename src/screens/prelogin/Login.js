@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
-import {Logoborder} from '../../asstes/images';
+import {Logoborder} from '../../assets/images';
 import Custombutton from '../../components/Custombutton';
 
 const Login = () => {

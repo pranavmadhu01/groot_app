@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
-import {Logoborder} from '../../asstes/images';
+import {Logoborder} from '../../assets/images';
 import Geolocation from '@react-native-community/geolocation';
 const Farmform = () => {
   const [formdata, setFormData] = useState({
