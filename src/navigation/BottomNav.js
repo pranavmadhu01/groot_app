@@ -17,91 +17,82 @@ const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
   return (
-    <>
+    <View style={styles.Container}>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarStyle: styles.bottomNavWrapper,
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({focussed}) => (
+              <View>
+                <HomeIcon width={24} height={24} />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Cost Estimator"
+          component={CostEstimatorForm}
+          options={{
+            tabBarIcon: ({focussed}) => (
+              <View>
+                <CalculatorIcon width={24} height={24} />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Add"
+          component={AddIcon}
+          options={{
+            tabBarIcon: ({focussed}) => (
+              <View>
+                <AddIcon width={32} height={32} color="green" />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Timeline"
+          component={TimelineIcon}
+          options={{
+            tabBarIcon: ({focussed}) => (
+              <View>
+                <TimelineIcon width={24} height={24} />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Scan a Disease"
+          component={ScanIcon}
+          options={{
+            tabBarIcon: ({focussed}) => (
+              <View>
+                <ScanIcon width={24} height={24} />
+              </View>
+            ),
+          }}
+        />
+      </Tab.Navigator>
       <View style={styles.navbarLogoContainer}>
         <NavbarLogo width={60} height={60} />
       </View>
-      <View style={styles.bottomNavContainer}>
-        <Tab.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            tabBarShowLabel: false,
-            headerShown: false,
-            tabBarStyle: styles.bottomNavWrapper,
-          }}>
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{
-              tabBarIcon: ({focussed}) => (
-                <View>
-                  <HomeIcon width={24} height={24} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Cost Estimator"
-            component={CostEstimatorForm}
-            options={{
-              tabBarIcon: ({focussed}) => (
-                <View>
-                  <CalculatorIcon width={24} height={24} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Add"
-            component={AddIcon}
-            options={{
-              tabBarIcon: ({focussed}) => (
-                <View>
-                  <AddIcon width={32} height={32} color="green" />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Timeline"
-            component={TimelineIcon}
-            options={{
-              tabBarIcon: ({focussed}) => (
-                <View>
-                  <TimelineIcon width={24} height={24} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Scan a Disease"
-            component={ScanIcon}
-            options={{
-              tabBarIcon: ({focussed}) => (
-                <View>
-                  <ScanIcon width={24} height={24} />
-                </View>
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </View>
-      <BlurView style={styles.blurWrapper}></BlurView>
-    </>
+    </View>
   );
 };
 
 export default BottomNav;
 
 const styles = StyleSheet.create({
-  bottomNavContainer: {
+  Container: {
     flex: 1,
-    zIndex: 0,
-  },
-  blurWrapper: {
-    blurAmount: 32,
-    blurType: 'light',
-    zIndex: 2,
   },
   bottomNavWrapper: {
     backgroundColor: 'rgba(110, 175, 31, 0.15)',
@@ -112,12 +103,10 @@ const styles = StyleSheet.create({
     elevation: 0,
     borderRadius: 15,
     height: 90,
-    zIndex: 3,
   },
   navbarLogoContainer: {
     position: 'absolute',
     alignSelf: 'center',
     bottom: 100,
-    zIndex: 1,
   },
 });
