@@ -5,8 +5,7 @@ import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
 import {Text} from 'react-native-paper';
 import {Logoborder} from '../../assets/images';
 import Leaves from '../../components/logos/Leaves';
-import Notification from '../../components/icons/Notification';
-import Settings from '../../components/icons/Settings';
+import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
 import Custombutton from '../../components/Custombutton';
 import {white} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 
@@ -18,8 +17,8 @@ const Home = () => {
       <View style={styles.topBar}>
         <Leaves width={61} height={60} />
         <View style={styles.topBarIconWrapper}>
-          <Notification width={26} height={26} />
-          <Settings width={20} height={20} />
+          <NotificationIcon width={26} height={26} />
+          <SettingsIcon width={20} height={20} />
         </View>
       </View>
 
@@ -92,7 +91,7 @@ export default Home;
 const styles = StyleSheet.create({
   homeWrapper: {
     backgroundColor: '#F3FFF2',
-    height: '100%',
+    flex: 1,
     padding: (0, 24, 0, 24),
   },
 

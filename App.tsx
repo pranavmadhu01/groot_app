@@ -8,12 +8,14 @@ import Signup from './src/screens/prelogin/Signup';
 import CostEstimatorForm from './src/screens/postlogin/CostEstimatorForm';
 import DiseaseInfo from './src/screens/postlogin/DiseaseInfo';
 import Home from './src/screens/postlogin/Home';
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */ const App = () => {
-  return <Home />;
+import {NavigationContainer} from '@react-navigation/native';
+import BottomNav from './src/navigation/BottomNav';
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <BottomNav />
+    </NavigationContainer>
+  );
 };
 export default App;
