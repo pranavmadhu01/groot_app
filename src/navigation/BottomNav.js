@@ -1,9 +1,10 @@
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {View, Image, StyleSheet} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+import {View, StyleSheet} from 'react-native';
 
 import Home from '../screens/postlogin/Home';
 import CostEstimatorForm from '../screens/postlogin/CostEstimatorForm';
+
 import {
   HomeIcon,
   CalculatorIcon,
@@ -11,6 +12,7 @@ import {
   TimelineIcon,
   ScanIcon,
 } from '../components/icons/icons';
+
 import NavbarLogo from '../components/logos/NavbarLogo';
 
 const Tab = createBottomTabNavigator();
@@ -29,9 +31,9 @@ const BottomNav = () => {
           name="Home"
           component={Home}
           options={{
-            tabBarIcon: ({focussed}) => (
+            tabBarIcon: ({focused}) => (
               <View>
-                <HomeIcon width={24} height={24} />
+                <HomeIcon width={24} height={24} isFilled={focused} />
               </View>
             ),
           }}
@@ -40,9 +42,9 @@ const BottomNav = () => {
           name="Cost Estimator"
           component={CostEstimatorForm}
           options={{
-            tabBarIcon: ({focussed}) => (
+            tabBarIcon: ({focused}) => (
               <View>
-                <CalculatorIcon width={24} height={24} />
+                <CalculatorIcon width={24} height={24} isFilled={focused}/>
               </View>
             ),
           }}
@@ -51,9 +53,9 @@ const BottomNav = () => {
           name="Add"
           component={AddIcon}
           options={{
-            tabBarIcon: ({focussed}) => (
+            tabBarIcon: ({focused}) => (
               <View>
-                <AddIcon width={32} height={32} color="green" />
+                <AddIcon width={32} height={32} isFilled={focused} />
               </View>
             ),
           }}
@@ -62,9 +64,9 @@ const BottomNav = () => {
           name="Timeline"
           component={TimelineIcon}
           options={{
-            tabBarIcon: ({focussed}) => (
+            tabBarIcon: ({focused}) => (
               <View>
-                <TimelineIcon width={24} height={24} />
+                <TimelineIcon width={24} height={24} isFilled={focused}/>
               </View>
             ),
           }}
@@ -73,9 +75,9 @@ const BottomNav = () => {
           name="Scan a Disease"
           component={ScanIcon}
           options={{
-            tabBarIcon: ({focussed}) => (
+            tabBarIcon: ({focused}) => (
               <View>
-                <ScanIcon width={24} height={24} />
+                <ScanIcon width={24} height={24} isFilled={focused}/>
               </View>
             ),
           }}
