@@ -6,7 +6,7 @@ import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import Custombutton from '../../components/Custombutton';
 
-import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';
 
 const Farmform = () => {
@@ -30,15 +30,15 @@ const Farmform = () => {
   return (
     <View style={styles.farmFormContainer}>
       <View style={styles.topBar}>
-          <View style={styles.logoWrapper}>
-            <Leaves width={36} height={36} />
-            <Text style={styles.logoText}>Groot</Text>
-          </View>
-          <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} />
-            <SettingsIcon width={20} height={20} />
-          </View>
+        <View style={styles.logoWrapper}>
+          <Leaves width={36} height={36} />
+          <Text style={styles.logoText}>Groot</Text>
         </View>
+        <View style={styles.topBarIconWrapper}>
+          <NotificationIcon width={26} height={26} />
+          <SettingsIcon width={20} height={20} />
+        </View>
+      </View>
       <View style={styles.farmFormWrapper}>
         <View style={{alignItems: 'center', gap: 15}}>
           <Leaves width={60} height={60} />
@@ -104,13 +104,13 @@ const Farmform = () => {
           </Pressable>
         </View>
         <Custombutton
-            title="Create Farm"
-            borderRadius={30}
-            mode="contained"
-            buttonColor="#6EAF1F"
-            textColor="#fff"
-            height={60}
-          />
+          title="Create Farm"
+          borderRadius={30}
+          mode="contained"
+          buttonColor="#6EAF1F"
+          textColor="#fff"
+          height={60}
+        />
       </View>
     </View>
   );

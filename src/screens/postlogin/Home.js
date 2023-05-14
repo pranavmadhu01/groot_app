@@ -1,88 +1,99 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
-import {useState} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
-import {Text} from 'react-native-paper';
-import {Logoborder} from '../../assets/images';
+import {Modal, Portal, Provider, Text} from 'react-native-paper';
 import Leaves from '../../components/logos/Leaves';
-import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Custombutton from '../../components/Custombutton';
-import {white} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
+import {NotificationModal} from '../../components/modals/Modals';
 
 const vw = Dimensions.get('window').width;
 
 const Home = () => {
+  const [isVisible, setisVisible] = React.useState(false);
+
+  const showModal = () => setisVisible(true);
+  const hideModal = () => setisVisible(false);
+
   return (
-    <View style={styles.homeWrapper}>
-      <View style={styles.topBar}>
-        <Leaves width={61} height={60} />
-        <View style={styles.topBarIconWrapper}>
-          <NotificationIcon width={26} height={26} />
-          <SettingsIcon width={20} height={20} />
+    <Provider>
+      <Portal>
+        <Modal
+          visible={isVisible}
+          onDismiss={hideModal}>
+          <NotificationModal />
+        </Modal>
+      </Portal>
+      <View style={styles.homeWrapper}>
+        <View style={styles.topBar}>
+          <Leaves width={61} height={60} />
+          <View style={styles.topBarIconWrapper}>
+            <NotificationIcon width={26} height={26} onPress={showModal} />
+            <SettingsIcon width={20} height={20} />
+          </View>
+        </View>
+
+        <View style={{flexDirection: 'row', gap: 5, marginVertical: 5}}>
+          <Text style={{fontWeight: 100, fontSize: 28}}>Hey</Text>
+          <Text style={{fontWeight: 900, fontSize: 28}}>Groot</Text>
+        </View>
+        <Text style={{fontWeight: 100, fontSize: 18}}>
+          Your farms are all set!
+        </Text>
+
+        <View style={styles.farmBar}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <View style={styles.farms}>
+              <Custombutton
+                buttonColor={'#fff'}
+                textColor={'#000'}
+                title={'Grape Farm'}
+                padding={6}
+                mode={'outlined'}
+                borderRadius={50}
+                alignSelf={'center'}
+                margin={(0, 6, 0, 0)}
+              />
+              <Custombutton
+                buttonColor={'#fff'}
+                textColor={'#000'}
+                title={'Grape Farm'}
+                padding={6}
+                mode={'outlined'}
+                borderRadius={50}
+                alignSelf={'center'}
+              />
+              <Custombutton
+                buttonColor={'#fff'}
+                textColor={'#000'}
+                title={'Grape Farm'}
+                padding={6}
+                mode={'outlined'}
+                borderRadius={50}
+                alignSelf={'center'}
+              />
+              <Custombutton
+                buttonColor={'#fff'}
+                textColor={'#000'}
+                title={'Grape Farm'}
+                padding={6}
+                mode={'outlined'}
+                borderRadius={50}
+                alignSelf={'center'}
+              />
+              <Custombutton
+                buttonColor={'#6EAF1F'}
+                textColor={'#000'}
+                title={'+'}
+                padding={0}
+                mode={'outlined'}
+                borderRadius={200}
+                alignSelf={'center'}
+              />
+            </View>
+          </ScrollView>
         </View>
       </View>
-
-      <View style={{flexDirection: 'row', gap: 5, marginVertical: 5}}>
-        <Text style={{fontWeight: 100, fontSize: 28}}>Hey</Text>
-        <Text style={{fontWeight: 900, fontSize: 28}}>Groot</Text>
-      </View>
-      <Text style={{fontWeight: 100, fontSize: 18}}>
-        Your farms are all set!
-      </Text>
-
-      <View style={styles.farmBar}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.farms}>
-            <Custombutton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-              margin={(0, 6, 0, 0)}
-            />
-            <Custombutton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <Custombutton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <Custombutton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <Custombutton
-              buttonColor={'#6EAF1F'}
-              textColor={'#000'}
-              title={'+'}
-              padding={0}
-              mode={'outlined'}
-              borderRadius={200}
-              alignSelf={'center'}
-            />
-          </View>
-        </ScrollView>
-      </View>
-    </View>
+    </Provider>
   );
 };
 

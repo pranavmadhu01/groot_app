@@ -4,7 +4,7 @@ import {Text} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import Custombutton from '../../components/Custombutton';
 
-import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';
 
 const vw = Dimensions.get('window').width;

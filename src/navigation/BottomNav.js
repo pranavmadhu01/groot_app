@@ -13,7 +13,7 @@ import {
   AddIcon,
   TimelineIcon,
   ScanIcon,
-} from '../components/icons/icons';
+} from '../components/icons/Icons';
 
 import NavbarLogo from '../components/logos/NavbarLogo';
 
@@ -46,7 +46,7 @@ const BottomNav = () => {
           options={{
             tabBarIcon: ({focused}) => (
               <View>
-                <CalculatorIcon width={24} height={24} isFilled={focused}/>
+                <CalculatorIcon width={24} height={24} isFilled={focused} />
               </View>
             ),
           }}
@@ -68,7 +68,7 @@ const BottomNav = () => {
           options={{
             tabBarIcon: ({focused}) => (
               <View>
-                <TimelineIcon width={24} height={24} isFilled={focused}/>
+                <TimelineIcon width={24} height={24} isFilled={focused} />
               </View>
             ),
           }}
@@ -79,7 +79,7 @@ const BottomNav = () => {
           options={{
             tabBarIcon: ({focused}) => (
               <View>
-                <ScanIcon width={24} height={24} isFilled={focused}/>
+                <ScanIcon width={24} height={24} isFilled={focused} />
               </View>
             ),
           }}
