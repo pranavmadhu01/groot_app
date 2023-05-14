@@ -20,6 +20,8 @@ const Custombutton = ({
   padding,
   alignSelf,
   margin,
+  fontSize,
+  fontWeight,
 }) => {
   // const navigation = useNavigation();
 
@@ -40,6 +42,8 @@ const Custombutton = ({
         padding: padding,
         margin: margin,
         alignSelf: alignSelf,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
         onPress: onPress,
       }}>
       {title}

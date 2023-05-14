@@ -37,7 +37,7 @@ const Home = () => {
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
-              padding={(3, 6, 3, 6)}
+              padding={6}
               mode={'outlined'}
               borderRadius={50}
               alignSelf={'center'}
@@ -47,7 +47,7 @@ const Home = () => {
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
-              padding={(3, 6, 3, 6)}
+              padding={6}
               mode={'outlined'}
               borderRadius={50}
               alignSelf={'center'}
@@ -56,7 +56,7 @@ const Home = () => {
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
-              padding={(3, 6, 3, 6)}
+              padding={6}
               mode={'outlined'}
               borderRadius={50}
               alignSelf={'center'}
@@ -65,7 +65,7 @@ const Home = () => {
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
-              padding={(3, 6, 3, 6)}
+              padding={6}
               mode={'outlined'}
               borderRadius={50}
               alignSelf={'center'}
@@ -74,7 +74,7 @@ const Home = () => {
               buttonColor={'#6EAF1F'}
               textColor={'#000'}
               title={'+'}
-              padding={(0, 3, 0, 3)}
+              padding={0}
               mode={'outlined'}
               borderRadius={200}
               alignSelf={'center'}
@@ -90,9 +90,10 @@ export default Home;
 
 const styles = StyleSheet.create({
   homeWrapper: {
-    backgroundColor: '#F3FFF2',
+    backgroundColor: '#fff',
     flex: 1,
-    padding: (0, 24, 0, 24),
+    paddingVertical: 30,
+    paddingHorizontal: 24,
   },
 
   topBar: {

@@ -4,6 +4,7 @@ import {View, StyleSheet} from 'react-native';
 
 import Home from '../screens/postlogin/Home';
 import CostEstimatorForm from '../screens/postlogin/CostEstimatorForm';
+import Farmform from '../screens/postlogin/Farmform';
 
 import {
   HomeIcon,
@@ -51,7 +52,7 @@ const BottomNav = () => {
         />
         <Tab.Screen
           name="Add"
-          component={AddIcon}
+          component={Farmform}
           options={{
             tabBarIcon: ({focused}) => (
               <View>
