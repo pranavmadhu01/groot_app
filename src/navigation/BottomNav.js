@@ -5,6 +5,7 @@ import {View, StyleSheet} from 'react-native';
 import Home from '../screens/postlogin/Home';
 import CostEstimatorForm from '../screens/postlogin/CostEstimatorForm';
 import Farmform from '../screens/postlogin/Farmform';
+import Timeline from '../screens/postlogin/Timeline';
 
 import {
   HomeIcon,
@@ -63,7 +64,7 @@ const BottomNav = () => {
         />
         <Tab.Screen
           name="Timeline"
-          component={TimelineIcon}
+          component={Timeline}
           options={{
             tabBarIcon: ({focused}) => (
               <View>
@@ -74,7 +75,7 @@ const BottomNav = () => {
         />
         <Tab.Screen
           name="Scan a Disease"
-          component={ScanIcon}
+          component={Home}
           options={{
             tabBarIcon: ({focused}) => (
               <View>

@@ -1,34 +1,27 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
 import {useState} from 'react';
-import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import {Text} from 'react-native-paper';
-import {Logoborder} from '../../assets/images';
-import Leaves from '../../components/logos/Leaves';
-import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import Geolocation from '@react-native-community/geolocation';
 import Custombutton from '../../components/Custombutton';
-import {white} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
+
+import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import Leaves from '../../components/logos/Leaves';
 
 const vw = Dimensions.get('window').width;
 
-const Home = () => {
+const Timeline = ({navigation}) => {
   return (
-    <View style={styles.homeWrapper}>
+    <View style={styles.timelineContainer}>
       <View style={styles.topBar}>
-        <Leaves width={61} height={60} />
+        <View style={styles.logoWrapper}>
+          <Leaves width={36} height={36} />
+          <Text style={styles.logoText}>Groot</Text>
+        </View>
         <View style={styles.topBarIconWrapper}>
           <NotificationIcon width={26} height={26} />
           <SettingsIcon width={20} height={20} />
         </View>
       </View>
-
-      <View style={{flexDirection: 'row', gap: 5, marginVertical: 5}}>
-        <Text style={{fontWeight: 100, fontSize: 28}}>Hey</Text>
-        <Text style={{fontWeight: 900, fontSize: 28}}>Groot</Text>
-      </View>
-      <Text style={{fontWeight: 100, fontSize: 18}}>
-        Your farms are all set!
-      </Text>
 
       <View style={styles.farmBar}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -82,23 +75,39 @@ const Home = () => {
           </View>
         </ScrollView>
       </View>
+
+      <View style={styles.timelineWrapper}>
+        <View style={{alignItems: 'center', gap: 15}}>
+          <Text variant="headlineMedium" style={{fontWeight: '800'}}>
+            Timeline
+          </Text>
+        </View>
+        <View></View>
+      </View>
     </View>
   );
 };
 
-export default Home;
+export default Timeline;
 
 const styles = StyleSheet.create({
-  homeWrapper: {
+  timelineContainer: {
     flex: 1,
     paddingVertical: 30,
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     color: '#151810',
   },
+  timelineWrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 30,
+    gap: 30,
+  },
 
   topBar: {
     height: '10%',
+    justifyContent: 'center',
     flexDirection: 'row',
   },
   topBarIconWrapper: {
@@ -109,9 +118,19 @@ const styles = StyleSheet.create({
     gap: 24,
     flex: 1,
   },
+  logoWrapper: {
+    flexDirection: 'row',
+    gap: 5,
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: '900',
+    paddingTop: 5,
+    color: '#375C0A',
+  },
 
   farmBar: {
-    marginVertical: 16,
+    marginBottom: 16,
     width: vw,
     alignSelf: 'center',
   },

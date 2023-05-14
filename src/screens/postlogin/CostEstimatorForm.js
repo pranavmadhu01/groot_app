@@ -10,6 +10,9 @@ import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import Custombutton from '../../components/Custombutton';
 
+import {NotificationIcon, SettingsIcon} from '../../components/icons/icons';
+import Leaves from '../../components/logos/Leaves';
+
 const vw = Dimensions.get('window').width;
 
 const CostEstimatorForm = ({navigation}) => {
@@ -41,6 +44,17 @@ const CostEstimatorForm = ({navigation}) => {
 
   return (
     <View style={styles.costFormContainer}>
+      <View style={styles.topBar}>
+        <View style={styles.logoWrapper}>
+          <Leaves width={36} height={36} />
+          <Text style={styles.logoText}>Groot</Text>
+        </View>
+        <View style={styles.topBarIconWrapper}>
+          <NotificationIcon width={26} height={26} />
+          <SettingsIcon width={20} height={20} />
+        </View>
+      </View>
+
       <View style={styles.farmBar}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.farms}>
@@ -104,7 +118,6 @@ const CostEstimatorForm = ({navigation}) => {
           <TextInput
             mode="outlined"
             keyboardType="number-pad"
-            autoFocus={true}
             placeholder="Enter the area of cultivation"
             value={formdata.area}
             onChangeText={text => setFormData({...formdata, area: text})}
@@ -164,12 +177,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 30,
     paddingHorizontal: 24,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
+    color: '#151810',
   },
   costFormWrapper: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 80,
+    paddingTop: 30,
     gap: 30,
   },
 
@@ -184,8 +198,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 60,
   },
+
+  topBar: {
+    height: '10%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  topBarIconWrapper: {
+    height: '40%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    gap: 24,
+    flex: 1,
+  },
+  logoWrapper: {
+    flexDirection: 'row',
+    gap: 5,
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: '900',
+    paddingTop: 5,
+    color: '#375C0A',
+  },
+
   farmBar: {
-    marginVertical: 16,
+    marginBottom: 16,
     width: vw,
     alignSelf: 'center',
   },
