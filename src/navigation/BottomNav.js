@@ -2,10 +2,12 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, StyleSheet} from 'react-native';
 
-import Home from '../screens/postlogin/Home';
-import CostEstimatorForm from '../screens/postlogin/CostEstimatorForm';
-import Farmform from '../screens/postlogin/Farmform';
-import Timeline from '../screens/postlogin/Timeline';
+import {
+  Home,
+  CostEstimatorForm,
+  FarmForm,
+  Timeline,
+} from '../screens/postlogin/PostLogin';
 
 import {
   HomeIcon,
@@ -53,7 +55,7 @@ const BottomNav = () => {
         />
         <Tab.Screen
           name="Add"
-          component={Farmform}
+          component={FarmForm}
           options={{
             tabBarIcon: ({focused}) => (
               <View>

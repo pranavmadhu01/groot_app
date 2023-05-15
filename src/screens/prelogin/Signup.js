@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
-import {Logoborder} from '../../assets/images';
-import Custombutton from '../../components/Custombutton';
-const Signup = () => {
+import Leaves from '../../components/logos/Leaves';
+import Custombutton from '../../components/CustomButton';
+const Signup = ({navigation}) => {
   const [formdata, setFormData] = useState({
     phonenumber: '',
     email: '',
@@ -12,7 +12,7 @@ const Signup = () => {
   return (
     <View style={styles.signupwrapper}>
       <View style={{alignItems: 'center', gap: 15}}>
-        <Image source={Logoborder} />
+        <Leaves width={36} height={36} />
         <Text variant="headlineMedium" style={{fontWeight: '800'}}>
           Sign Up
         </Text>
@@ -57,6 +57,8 @@ const Signup = () => {
           buttonColor="#6EAF1F"
           textColor="#fff"
           height={60}
+          isNavigator={true}
+          screenName={'Main Screen'}
         />
         <View style={styles.buttontextWrapper}>
           <Text
@@ -68,7 +70,7 @@ const Signup = () => {
             }}>
             Already have an account?
           </Text>
-          <Pressable>
+          <Pressable onPress={navigation.navigate('Login')}>
             <Text
               style={{color: '#6EAF1F', fontWeight: '900'}}
               variant="labelSmall">

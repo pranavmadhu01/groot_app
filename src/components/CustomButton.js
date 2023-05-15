@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Button, Text} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
-const Custombutton = ({
+const CustomButton = ({
   textColor,
   buttonColor,
   onPress,
@@ -23,32 +23,31 @@ const Custombutton = ({
   fontSize,
   fontWeight,
 }) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   return (
     <Button
       textColor={textColor}
       buttonColor={buttonColor}
-      // onPress={
-      //   isNavigator ? () => navigation.navigate(screenName, data) : onPress
-      // }
+      onPress={
+        isNavigator ? () => navigation.navigate(screenName, data) : onPress
+      }
       disabled={disabled}
       mode={mode}
       style={{
         width: width,
         height: height,
-        justifyContent: 'center',
         borderRadius: borderRadius || 10,
         padding: padding,
         margin: margin,
         alignSelf: alignSelf,
+        justifyContent: 'center',
         fontSize: fontSize,
         fontWeight: fontWeight,
-        onPress: onPress,
       }}>
       {title}
     </Button>
   );
 };
 
-export default Custombutton;
+export default CustomButton;

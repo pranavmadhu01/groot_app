@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import {Text} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
-import Custombutton from '../../components/Custombutton';
+import Custombutton from '../../components/CustomButton';
 
 import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';

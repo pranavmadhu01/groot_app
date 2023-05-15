@@ -4,12 +4,12 @@ import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
-import Custombutton from '../../components/Custombutton';
+import CustomButton from '../../components/CustomButton';
 
 import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';
 
-const Farmform = () => {
+const FarmForm = () => {
   const [formdata, setFormData] = useState({
     name: '',
     type: '',
@@ -103,7 +103,7 @@ const Farmform = () => {
             </Text>
           </Pressable>
         </View>
-        <Custombutton
+        <CustomButton
           title="Create Farm"
           borderRadius={30}
           mode="contained"
@@ -115,7 +115,7 @@ const Farmform = () => {
     </View>
   );
 };
-export default Farmform;
+export default FarmForm;
 const styles = StyleSheet.create({
   farmFormContainer: {
     flex: 1,

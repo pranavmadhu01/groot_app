@@ -1,11 +1,11 @@
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
-import {Logonoborder} from '../../assets/images';
-const Addfarm = () => {
+import Leaves from '../../components/logos/Leaves';
+const AddFarm = () => {
   return (
     <View style={styles.addfarmwrapper}>
       <Pressable style={styles.pressableStyle}>
-        <Image source={Logonoborder} />
+        <Leaves width={36} height={36} />
         <Text variant="headlineSmall" style={{fontWeight: '700'}}>
           Add Farm
         </Text>
@@ -16,7 +16,7 @@ const Addfarm = () => {
     </View>
   );
 };
-export default Addfarm;
+export default AddFarm;
 const styles = StyleSheet.create({
   addfarmwrapper: {
     flex: 1,

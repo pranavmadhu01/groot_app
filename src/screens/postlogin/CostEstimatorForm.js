@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
-import Custombutton from '../../components/Custombutton';
+import CustomButton from '../../components/CustomButton';
 
 import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';
@@ -58,7 +58,7 @@ const CostEstimatorForm = ({navigation}) => {
       <View style={styles.farmBar}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.farms}>
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -68,7 +68,7 @@ const CostEstimatorForm = ({navigation}) => {
               alignSelf={'center'}
               margin={(0, 6, 0, 0)}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -77,7 +77,7 @@ const CostEstimatorForm = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -86,7 +86,7 @@ const CostEstimatorForm = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -95,7 +95,7 @@ const CostEstimatorForm = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#6EAF1F'}
               textColor={'#000'}
               title={'+'}
@@ -157,7 +157,7 @@ const CostEstimatorForm = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-        <Custombutton
+        <CustomButton
           title="Calculate"
           borderRadius={30}
           mode="contained"

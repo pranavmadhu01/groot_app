@@ -6,17 +6,19 @@ import {
   View,
 } from 'react-native';
 import {Text} from 'react-native-paper';
-import {Landingpagebg, Logoborder} from '../../assets/images';
-import Custombutton from '../../components/Custombutton';
-const Landingpage = () => {
+import {LandingPageBg} from '../../assets/images/images';
+import Custombutton from '../../components/CustomButton';
+import Leaves from '../../components/logos/Leaves';
+
+const LandingPage = ({navigation}) => {
   return (
-    <ImageBackground source={Landingpagebg} style={{flex: 1}}>
+    <ImageBackground source={LandingPageBg} style={{flex: 1}}>
       <View style={styles.landingpagewrapper}>
         <View
           style={{
             alignItems: 'flex-end',
           }}>
-          <Image source={Logoborder} />
+          <Leaves width={60} height={60} hasBorder={true} />
         </View>
         <View
           style={{
@@ -26,7 +28,7 @@ const Landingpage = () => {
             Welcome to
           </Text>
           <Text
-            variant="headlineLarge"
+            variant="displaySmall"
             style={{...styles.textStyle, fontWeight: '900'}}>
             Groot
           </Text>
@@ -34,10 +36,11 @@ const Landingpage = () => {
         <View style={{gap: 20}}>
           <Custombutton
             title="Get Started"
-            mode="contained"
             textColor="#fff"
             buttonColor="#6EAF1F"
             height={60}
+            isNavigator={true}
+            screenName={'Sign Up'}
           />
           <View style={styles.buttontextWrapper}>
             <Text
@@ -47,13 +50,13 @@ const Landingpage = () => {
                 justifyContent: 'center',
                 color: '#E6EAE1',
               }}>
-              Not registered yet?
+              Already registered?
             </Text>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('Login')}>
               <Text
                 style={{color: '#6EAF1F', fontWeight: '900'}}
                 variant="labelSmall">
-                Sign Up
+                Login
               </Text>
             </Pressable>
           </View>
@@ -62,10 +65,12 @@ const Landingpage = () => {
     </ImageBackground>
   );
 };
-export default Landingpage;
+export default LandingPage;
+
 const styles = StyleSheet.create({
   landingpagewrapper: {
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingVertical: 56,
     gap: 10,
     flex: 1,
     justifyContent: 'space-between',
@@ -73,6 +78,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#fff',
     fontWeight: '100',
+    marginBottom: 10,
   },
   buttontextWrapper: {
     flexDirection: 'row',

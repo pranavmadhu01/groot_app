@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
 import {Modal, Portal, Provider, Text} from 'react-native-paper';
 import Leaves from '../../components/logos/Leaves';
 import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
-import Custombutton from '../../components/Custombutton';
+import CustomButton from '../../components/CustomButton';
 import {NotificationModal} from '../../components/modals/Modals';
 
 const vw = Dimensions.get('window').width;
@@ -17,9 +17,7 @@ const Home = () => {
   return (
     <Provider>
       <Portal>
-        <Modal
-          visible={isVisible}
-          onDismiss={hideModal}>
+        <Modal visible={isVisible} onDismiss={hideModal}>
           <NotificationModal />
         </Modal>
       </Portal>
@@ -43,7 +41,7 @@ const Home = () => {
         <View style={styles.farmBar}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.farms}>
-              <Custombutton
+              <CustomButton
                 buttonColor={'#fff'}
                 textColor={'#000'}
                 title={'Grape Farm'}
@@ -53,7 +51,7 @@ const Home = () => {
                 alignSelf={'center'}
                 margin={(0, 6, 0, 0)}
               />
-              <Custombutton
+              <CustomButton
                 buttonColor={'#fff'}
                 textColor={'#000'}
                 title={'Grape Farm'}
@@ -62,7 +60,7 @@ const Home = () => {
                 borderRadius={50}
                 alignSelf={'center'}
               />
-              <Custombutton
+              <CustomButton
                 buttonColor={'#fff'}
                 textColor={'#000'}
                 title={'Grape Farm'}
@@ -71,7 +69,7 @@ const Home = () => {
                 borderRadius={50}
                 alignSelf={'center'}
               />
-              <Custombutton
+              <CustomButton
                 buttonColor={'#fff'}
                 textColor={'#000'}
                 title={'Grape Farm'}
@@ -80,7 +78,7 @@ const Home = () => {
                 borderRadius={50}
                 alignSelf={'center'}
               />
-              <Custombutton
+              <CustomButton
                 buttonColor={'#6EAF1F'}
                 textColor={'#000'}
                 title={'+'}

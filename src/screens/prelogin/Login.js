@@ -3,10 +3,10 @@
 import {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
-import {Logoborder} from '../../assets/images';
-import Custombutton from '../../components/Custombutton';
+import Leaves from '../../components/logos/Leaves';
+import Custombutton from '../../components/CustomButton';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [formdata, setFormData] = useState({
     phonenumber: '',
     email: '',
@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <View style={styles.loginwrapper}>
       <View style={{alignItems: 'center', gap: 15}}>
-        <Image source={Logoborder} />
+        <Leaves width={36} height={36} />
         <Text variant="headlineMedium" style={{fontWeight: '800'}}>
           Login
         </Text>
@@ -54,6 +54,8 @@ const Login = () => {
           buttonColor="#6EAF1F"
           textColor="#fff"
           height={60}
+          isNavigator={true}
+          screenName={'Main Screen'}
         />
         <View style={styles.buttontextWrapper}>
           <Text
@@ -65,7 +67,7 @@ const Login = () => {
             }}>
             Not registered yet?
           </Text>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate('Sign Up')}>
             <Text
               style={{color: '#6EAF1F', fontWeight: '900'}}
               variant="labelSmall">
