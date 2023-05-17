@@ -9,6 +9,7 @@ import {
   FarmForm,
   Timeline,
   ScanDisease,
+  DiseaseInfo,
 } from '../screens/postlogin/PostLogin';
 
 import {
@@ -106,6 +107,7 @@ const BottomNav = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="BottomNavScreen" component={BottomNavScreen} />
       <Stack.Screen name="ScanDisease" component={ScanDisease} />
+      <Stack.Screen name="DiseaseInfo" component={DiseaseInfo} />
     </Stack.Navigator>
   );
 };

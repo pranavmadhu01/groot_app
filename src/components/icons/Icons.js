@@ -5,6 +5,8 @@ import TimelineIcon from "./TimelineIcon";
 import NotificationIcon from "./NotificationIcon";
 import SettingsIcon from "./SettingsIcon";
 import AddIcon from "./AddIcon";
+import ArrowBackIcon from "./ArrowBackIcon";
+import CamScanIcon from "./CamScanIcon";
 
 export {
   HomeIcon,
@@ -14,4 +16,6 @@ export {
   NotificationIcon,
   SettingsIcon,
   AddIcon,
+  ArrowBackIcon,
+  CamScanIcon,
 };
