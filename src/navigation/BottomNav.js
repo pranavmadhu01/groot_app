@@ -1,4 +1,5 @@
 import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, StyleSheet} from 'react-native';
 
@@ -7,6 +8,7 @@ import {
   CostEstimatorForm,
   FarmForm,
   Timeline,
+  ScanDisease,
 } from '../screens/postlogin/PostLogin';
 
 import {
@@ -20,77 +22,85 @@ import {
 import NavbarLogo from '../components/logos/NavbarLogo';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const BottomNavScreen = ({navigation}) => (
+  <View style={styles.Container}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarStyle: styles.bottomNavWrapper,
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View>
+              <HomeIcon width={24} height={24} isFilled={focused} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Cost Estimator"
+        component={CostEstimatorForm}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View>
+              <CalculatorIcon width={24} height={24} isFilled={focused} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Add"
+        component={FarmForm}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View>
+              <AddIcon width={32} height={32} isFilled={focused} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Timeline"
+        component={Timeline}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View>
+              <TimelineIcon width={24} height={24} isFilled={focused} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ScanDisease"
+        component={() => navigation.navigate('ScanDisease')}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View>
+              <ScanIcon width={24} height={24} isFilled={focused} />
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+    <View style={styles.navbarLogoContainer}>
+      <NavbarLogo width={60} height={60} />
+    </View>
+  </View>
+);
 
 const BottomNav = () => {
   return (
-    <View style={styles.Container}>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarStyle: styles.bottomNavWrapper,
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View>
-                <HomeIcon width={24} height={24} isFilled={focused} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Cost Estimator"
-          component={CostEstimatorForm}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View>
-                <CalculatorIcon width={24} height={24} isFilled={focused} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Add"
-          component={FarmForm}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View>
-                <AddIcon width={32} height={32} isFilled={focused} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Timeline"
-          component={Timeline}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View>
-                <TimelineIcon width={24} height={24} isFilled={focused} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Scan a Disease"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View>
-                <ScanIcon width={24} height={24} isFilled={focused} />
-              </View>
-            ),
-          }}
-        />
-      </Tab.Navigator>
-      <View style={styles.navbarLogoContainer}>
-        <NavbarLogo width={60} height={60} />
-      </View>
-    </View>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="BottomNavScreen" component={BottomNavScreen} />
+      <Stack.Screen name="ScanDisease" component={ScanDisease} />
+    </Stack.Navigator>
   );
 };
 

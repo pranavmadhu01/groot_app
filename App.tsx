@@ -6,7 +6,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import BottomNav from './src/navigation/BottomNav';
-
 import {LandingPage, Login, Signup} from './src/screens/prelogin/PreLogin';
 
 const Stack = createNativeStackNavigator();
