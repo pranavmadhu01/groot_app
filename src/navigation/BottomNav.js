@@ -79,7 +79,13 @@ const BottomNavScreen = ({navigation}) => (
       />
       <Tab.Screen
         name="ScanDisease"
-        component={() => navigation.navigate('ScanDisease')}
+        component={Home}
+        listeners={() => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('ScanDisease');
+          },
+        })}
         options={{
           tabBarIcon: ({focused}) => (
             <View>

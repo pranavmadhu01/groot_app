@@ -52,7 +52,7 @@ const ScanDisease = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={styles.goBackBtn}
-        onPress={() => navigation.goBack()}>
+        onPress={() => navigation.navigate('Home')}>
         <Text>Go Back</Text>
       </TouchableOpacity>
     </View>
