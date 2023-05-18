@@ -42,12 +42,17 @@ const LandingPage = ({navigation}) => {
               variant="labelMedium"
               style={{
                 color: 'white',
+                fontFamily: 'Gilroy-Medium',
               }}>
               Already registered?
             </Text>
             <Pressable onPress={() => navigation.navigate('Login')}>
               <Text
-                style={{color: '#6EAF1F', fontWeight: '900', marginLeft: 5}}
+                style={{
+                  color: '#6EAF1F',
+                  fontFamily: 'Gilroy-SemiBold',
+                  marginLeft: 5,
+                }}
                 variant="labelMedium">
                 Login
               </Text>

@@ -5,7 +5,7 @@ import {Pressable, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import CustomButton from '../../components/CustomButton';
 import Leaves from '../../components/logos/Leaves';
-import {ArrowBackIcon} from '../../components/icons/Icons';
+import {ArrowBackIcon, PersonIcon} from '../../components/icons/Icons';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
@@ -32,42 +32,57 @@ const SignUp = ({navigation}) => {
         </View>
         <View>
           <View style={styles.groupWrapper}>
-            <TextInput
-              mode="outlined"
-              keyboardType="default"
-              placeholder="Enter name"
-              value={formdata.name}
-              onChangeText={text => setFormData({...formdata, name: text})}
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
-            <TextInput
-              mode="outlined"
-              keyboardType="default"
-              placeholder="Enter email address"
-              value={formdata.type}
-              onChangeText={text => setFormData({...formdata, email: text})}
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
-            <TextInput
-              mode="outlined"
-              keyboardType="default"
-              placeholder="Enter phone number"
-              value={formdata.type}
-              onChangeText={text => setFormData({...formdata, phone: text})}
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
+            <View style={styles.textInputWrapper}>
+              <View style={styles.iconWrapper}>
+                <PersonIcon width={20} height={20} />
+              </View>
+              <TextInput
+                mode="outlined"
+                keyboardType="default"
+                placeholder="Enter full name"
+                value={formdata.name}
+                onChangeText={text => setFormData({...formdata, name: text})}
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+              />
+            </View>
+            <View style={styles.textInputWrapper}>
+              <View style={styles.iconWrapper}>
+                <PersonIcon width={20} height={20} />
+              </View>
+              <TextInput
+                mode="outlined"
+                keyboardType="email-address"
+                placeholder="Enter email address"
+                value={formdata.name}
+                onChangeText={text => setFormData({...formdata, email: text})}
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+              />
+            </View>
+            <View style={styles.textInputWrapper}>
+              <View style={styles.iconWrapper}>
+                <PersonIcon width={20} height={20} />
+              </View>
+              <TextInput
+                mode="outlined"
+                keyboardType="phone-pad"
+                placeholder="Enter phone number"
+                value={formdata.name}
+                onChangeText={text => setFormData({...formdata, phone: text})}
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+              />
+            </View>
           </View>
         </View>
 
@@ -85,12 +100,17 @@ const SignUp = ({navigation}) => {
               variant="labelMedium"
               style={{
                 color: 'black',
+                fontFamily: 'Gilroy-Medium',
               }}>
               Already registered?
             </Text>
             <Pressable onPress={() => navigation.navigate('Login')}>
               <Text
-                style={{color: '#6EAF1F', fontWeight: '900', marginLeft: 5}}
+                style={{
+                  color: '#6EAF1F',
+                  fontFamily: 'Gilroy-SemiBold',
+                  marginLeft: 5,
+                }}
                 variant="labelMedium">
                 Login
               </Text>
@@ -132,9 +152,18 @@ const styles = StyleSheet.create({
     gap: 15,
   },
 
+  iconWrapper: {
+    position: 'absolute',
+    left: 20,
+    zIndex: 1,
+  },
+  textInputWrapper: {
+    justifyContent: 'center',
+  },
   textFieldStyle: {
     backgroundColor: '#E2EFD2',
     height: 64,
+    paddingLeft: 40,
   },
   groupWrapper: {
     marginBottom: 20,

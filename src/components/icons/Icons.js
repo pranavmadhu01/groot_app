@@ -7,6 +7,7 @@ import SettingsIcon from "./SettingsIcon";
 import AddIcon from "./AddIcon";
 import ArrowBackIcon from "./ArrowBackIcon";
 import CamScanIcon from "./CamScanIcon";
+import PersonIcon from "./PersonIcon";
 
 export {
   HomeIcon,
@@ -18,4 +19,5 @@ export {
   AddIcon,
   ArrowBackIcon,
   CamScanIcon,
+  PersonIcon,
 };

@@ -5,7 +5,7 @@ import {Pressable, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import CustomButton from '../../components/CustomButton';
 import Leaves from '../../components/logos/Leaves';
-import {ArrowBackIcon} from '../../components/icons/Icons';
+import {ArrowBackIcon, PersonIcon} from '../../components/icons/Icons';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
@@ -29,13 +29,17 @@ const SignUp = ({navigation}) => {
             Login
           </Text>
         </View>
-        <View>
-          <View style={styles.groupWrapper}>
+
+        <View style={styles.groupWrapper}>
+          <View style={styles.textInputWrapper}>
+            <View style={styles.iconWrapper}>
+              <PersonIcon width={20} height={20} />
+            </View>
             <TextInput
               mode="outlined"
-              keyboardType="default"
+              keyboardType="email-address"
               placeholder="Enter email address"
-              value={formdata.type}
+              value={formdata.name}
               onChangeText={text => setFormData({...formdata, email: text})}
               style={styles.textFieldStyle}
               outlineStyle={{borderRadius: 12, borderWidth: 3}}
@@ -43,22 +47,28 @@ const SignUp = ({navigation}) => {
               activeOutlineColor="#6EAF1F"
               placeholderTextColor="#808A75"
             />
-            <Text
-              variant="labelLarge"
-              style={{
-                textAlign: 'center',
-                color: '#808A75',
-                marginVertical: 10,
-                fontSize: 16,
-                fontFamily: 'Gilroy-Medium',
-              }}>
-              or
-            </Text>
+          </View>
+          <Text
+            variant="labelLarge"
+            style={{
+              textAlign: 'center',
+              color: '#808A75',
+              marginVertical: 10,
+              fontSize: 16,
+              fontFamily: 'Gilroy-Medium',
+            }}>
+            or
+          </Text>
+
+          <View style={styles.textInputWrapper}>
+            <View style={styles.iconWrapper}>
+              <PersonIcon width={20} height={20} />
+            </View>
             <TextInput
               mode="outlined"
-              keyboardType="default"
+              keyboardType="phone-pad"
               placeholder="Enter phone number"
-              value={formdata.type}
+              value={formdata.name}
               onChangeText={text => setFormData({...formdata, phone: text})}
               style={styles.textFieldStyle}
               outlineStyle={{borderRadius: 12, borderWidth: 3}}
@@ -83,12 +93,17 @@ const SignUp = ({navigation}) => {
               variant="labelMedium"
               style={{
                 color: 'black',
+                fontFamily: 'Gilroy-Medium',
               }}>
               Not registered yet?
             </Text>
             <Pressable onPress={() => navigation.navigate('Sign Up')}>
               <Text
-                style={{color: '#6EAF1F', fontWeight: '900', marginLeft: 5}}
+                style={{
+                  color: '#6EAF1F',
+                  fontFamily: 'Gilroy-SemiBold',
+                  marginLeft: 5,
+                }}
                 variant="labelMedium">
                 Sign Up
               </Text>
@@ -130,9 +145,18 @@ const styles = StyleSheet.create({
     gap: 15,
   },
 
+  iconWrapper: {
+    position: 'absolute',
+    left: 20,
+    zIndex: 1,
+  },
+  textInputWrapper: {
+    justifyContent: 'center',
+  },
   textFieldStyle: {
     backgroundColor: '#E2EFD2',
     height: 64,
+    paddingLeft: 40,
   },
   groupWrapper: {
     marginBottom: 20,
