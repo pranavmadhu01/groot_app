@@ -21,16 +21,20 @@ const CustomButton = ({
   alignSelf,
   margin,
   fontSize,
-  fontWeight,
+  fontFamily,
 }) => {
   const navigation = useNavigation();
 
   return (
     <Button
-      textColor={textColor}
       buttonColor={buttonColor}
       onPress={
-        isNavigator ? () => navigation.navigate(screenName, data) : onPress
+        isNavigator
+          ? e => {
+              e.preventDefault();
+              navigation.navigate(screenName, data);
+            }
+          : onPress
       }
       disabled={disabled}
       mode={mode}
@@ -42,10 +46,15 @@ const CustomButton = ({
         margin: margin,
         alignSelf: alignSelf,
         justifyContent: 'center',
-        fontSize: fontSize,
-        fontWeight: fontWeight,
       }}>
-      {title}
+      <Text
+        style={{
+          fontSize: fontSize || 16,
+          fontFamily: fontFamily || 'Gilroy-Semibold',
+          color: textColor || 'white',
+        }}>
+        {title}
+      </Text>
     </Button>
   );
 };

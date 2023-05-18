@@ -1,5 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
@@ -54,7 +60,9 @@ const ScanDisease = ({navigation}) => {
         photo
       />
       <View style={styles.topBar}>
-        <TouchableOpacity style={styles.goBackBtn} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity
+          style={styles.goBackBtn}
+          onPress={() => navigation.navigate('Home')}>
           <ArrowBackIcon width={32} height={32} color="#fff" />
         </TouchableOpacity>
 

@@ -9,6 +9,7 @@ import {ArrowBackIcon} from '../../components/icons/Icons';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
+    name: '',
     email: '',
     phone: '',
   });
@@ -26,11 +27,23 @@ const SignUp = ({navigation}) => {
           <Text
             variant="headlineMedium"
             style={{fontFamily: 'Gilroy-SemiBold'}}>
-            Login
+            Sign Up
           </Text>
         </View>
         <View>
           <View style={styles.groupWrapper}>
+            <TextInput
+              mode="outlined"
+              keyboardType="default"
+              placeholder="Enter name"
+              value={formdata.name}
+              onChangeText={text => setFormData({...formdata, name: text})}
+              style={styles.textFieldStyle}
+              outlineStyle={{borderRadius: 12, borderWidth: 3}}
+              outlineColor="#fff"
+              activeOutlineColor="#6EAF1F"
+              placeholderTextColor="#808A75"
+            />
             <TextInput
               mode="outlined"
               keyboardType="default"
@@ -43,17 +56,6 @@ const SignUp = ({navigation}) => {
               activeOutlineColor="#6EAF1F"
               placeholderTextColor="#808A75"
             />
-            <Text
-              variant="labelLarge"
-              style={{
-                textAlign: 'center',
-                color: '#808A75',
-                marginVertical: 10,
-                fontSize: 16,
-                fontFamily: 'Gilroy-Medium',
-              }}>
-              or
-            </Text>
             <TextInput
               mode="outlined"
               keyboardType="default"
@@ -71,12 +73,12 @@ const SignUp = ({navigation}) => {
 
         <View style={styles.bottomWrapper}>
           <CustomButton
-            title="Continue"
+            title="Register"
             textColor="#fff"
             buttonColor="#6EAF1F"
             height={60}
             isNavigator={true}
-            screenName={'Main Screen'}
+            screenName={'Login'}
           />
           <View style={styles.buttontextWrapper}>
             <Text
@@ -84,13 +86,13 @@ const SignUp = ({navigation}) => {
               style={{
                 color: 'black',
               }}>
-              Not registered yet?
+              Already registered?
             </Text>
-            <Pressable onPress={() => navigation.navigate('Sign Up')}>
+            <Pressable onPress={() => navigation.navigate('Login')}>
               <Text
                 style={{color: '#6EAF1F', fontWeight: '900', marginLeft: 5}}
                 variant="labelMedium">
-                Sign Up
+                Login
               </Text>
             </Pressable>
           </View>
