@@ -8,6 +8,10 @@ import AddIcon from "./AddIcon";
 import ArrowBackIcon from "./ArrowBackIcon";
 import CamScanIcon from "./CamScanIcon";
 import PersonIcon from "./PersonIcon";
+import MailIcon from "./MailIcon";
+import PhoneIcon from "./PhoneIcon";
+import LockIcon from "./LockIcon";
+import EyeIcon from "./EyeIcon";
 
 export {
   HomeIcon,
@@ -20,4 +24,8 @@ export {
   ArrowBackIcon,
   CamScanIcon,
   PersonIcon,
+  MailIcon,
+  PhoneIcon,
+  LockIcon,
+  EyeIcon,
 };

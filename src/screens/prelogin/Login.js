@@ -5,13 +5,25 @@ import {Pressable, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import CustomButton from '../../components/CustomButton';
 import Leaves from '../../components/logos/Leaves';
-import {ArrowBackIcon, PersonIcon} from '../../components/icons/Icons';
+import {
+  ArrowBackIcon,
+  LockIcon,
+  PersonIcon,
+  EyeIcon,
+} from '../../components/icons/Icons';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
     email: '',
     phone: '',
+    password: '',
   });
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const handlePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <View style={styles.formContainer}>
@@ -30,52 +42,81 @@ const SignUp = ({navigation}) => {
           </Text>
         </View>
 
-        <View style={styles.groupWrapper}>
-          <View style={styles.textInputWrapper}>
-            <View style={styles.iconWrapper}>
-              <PersonIcon width={20} height={20} />
+        <View style={styles.inputWrapper}>
+          <View style={styles.groupWrapper}>
+            <View style={styles.textInputWrapper}>
+              <View style={styles.leftIconWrapper}>
+                <PersonIcon width={20} height={20} />
+              </View>
+              <TextInput
+                mode="outlined"
+                keyboardType="email-address"
+                placeholder="Enter email address"
+                value={formdata.name}
+                onChangeText={text => setFormData({...formdata, email: text})}
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+              />
             </View>
-            <TextInput
-              mode="outlined"
-              keyboardType="email-address"
-              placeholder="Enter email address"
-              value={formdata.name}
-              onChangeText={text => setFormData({...formdata, email: text})}
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
+            <Text
+              variant="labelLarge"
+              style={{
+                textAlign: 'center',
+                color: '#808A75',
+                fontSize: 16,
+                fontFamily: 'Gilroy-Medium',
+              }}>
+              or
+            </Text>
+            <View style={styles.textInputWrapper}>
+              <View style={styles.leftIconWrapper}>
+                <PersonIcon width={20} height={20} />
+              </View>
+              <TextInput
+                mode="outlined"
+                keyboardType="phone-pad"
+                placeholder="Enter phone number"
+                value={formdata.name}
+                onChangeText={text => setFormData({...formdata, phone: text})}
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+              />
+            </View>
           </View>
-          <Text
-            variant="labelLarge"
-            style={{
-              textAlign: 'center',
-              color: '#808A75',
-              marginVertical: 10,
-              fontSize: 16,
-              fontFamily: 'Gilroy-Medium',
-            }}>
-            or
-          </Text>
-
           <View style={styles.textInputWrapper}>
-            <View style={styles.iconWrapper}>
-              <PersonIcon width={20} height={20} />
+            <View style={styles.leftIconWrapper}>
+              <LockIcon width={20} height={20} />
             </View>
             <TextInput
               mode="outlined"
-              keyboardType="phone-pad"
-              placeholder="Enter phone number"
-              value={formdata.name}
-              onChangeText={text => setFormData({...formdata, phone: text})}
+              keyboardType={isPasswordVisible ? 'visible-password' : 'default'}
+              placeholder="Enter password"
+              secureTextEntry={!isPasswordVisible}
+              textContentType="newPassword"
+              value={formdata.password}
+              onChangeText={text => setFormData({...formdata, password: text})}
               style={styles.textFieldStyle}
               outlineStyle={{borderRadius: 12, borderWidth: 3}}
               outlineColor="#fff"
               activeOutlineColor="#6EAF1F"
               placeholderTextColor="#808A75"
             />
+            <TouchableOpacity
+              style={styles.rightIconWrapper}
+              onPress={handlePasswordVisibility}>
+              <EyeIcon
+                width={20}
+                height={20}
+                color={'#808A75'}
+                isCrossed={!isPasswordVisible}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -119,7 +160,7 @@ export default SignUp;
 const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
-    paddingVertical: 120,
+    paddingVertical: 75,
     paddingHorizontal: 24,
     color: '#151810',
     backgroundColor: '#fff',
@@ -136,7 +177,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'space-between',
-    paddingTop: 24,
     gap: 30,
   },
 
@@ -145,12 +185,16 @@ const styles = StyleSheet.create({
     gap: 15,
   },
 
-  iconWrapper: {
+  inputWrapper: {
+    gap: 20,
+  },
+  leftIconWrapper: {
     position: 'absolute',
     left: 20,
     zIndex: 1,
   },
   textInputWrapper: {
+    height: 64,
     justifyContent: 'center',
   },
   textFieldStyle: {
@@ -158,8 +202,13 @@ const styles = StyleSheet.create({
     height: 64,
     paddingLeft: 40,
   },
+  rightIconWrapper: {
+    position: 'absolute',
+    right: 20,
+    zIndex: 1,
+  },
   groupWrapper: {
-    marginBottom: 20,
+    gap: 10,
   },
   buttontextWrapper: {
     flexDirection: 'row',
