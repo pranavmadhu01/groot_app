@@ -15,7 +15,6 @@ import CustomButton from '../../components/CustomButton';
 import Leaves from '../../components/logos/Leaves';
 import {
   ArrowBackIcon,
-  PersonIcon,
   MailIcon,
   PhoneIcon,
   LockIcon,
