@@ -176,8 +176,6 @@ const styles = StyleSheet.create({
   formWrapper: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'space-between',
-    gap: 30,
   },
 
   topWrapper: {
