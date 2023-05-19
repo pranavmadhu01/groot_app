@@ -106,7 +106,9 @@ const SignUp = ({navigation}) => {
             </View>
           )}
 
-          <KeyboardAwareScrollView enableAutomaticScroll={true}>
+          <KeyboardAwareScrollView
+            enableAutomaticScroll={true}
+            showsVerticalScrollIndicator={false}>
             <View style={styles.inputWrapper}>
               <View style={styles.groupWrapper}>
                 <View style={styles.textInputWrapper}>
