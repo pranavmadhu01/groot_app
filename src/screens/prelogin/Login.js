@@ -1,23 +1,65 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import {useState} from 'react';
-import {Pressable, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {useState, useRef, useEffect} from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
 import CustomButton from '../../components/CustomButton';
 import Leaves from '../../components/logos/Leaves';
 import {
   ArrowBackIcon,
-  LockIcon,
   PersonIcon,
+  MailIcon,
+  PhoneIcon,
+  LockIcon,
   EyeIcon,
 } from '../../components/icons/Icons';
 
-const SignUp = ({navigation}) => {
+const Login = ({navigation}) => {
   const [formdata, setFormData] = useState({
     email: '',
     phone: '',
     password: '',
   });
+
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const emailRef = useRef();
+  const phoneRef = useRef();
+  const passwordRef = useRef();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -26,137 +68,180 @@ const SignUp = ({navigation}) => {
   };
 
   return (
-    <View style={styles.formContainer}>
-      <TouchableOpacity
-        style={styles.goBackBtn}
-        onPress={() => navigation.navigate('Landing Page')}>
-        <ArrowBackIcon width={32} height={32} color="black" />
-      </TouchableOpacity>
-      <View style={styles.formWrapper}>
-        <View style={styles.topWrapper}>
-          <Leaves width={60} height={60} />
-          <Text
-            variant="headlineMedium"
-            style={{fontFamily: 'Gilroy-SemiBold'}}>
-            Login
-          </Text>
-        </View>
-
-        <View style={styles.inputWrapper}>
-          <View style={styles.groupWrapper}>
-            <View style={styles.textInputWrapper}>
-              <View style={styles.leftIconWrapper}>
-                <PersonIcon width={20} height={20} />
-              </View>
-              <TextInput
-                mode="outlined"
-                keyboardType="email-address"
-                placeholder="Enter email address"
-                value={formdata.name}
-                onChangeText={text => setFormData({...formdata, email: text})}
-                style={styles.textFieldStyle}
-                outlineStyle={{borderRadius: 12, borderWidth: 3}}
-                outlineColor="#fff"
-                activeOutlineColor="#6EAF1F"
-                placeholderTextColor="#808A75"
-              />
-            </View>
-            <Text
-              variant="labelLarge"
-              style={{
-                textAlign: 'center',
-                color: '#808A75',
-                fontSize: 16,
-                fontFamily: 'Gilroy-Medium',
-              }}>
-              or
-            </Text>
-            <View style={styles.textInputWrapper}>
-              <View style={styles.leftIconWrapper}>
-                <PersonIcon width={20} height={20} />
-              </View>
-              <TextInput
-                mode="outlined"
-                keyboardType="phone-pad"
-                placeholder="Enter phone number"
-                value={formdata.name}
-                onChangeText={text => setFormData({...formdata, phone: text})}
-                style={styles.textFieldStyle}
-                outlineStyle={{borderRadius: 12, borderWidth: 3}}
-                outlineColor="#fff"
-                activeOutlineColor="#6EAF1F"
-                placeholderTextColor="#808A75"
-              />
-            </View>
-          </View>
-          <View style={styles.textInputWrapper}>
-            <View style={styles.leftIconWrapper}>
-              <LockIcon width={20} height={20} />
-            </View>
-            <TextInput
-              mode="outlined"
-              keyboardType={isPasswordVisible ? 'visible-password' : 'default'}
-              placeholder="Enter password"
-              secureTextEntry={!isPasswordVisible}
-              textContentType="newPassword"
-              value={formdata.password}
-              onChangeText={text => setFormData({...formdata, password: text})}
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
-            <TouchableOpacity
-              style={styles.rightIconWrapper}
-              onPress={handlePasswordVisibility}>
-              <EyeIcon
-                width={20}
-                height={20}
-                color={'#808A75'}
-                isCrossed={!isPasswordVisible}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.bottomWrapper}>
-          <CustomButton
-            title="Continue"
-            textColor="#fff"
-            buttonColor="#6EAF1F"
-            height={60}
-            isNavigator={true}
-            screenName={'Main Screen'}
-          />
-          <View style={styles.buttontextWrapper}>
-            <Text
-              variant="labelMedium"
-              style={{
-                color: 'black',
-                fontFamily: 'Gilroy-Medium',
-              }}>
-              Not registered yet?
-            </Text>
-            <Pressable onPress={() => navigation.navigate('Sign Up')}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.formContainer}>
+        <TouchableOpacity
+          style={styles.goBackBtn}
+          onPress={() => navigation.navigate('Landing Page')}>
+          <ArrowBackIcon width={32} height={32} color="black" />
+        </TouchableOpacity>
+        <View style={styles.formWrapper}>
+          {isKeyboardVisible ? (
+            <View style={styles.compactTopWrapper}>
+              <Leaves width={30} height={30} />
               <Text
-                style={{
-                  color: '#6EAF1F',
-                  fontFamily: 'Gilroy-SemiBold',
-                  marginLeft: 5,
-                }}
-                variant="labelMedium">
-                Sign Up
+                variant="headlineMedium"
+                style={{fontFamily: 'Gilroy-SemiBold'}}>
+                Login
               </Text>
-            </Pressable>
+            </View>
+          ) : (
+            <View style={styles.topWrapper}>
+              <Leaves width={60} height={60} />
+              <Text
+                variant="headlineMedium"
+                style={{fontFamily: 'Gilroy-SemiBold'}}>
+                Login
+              </Text>
+            </View>
+          )}
+
+          <KeyboardAwareScrollView
+            enableAutomaticScroll={true}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.inputWrapper}>
+              <View style={styles.groupWrapper}>
+                <View style={styles.textInputWrapper}>
+                  <View style={styles.leftIconWrapper}>
+                    <MailIcon width={20} height={20} />
+                  </View>
+                  <TextInput
+                    mode="outlined"
+                    keyboardType="email-address"
+                    placeholder="Enter email address"
+                    textContentType="emailAddress"
+                    autoCapitalize="none"
+                    value={formdata.email}
+                    onChangeText={text =>
+                      setFormData({...formdata, email: text})
+                    }
+                    style={styles.textFieldStyle}
+                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineColor="#fff"
+                    activeOutlineColor="#6EAF1F"
+                    placeholderTextColor="#808A75"
+                    ref={emailRef}
+                    returnKeyType="next"
+                    onSubmitEditing={() => {
+                      phoneRef.current.focus();
+                    }}
+                  />
+                </View>
+                <Text
+                  variant="labelLarge"
+                  style={{
+                    textAlign: 'center',
+                    color: '#808A75',
+                    fontSize: 16,
+                    fontFamily: 'Gilroy-Medium',
+                  }}>
+                  or
+                </Text>
+                <View style={styles.textInputWrapper}>
+                  <View style={styles.leftIconWrapper}>
+                    <PhoneIcon width={20} height={20} />
+                  </View>
+                  <TextInput
+                    mode="outlined"
+                    keyboardType="phone-pad"
+                    textContentType="telephoneNumber"
+                    placeholder="Enter phone number"
+                    value={formdata.phone}
+                    onChangeText={text =>
+                      setFormData({...formdata, phone: text})
+                    }
+                    style={styles.textFieldStyle}
+                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineColor="#fff"
+                    activeOutlineColor="#6EAF1F"
+                    placeholderTextColor="#808A75"
+                    ref={phoneRef}
+                    returnKeyType="next"
+                    onSubmitEditing={() => {
+                      passwordRef.current.focus();
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.textInputWrapper}>
+                <View style={styles.leftIconWrapper}>
+                  <LockIcon width={20} height={20} />
+                </View>
+                <TextInput
+                  mode="outlined"
+                  keyboardType={
+                    isPasswordVisible ? 'visible-password' : 'default'
+                  }
+                  placeholder="Enter password"
+                  secureTextEntry={!isPasswordVisible}
+                  textContentType="newPassword"
+                  value={formdata.password}
+                  onChangeText={text =>
+                    setFormData({...formdata, password: text})
+                  }
+                  style={styles.textFieldStyle}
+                  outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                  outlineColor="#fff"
+                  activeOutlineColor="#6EAF1F"
+                  placeholderTextColor="#808A75"
+                  ref={passwordRef}
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    confirmPasswordRef.current.focus();
+                  }}
+                />
+                <TouchableOpacity
+                  style={styles.rightIconWrapper}
+                  onPress={handlePasswordVisibility}>
+                  <EyeIcon
+                    width={20}
+                    height={20}
+                    color={'#808A75'}
+                    isCrossed={!isPasswordVisible}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </KeyboardAwareScrollView>
+
+          <View style={styles.bottomWrapper}>
+            <CustomButton
+              title="Continue"
+              textColor="#fff"
+              buttonColor="#6EAF1F"
+              height={60}
+              isNavigator={true}
+              screenName={'Main Screen'}
+            />
+            <View style={styles.buttontextWrapper}>
+              <Text
+                variant="labelMedium"
+                style={{
+                  color: 'black',
+                  fontFamily: 'Gilroy-Medium',
+                }}>
+                Not registered yet?
+              </Text>
+              <Pressable onPress={() => navigation.navigate('Sign Up')}>
+                <Text
+                  style={{
+                    color: '#6EAF1F',
+                    fontFamily: 'Gilroy-SemiBold',
+                    marginLeft: 5,
+                  }}
+                  variant="labelMedium">
+                  Sign Up
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
-export default SignUp;
+export default Login;
 const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
@@ -175,16 +260,28 @@ const styles = StyleSheet.create({
 
   formWrapper: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
   },
 
   topWrapper: {
     alignItems: 'center',
     gap: 15,
+    paddingBottom: 60,
+  },
+  compactTopWrapper: {
+    position: 'relative',
+    bottom: 40,
+    flexDirection: 'row',
+    gap: 10,
+    alignSelf: 'center',
+    paddingBottom: 0,
   },
 
   inputWrapper: {
-    gap: 20,
+    flex: 1,
+    paddingBottom: 15,
+    gap: 5,
   },
   leftIconWrapper: {
     position: 'absolute',
