@@ -3,7 +3,7 @@ import {LandingPage, Login, Signup} from '../../screens/prelogin';
 const Stack = createNativeStackNavigator();
 const PreloginStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Landing Page" component={LandingPage} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Sign Up" component={Signup} />
