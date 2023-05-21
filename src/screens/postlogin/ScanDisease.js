@@ -42,6 +42,7 @@ const ScanDisease = ({navigation}) => {
   const takePicture = async () => {
     if (camera != null) {
       const photo = await camera.current.takePhoto();
+      console.log(photo);
       setImageData(photo.path);
       console.log(photo.path);
       () => {
@@ -62,7 +63,7 @@ const ScanDisease = ({navigation}) => {
       <View style={styles.topBar}>
         <TouchableOpacity
           style={styles.goBackBtn}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.goBack()}>
           <ArrowBackIcon width={32} height={32} color="#fff" />
         </TouchableOpacity>
 

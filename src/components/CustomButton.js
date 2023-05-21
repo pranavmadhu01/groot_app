@@ -2,7 +2,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {useNavigation} from '@react-navigation/native';
 import {Button, Text} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
 
 const CustomButton = ({
   textColor,

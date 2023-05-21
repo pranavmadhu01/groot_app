@@ -263,7 +263,7 @@ const SignUp = ({navigation}) => {
               </View>
             </View>
           </KeyboardAwareScrollView>
-          
+
           <View style={styles.bottomWrapper}>
             <CustomButton
               title="Register"
