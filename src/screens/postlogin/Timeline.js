@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Text, ProgressBar} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import Custombutton from '../../components/CustomButton';
 
@@ -78,11 +78,37 @@ const Timeline = ({navigation}) => {
 
       <View style={styles.timelineWrapper}>
         <View style={{alignItems: 'center', gap: 15}}>
-          <Text variant="headlineMedium" style={{fontWeight: '800'}}>
+          <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 40}}>
             Timeline
           </Text>
         </View>
-        <View></View>
+
+        <View>
+          <View style={styles.progressTextWrapper}>
+            <Text style={{fontFamily: 'Gilroy-SemiBold', fontSize: 16}}>
+              Farming Progress
+            </Text>
+            <View>
+              <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 14}}>
+                50% Completed
+              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontFamily: 'Gilroy-SemiBold', fontSize: 14}}>
+                  Day 183/
+                </Text>
+                <Text style={{color: '#808A75'}}>365</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.progressBarWrapper}>
+            <ProgressBar
+              progress={0.5}
+              color="#6EAF1F"
+              style={styles.progressBar}
+            />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -138,5 +164,26 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     flexDirection: 'row',
     gap: 6,
+  },
+
+  progressTextWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    alignItems: 'flex-end',
+    paddingHorizontal: 15,
+  },
+  progressBarWrapper: {
+    height: 32,
+    borderColor: '#588C19',
+    borderWidth: 2,
+    justifyContent: 'center',
+    paddingHorizontal: 2,
+    borderRadius: 30,
+  },
+  progressBar: {
+    height: 24,
+    borderRadius: 30,
+    backgroundColor: 'transparent',
   },
 });
