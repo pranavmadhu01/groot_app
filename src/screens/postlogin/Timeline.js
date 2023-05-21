@@ -109,6 +109,28 @@ const Timeline = ({navigation}) => {
             />
           </View>
         </View>
+
+        <View style={styles.statsCardContainer}>
+          <View style={styles.statsCardBg}></View>
+          <View style={styles.statsCardWrapper}>
+            <View style={styles.statsCardTextWrapper}>
+              <Text style={styles.labelText}>Progress</Text>
+              <Text style={styles.value}>75%</Text>
+            </View>
+            <View style={styles.statsCardTextWrapper}>
+              <Text style={styles.labelText}>Days Left</Text>
+              <Text style={styles.value}>146</Text>
+            </View>
+            <View style={styles.statsCardTextWrapper}>
+              <Text style={styles.labelText}>Fertilizers Used</Text>
+              <Text style={styles.value}>24 kg</Text>
+            </View>
+            <View style={styles.statsCardTextWrapper}>
+              <Text style={styles.labelText}>Total Cost</Text>
+              <Text style={styles.value}>25.6 K</Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -185,5 +207,39 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 30,
     backgroundColor: 'transparent',
+  },
+
+  labelText: {
+    fontSize: 12,
+    fontFamily: 'Gilroy-Medium',
+  },
+  value: {
+    fontSize: 18,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+
+  statsCardContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statsCardBg: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    backgroundColor: '#6EAF1F',
+    opacity: 0.1,
+    borderRadius: 12,
+  },
+  statsCardWrapper: {
+    position: 'relative',
+    flexDirection: 'row',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    gap: 20,
+  },
+  statsCardTextWrapper: {
+    gap: 5,
   },
 });
