@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
+  Image,
 } from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 
@@ -16,6 +17,7 @@ import {
 } from '../../components/icons/Icons';
 import Leaves from '../../components/logos/Leaves';
 import {useIsFocused} from '@react-navigation/native';
+import {diseaseDetection} from '../../api';
 
 const vw = Dimensions.get('window').width;
 
@@ -42,12 +44,24 @@ const ScanDisease = ({navigation}) => {
   const takePicture = async () => {
     if (camera != null) {
       const photo = await camera.current.takePhoto();
-      console.log(photo);
-      setImageData(photo.path);
-      console.log(photo.path);
-      () => {
-        navigation.navigate('DiseaseInfo');
-      };
+      const formData = new FormData();
+      formData.append('image', {
+        uri: 'file://' + photo.path,
+        type: 'image/jpeg',
+        name: photo.path.split('/')[photo.path.split('/').length - 1],
+      });
+      await diseaseDetection(formData)
+        .then(response => {
+          if (response.data.success) {
+            navigation.navigate('DiseaseInfo', {
+              scanData: response.data.data,
+              image: response.data.uri,
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   };
 
