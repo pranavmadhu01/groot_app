@@ -28,14 +28,14 @@ const Stack = createNativeStackNavigator();
 const BottomNavScreen = ({navigation}) => (
   <View style={styles.Container}>
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="homescreen"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: styles.bottomNavWrapper,
       }}>
       <Tab.Screen
-        name="Home"
+        name="homescreen"
         component={Home}
         options={{
           tabBarIcon: ({focused}) => (
@@ -46,7 +46,7 @@ const BottomNavScreen = ({navigation}) => (
         }}
       />
       <Tab.Screen
-        name="Cost Estimator"
+        name="costestimatorscreen"
         component={CostEstimatorForm}
         options={{
           tabBarIcon: ({focused}) => (
@@ -57,7 +57,7 @@ const BottomNavScreen = ({navigation}) => (
         }}
       />
       <Tab.Screen
-        name="Add"
+        name="addfarmscreen"
         component={FarmForm}
         options={{
           tabBarIcon: ({focused}) => (
@@ -68,7 +68,7 @@ const BottomNavScreen = ({navigation}) => (
         }}
       />
       <Tab.Screen
-        name="Timeline"
+        name="timelinescreen"
         component={Timeline}
         options={{
           tabBarIcon: ({focused}) => (
@@ -79,7 +79,7 @@ const BottomNavScreen = ({navigation}) => (
         }}
       />
       <Tab.Screen
-        name="ScanDisease"
+        name="scandiseasescreen"
         component={Home}
         listeners={() => ({
           tabPress: e => {
@@ -107,7 +107,6 @@ const BottomNav = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="BottomNavScreen" component={BottomNavScreen} />
       <Stack.Screen name="ScanDisease" component={ScanDisease} />
-      <Stack.Screen name="DiseaseInfo" component={DiseaseInfo} />
     </Stack.Navigator>
   );
 };
