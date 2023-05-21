@@ -85,16 +85,16 @@ const Timeline = ({navigation}) => {
 
         <View>
           <View style={styles.progressTextWrapper}>
-            <Text style={{fontFamily: 'Gilroy-SemiBold', fontSize: 16}}>
+            <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 20}}>
               Farming Progress
             </Text>
-            <View>
+            <View style={{gap: 3}}>
               <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 14}}>
-                50% Completed
+                75% Completed
               </Text>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontFamily: 'Gilroy-SemiBold', fontSize: 14}}>
-                  Day 183/
+                  Day 219/
                 </Text>
                 <Text style={{color: '#808A75'}}>365</Text>
               </View>
@@ -103,7 +103,7 @@ const Timeline = ({navigation}) => {
 
           <View style={styles.progressBarWrapper}>
             <ProgressBar
-              progress={0.5}
+              progress={0.6}
               color="#6EAF1F"
               style={styles.progressBar}
             />
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   progressTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 5,
     alignItems: 'flex-end',
     paddingHorizontal: 15,
   },
