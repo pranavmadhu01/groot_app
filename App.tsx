@@ -25,7 +25,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Landing Page"
+        initialRouteName="preloginnavigation"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="preloginnavigation" component={PreloginStack} />
         <Stack.Screen name="Main Screen" component={BottomNav} />

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
 import {GreenRipples, RedRipples} from '../assets/images/images';
 
-const DiseaseCard = ({isDetected}) => {
+const DiseaseCard = ({isDetected, name, score}) => {
   return (
     <View style={styles.diseaseCard}>
       <Image source={isDetected ? RedRipples : GreenRipples} />
@@ -10,8 +10,8 @@ const DiseaseCard = ({isDetected}) => {
       <View style={styles.diseaseResult}>
         {isDetected ? (
           <>
-            <Text style={styles.diseaseDetected}>Disease Detected</Text>
-            <Text style={styles.diseaseName}>Anthracnose</Text>
+            <Text style={styles.diseaseDetected}>{score * 100}</Text>
+            <Text style={styles.diseaseName}>{name}</Text>
           </>
         ) : (
           <>
