@@ -364,6 +364,7 @@ const styles = StyleSheet.create({
   },
   groupWrapper: {
     gap: 5,
+    paddingBottom: 15,
   },
   buttontextWrapper: {
     flexDirection: 'row',

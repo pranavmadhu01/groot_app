@@ -1,8 +1,12 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
-import {Modal, Portal, Provider, Text} from 'react-native-paper';
+import {Modal, Portal, Provider, Text, Divider} from 'react-native-paper';
 import Leaves from '../../components/logos/Leaves';
-import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
+import {
+  NotificationIcon,
+  SettingsIcon,
+  SunWindIcon,
+} from '../../components/icons/Icons';
 import CustomButton from '../../components/CustomButton';
 import {NotificationModal} from '../../components/modals/Modals';
 
@@ -90,6 +94,44 @@ const Home = () => {
             </View>
           </ScrollView>
         </View>
+
+        <View style={{marginTop: 30}}>
+          <View style={styles.weatherCardBg}></View>
+
+          <View style={styles.weatherCardWrapper}>
+            <View style={styles.topPart}>
+              <Text style={{fontSize: 48, fontFamily: 'Gilroy-SemiBold'}}>
+                24°C
+              </Text>
+              <View>
+                <Text style={styles.labelText}>H: 32°C</Text>
+                <Text style={styles.labelText}>L: 21°C</Text>
+              </View>
+              <SunWindIcon width={75} height={75} color={'#151810'} />
+            </View>
+
+            <Divider />
+
+            <View style={styles.bottomPart}>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Humidity</Text>
+                <Text style={styles.value}>30%</Text>
+              </View>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Precipitation</Text>
+                <Text style={styles.value}>5.1ml</Text>
+              </View>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Pressure</Text>
+                <Text style={styles.value}>450hPa</Text>
+              </View>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Wind</Text>
+                <Text style={styles.value}>23m/s</Text>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </Provider>
   );
@@ -128,5 +170,42 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     flexDirection: 'row',
     gap: 6,
+  },
+
+  weatherCardWrapper: {
+    position: 'relative',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    gap: 20,
+  },
+  weatherCardBg: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    backgroundColor: '#6EAF1F',
+    opacity: 0.1,
+    borderRadius: 12,
+  },
+  topPart: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  labelText: {
+    fontSize: 12,
+    fontFamily: 'Gilroy-Medium',
+  },
+  value: {
+    fontSize: 14,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  bottomPart: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  bottomPartTextWrapper: {
+    gap: 5,
   },
 });

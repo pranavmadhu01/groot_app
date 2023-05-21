@@ -12,6 +12,7 @@ import MailIcon from "./MailIcon";
 import PhoneIcon from "./PhoneIcon";
 import LockIcon from "./LockIcon";
 import EyeIcon from "./EyeIcon";
+import SunWindIcon from "./SunWindIcon";
 
 export {
   HomeIcon,
@@ -28,4 +29,5 @@ export {
   PhoneIcon,
   LockIcon,
   EyeIcon,
+  SunWindIcon,
 };
