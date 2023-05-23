@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
   },
   timelineContainer: {
     flex: 1,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 108,
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     color: '#151810',

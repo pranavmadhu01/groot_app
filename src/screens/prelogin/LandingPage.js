@@ -1,10 +1,5 @@
-import {
-  Image,
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import React from 'react';
+import {ImageBackground, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {LandingPageBg} from '../../assets/images/images';
 import {CustomButton} from '../../components/buttons';
@@ -12,12 +7,9 @@ import {Leaves} from '../../components/logos';
 
 const LandingPage = ({navigation}) => {
   return (
-    <ImageBackground source={LandingPageBg} style={{flex: 1}}>
+    <ImageBackground source={LandingPageBg} style={styles.bgImage}>
       <View style={styles.landingPageWrapper}>
-        <View
-          style={{
-            alignItems: 'flex-end',
-          }}>
+        <View style={styles.leavesLogoWrapper}>
           <Leaves width={60} height={60} hasBorder={true} />
         </View>
         <View style={styles.textWrapper}>
@@ -38,22 +30,11 @@ const LandingPage = ({navigation}) => {
             screenName={'Sign Up'}
           />
           <View style={styles.buttontextWrapper}>
-            <Text
-              variant="labelMedium"
-              style={{
-                color: 'white',
-                fontFamily: 'Gilroy-Medium',
-              }}>
+            <Text variant="labelMedium" style={styles.queryStyle}>
               Already registered?
             </Text>
             <Pressable onPress={() => navigation.navigate('Login')}>
-              <Text
-                style={{
-                  color: '#6EAF1F',
-                  fontFamily: 'Gilroy-SemiBold',
-                  marginLeft: 5,
-                }}
-                variant="labelMedium">
+              <Text style={styles.queryLink} variant="labelMedium">
                 Login
               </Text>
             </Pressable>
@@ -73,6 +54,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
+
+  bgImage: {flex: 1},
+  leavesLogoWrapper: {alignItems: 'flex-end'},
 
   textWrapper: {
     position: 'relative',
@@ -96,5 +80,11 @@ const styles = StyleSheet.create({
   buttontextWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  queryStyle: {color: 'white', fontFamily: 'Gilroy-Medium'},
+  queryLink: {
+    color: '#6EAF1F',
+    fontFamily: 'Gilroy-SemiBold',
+    marginLeft: 5,
   },
 });
