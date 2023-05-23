@@ -1,6 +1,6 @@
 import React from 'react';
-import DiseaseCard from '../../components/DiseaseCard';
-import DiseaseDetails from '../../components/DiseaseDetails';
+import DiseaseCard from '../../components/cards/DiseaseCard';
+
 const {View, Image, StyleSheet, Dimensions} = require('react-native');
 
 const DiseaseInfo = ({route, navigation}) => {

@@ -5,6 +5,7 @@ import FarmForm from './FarmForm';
 import Home from './Home';
 import Timeline from './Timeline';
 import ScanDisease from './ScanDisease';
+import {StyleSheet} from 'react-native';
 
 export {
   AddFarm,
@@ -14,4 +15,23 @@ export {
   Home,
   Timeline,
   ScanDisease,
+  mainStyles,
 };
+
+const mainStyles = StyleSheet.create({
+  titleTextWrapper: {
+    alignItems: 'center',
+    gap: 15,
+  },
+  titleText: {
+    fontFamily: 'Gilroy-Bold',
+    fontSize: 40,
+  },
+  stickyHeader: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingBottom: 24,
+    elevation: 0,
+    zIndex: 2,
+  },
+});

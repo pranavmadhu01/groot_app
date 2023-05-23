@@ -17,7 +17,7 @@ const App = () => {
       SplashScreen.hide();
     };
 
-    const timeout = setTimeout(hideSplashScreen, 0);
+    const timeout = setTimeout(hideSplashScreen, 1000);
 
     return () => clearTimeout(timeout);
   }, []);

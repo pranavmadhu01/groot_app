@@ -1,13 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
-import CustomButton from '../../components/CustomButton';
+import {CustomButton} from '../../components/buttons';
 
-import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
-import Leaves from '../../components/logos/Leaves';
+import {NotificationIcon, SettingsIcon} from '../../components/icons';
+import {Leaves} from '../../components/logos';
+import {FormTitleWrapper} from '../../components/elements';
 
 const FarmForm = () => {
   const [formdata, setFormData] = useState({
@@ -40,12 +39,8 @@ const FarmForm = () => {
         </View>
       </View>
       <View style={styles.farmFormWrapper}>
-        <View style={{alignItems: 'center', gap: 15}}>
-          <Leaves width={60} height={60} />
-          <Text variant="headlineMedium" style={{fontWeight: '800'}}>
-            Create Farm
-          </Text>
-        </View>
+        <FormTitleWrapper title={'Create Farm'} isCompact={false} />
+
         <View>
           <View style={styles.groupWrapper}>
             <TextInput

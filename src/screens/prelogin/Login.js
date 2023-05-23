@@ -11,15 +11,16 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
-import CustomButton from '../../components/CustomButton';
-import Leaves from '../../components/logos/Leaves';
+import {CustomButton} from '../../components/buttons';
+import {Leaves} from '../../components/logos';
 import {
   ArrowBackIcon,
   MailIcon,
   PhoneIcon,
   LockIcon,
   EyeIcon,
-} from '../../components/icons/Icons';
+} from '../../components/icons';
+import {FormTitleWrapper} from '../../components/elements';
 
 const Login = ({navigation}) => {
   const [formdata, setFormData] = useState({
@@ -76,23 +77,9 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
         <View style={styles.formWrapper}>
           {isKeyboardVisible ? (
-            <View style={styles.compactTopWrapper}>
-              <Leaves width={30} height={30} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Login
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Login'} isCompact={true} />
           ) : (
-            <View style={styles.topWrapper}>
-              <Leaves width={60} height={60} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Login
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Login'} isCompact={false} />
           )}
 
           <KeyboardAwareScrollView
@@ -267,14 +254,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 15,
     paddingBottom: 60,
-  },
-  compactTopWrapper: {
-    position: 'relative',
-    bottom: 40,
-    flexDirection: 'row',
-    gap: 10,
-    alignSelf: 'center',
-    paddingBottom: 0,
   },
 
   inputWrapper: {

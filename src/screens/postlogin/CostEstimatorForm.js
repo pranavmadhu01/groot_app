@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
-import CustomButton from '../../components/CustomButton';
+import {CustomButton} from '../../components/buttons';
 
-import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
-import Leaves from '../../components/logos/Leaves';
+import {NotificationIcon, SettingsIcon} from '../../components/icons';
+import {Leaves} from '../../components/logos';
 
 const vw = Dimensions.get('window').width;
 
@@ -109,8 +109,8 @@ const CostEstimatorForm = ({navigation}) => {
       </View>
 
       <View style={styles.costFormWrapper}>
-        <View style={{alignItems: 'center', gap: 15}}>
-          <Text variant="headlineMedium" style={{fontWeight: '800'}}>
+        <View style={styles.costEstimatorTextWrapper}>
+          <Text variant="headlineMedium" style={styles.titleText}>
             Cost Estimator
           </Text>
         </View>
@@ -185,6 +185,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: 30,
     gap: 30,
+  },
+  costEstimatorTextWrapper: {
+    alignItems: 'center',
+    gap: 15,
   },
 
   textFieldStyle: {

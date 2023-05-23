@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
-import CustomButton from '../../components/CustomButton';
-import Leaves from '../../components/logos/Leaves';
+import {CustomButton} from '../../components/buttons';
+import {Leaves} from '../../components/logos';
 import {
   ArrowBackIcon,
   PersonIcon,
@@ -20,7 +20,7 @@ import {
   PhoneIcon,
   LockIcon,
   EyeIcon,
-} from '../../components/icons/Icons';
+} from '../../components/icons';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({

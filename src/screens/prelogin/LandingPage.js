@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import {LandingPageBg} from '../../assets/images/images';
-import Custombutton from '../../components/CustomButton';
-import Leaves from '../../components/logos/Leaves';
+import {CustomButton} from '../../components/buttons';
+import {Leaves} from '../../components/logos';
 
 const LandingPage = ({navigation}) => {
   return (
@@ -29,7 +29,7 @@ const LandingPage = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.bottomWrapper}>
-          <Custombutton
+          <CustomButton
             title="Get Started"
             textColor="#fff"
             buttonColor="#6EAF1F"

@@ -10,7 +10,7 @@ import {
   Timeline,
   ScanDisease,
   DiseaseInfo,
-} from '../screens/postlogin/PostLogin';
+} from '../screens/postlogin';
 
 import {
   HomeIcon,
@@ -18,9 +18,9 @@ import {
   AddIcon,
   TimelineIcon,
   ScanIcon,
-} from '../components/icons/Icons';
+} from '../components/icons';
 
-import NavbarLogo from '../components/logos/NavbarLogo';
+import {NavbarLogo} from '../components/logos';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

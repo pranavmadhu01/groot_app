@@ -1,21 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
   Dimensions,
-  Image,
 } from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {
-  ScanIcon,
-  ArrowBackIcon,
-  CamScanIcon,
-} from '../../components/icons/Icons';
-import Leaves from '../../components/logos/Leaves';
+import {ScanIcon, ArrowBackIcon, CamScanIcon} from '../../components/icons';
+import {Leaves} from '../../components/logos';
 import {useIsFocused} from '@react-navigation/native';
 import {diseaseDetection} from '../../api';
 
@@ -28,7 +23,6 @@ const ScanDisease = ({navigation}) => {
   const isFocused = useIsFocused();
 
   const camera = useRef(null);
-  const [imageData, setImageData] = useState('');
 
   useEffect(() => {
     checkPermission();
@@ -39,7 +33,9 @@ const ScanDisease = ({navigation}) => {
     console.log(newCameraPermission);
   };
 
-  if (device == null) return <ActivityIndicator />;
+  if (device == null) {
+    return <ActivityIndicator />;
+  }
 
   const takePicture = async () => {
     if (camera != null) {
