@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -24,6 +24,8 @@ const ScanDisease = ({navigation}) => {
 
   const camera = useRef(null);
 
+  const [cameraClicked, setCameraClicked] = useState(false);
+
   useEffect(() => {
     checkPermission();
   }, []);
@@ -39,6 +41,7 @@ const ScanDisease = ({navigation}) => {
 
   const takePicture = async () => {
     if (camera != null) {
+      setCameraClicked(true);
       const photo = await camera.current.takePhoto();
       const formData = new FormData();
       formData.append('image', {
@@ -53,10 +56,12 @@ const ScanDisease = ({navigation}) => {
               scanData: response.data.data,
               image: response.data.uri,
             });
+            setCameraClicked(false);
           }
         })
         .catch(error => {
           console.log(error);
+          setCameraClicked(false);
         });
     }
   };
@@ -88,16 +93,24 @@ const ScanDisease = ({navigation}) => {
       </View>
 
       <View style={styles.bottomWrapper}>
-        <Text style={styles.bottomText}>Scan to search for diseases</Text>
+        <Text style={styles.bottomText}>
+          {!cameraClicked
+            ? 'Scan to search for diseases'
+            : 'Processing your image'}
+        </Text>
 
         <View style={styles.captureBtnWrapper}>
-          <TouchableOpacity
-            style={styles.captureBtn}
-            onPress={() => takePicture()}>
-            <View style={styles.captureBtnIcon}>
-              <ScanIcon width={24} height={24} fillColor={'#fff'} />
-            </View>
-          </TouchableOpacity>
+          {!cameraClicked ? (
+            <TouchableOpacity
+              style={styles.captureBtn}
+              onPress={() => takePicture()}>
+              <View style={styles.captureBtnIcon}>
+                <ScanIcon width={24} height={24} fillColor={'#fff'} />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <ActivityIndicator color="green" />
+          )}
         </View>
       </View>
     </View>
@@ -149,6 +162,7 @@ const styles = StyleSheet.create({
 
   bottomWrapper: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomText: {
     color: 'white',
