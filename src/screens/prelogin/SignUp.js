@@ -1,6 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
-import {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -11,8 +9,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
-import CustomButton from '../../components/CustomButton';
-import Leaves from '../../components/logos/Leaves';
+import {CustomButton} from '../../components/buttons';
 import {
   ArrowBackIcon,
   PersonIcon,
@@ -20,7 +17,8 @@ import {
   PhoneIcon,
   LockIcon,
   EyeIcon,
-} from '../../components/icons/Icons';
+} from '../../components/icons';
+import {FormTitleWrapper} from '../../components/elements';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
@@ -30,7 +28,6 @@ const SignUp = ({navigation}) => {
     password: '',
     confirmPassword: '',
   });
-
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -40,7 +37,6 @@ const SignUp = ({navigation}) => {
         setIsKeyboardVisible(true);
       },
     );
-
     return () => {
       keyboardDidShowListener.remove();
     };
@@ -53,7 +49,6 @@ const SignUp = ({navigation}) => {
         setIsKeyboardVisible(false);
       },
     );
-
     return () => {
       keyboardDidHideListener.remove();
     };
@@ -87,23 +82,9 @@ const SignUp = ({navigation}) => {
         </TouchableOpacity>
         <View style={styles.formWrapper}>
           {isKeyboardVisible ? (
-            <View style={styles.compactTopWrapper}>
-              <Leaves width={30} height={30} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Sign Up
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Sign Up'} isCompact={true} />
           ) : (
-            <View style={styles.topWrapper}>
-              <Leaves width={60} height={60} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Sign Up
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Sign Up'} isCompact={false} />
           )}
 
           <KeyboardAwareScrollView
@@ -126,7 +107,7 @@ const SignUp = ({navigation}) => {
                       setFormData({...formdata, name: text})
                     }
                     style={styles.textFieldStyle}
-                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineStyle={styles.textInputOutlineStyle}
                     outlineColor="#fff"
                     activeOutlineColor="#6EAF1F"
                     placeholderTextColor="#808A75"
@@ -152,7 +133,7 @@ const SignUp = ({navigation}) => {
                       setFormData({...formdata, email: text})
                     }
                     style={styles.textFieldStyle}
-                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineStyle={styles.textInputOutlineStyle}
                     outlineColor="#fff"
                     activeOutlineColor="#6EAF1F"
                     placeholderTextColor="#808A75"
@@ -177,7 +158,7 @@ const SignUp = ({navigation}) => {
                       setFormData({...formdata, phone: text})
                     }
                     style={styles.textFieldStyle}
-                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineStyle={styles.textInputOutlineStyle}
                     outlineColor="#fff"
                     activeOutlineColor="#6EAF1F"
                     placeholderTextColor="#808A75"
@@ -206,7 +187,7 @@ const SignUp = ({navigation}) => {
                     setFormData({...formdata, password: text})
                   }
                   style={styles.textFieldStyle}
-                  outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                  outlineStyle={styles.textInputOutlineStyle}
                   outlineColor="#fff"
                   activeOutlineColor="#6EAF1F"
                   placeholderTextColor="#808A75"
@@ -243,7 +224,7 @@ const SignUp = ({navigation}) => {
                     setFormData({...formdata, confirmPassword: text})
                   }
                   style={styles.textFieldStyle}
-                  outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                  outlineStyle={styles.textInputOutlineStyle}
                   outlineColor="#fff"
                   activeOutlineColor="#6EAF1F"
                   placeholderTextColor="#808A75"
@@ -273,23 +254,12 @@ const SignUp = ({navigation}) => {
               isNavigator={true}
               screenName={'Login'}
             />
-            <View style={styles.buttontextWrapper}>
-              <Text
-                variant="labelMedium"
-                style={{
-                  color: 'black',
-                  fontFamily: 'Gilroy-Medium',
-                }}>
+            <View style={styles.buttonTextWrapper}>
+              <Text variant="labelMedium" style={styles.queryStyle}>
                 Already registered?
               </Text>
               <Pressable onPress={() => navigation.navigate('Login')}>
-                <Text
-                  style={{
-                    color: '#6EAF1F',
-                    fontFamily: 'Gilroy-SemiBold',
-                    marginLeft: 5,
-                  }}
-                  variant="labelMedium">
+                <Text style={styles.queryLink} variant="labelMedium">
                   Login
                 </Text>
               </Pressable>
@@ -357,6 +327,9 @@ const styles = StyleSheet.create({
     height: 64,
     paddingLeft: 40,
   },
+
+  textInputOutlineStyle: {borderRadius: 12, borderWidth: 3},
+
   rightIconWrapper: {
     position: 'absolute',
     right: 20,
@@ -375,8 +348,14 @@ const styles = StyleSheet.create({
   bottomWrapper: {
     gap: 20,
   },
-  buttontextWrapper: {
+  buttonTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  queryStyle: {color: 'black', fontFamily: 'Gilroy-Medium'},
+  queryLink: {
+    color: '#6EAF1F',
+    fontFamily: 'Gilroy-SemiBold',
+    marginLeft: 5,
   },
 });

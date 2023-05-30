@@ -1,11 +1,13 @@
-import {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import {Text, ProgressBar} from 'react-native-paper';
-import Geolocation from '@react-native-community/geolocation';
-import Custombutton from '../../components/CustomButton';
+import {CustomButton} from '../../components/buttons';
 
-import {NotificationIcon, SettingsIcon} from '../../components/icons/Icons';
-import Leaves from '../../components/logos/Leaves';
+import {NotificationIcon, SettingsIcon} from '../../components/icons';
+import {Leaves} from '../../components/logos';
+import {mainStyles} from '.';
+import {TimelineCard} from '../../components/cards';
+import {TimelineCardStack} from '../../components/elements';
 
 const vw = Dimensions.get('window').width;
 
@@ -26,7 +28,7 @@ const Timeline = ({navigation}) => {
       <View style={styles.farmBar}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.farms}>
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -36,7 +38,7 @@ const Timeline = ({navigation}) => {
               alignSelf={'center'}
               margin={(0, 6, 0, 0)}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -45,7 +47,7 @@ const Timeline = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -54,7 +56,7 @@ const Timeline = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#fff'}
               textColor={'#000'}
               title={'Grape Farm'}
@@ -63,7 +65,7 @@ const Timeline = ({navigation}) => {
               borderRadius={50}
               alignSelf={'center'}
             />
-            <Custombutton
+            <CustomButton
               buttonColor={'#6EAF1F'}
               textColor={'#000'}
               title={'+'}
@@ -77,38 +79,77 @@ const Timeline = ({navigation}) => {
       </View>
 
       <View style={styles.timelineWrapper}>
-        <View style={{alignItems: 'center', gap: 15}}>
-          <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 40}}>
-            Timeline
-          </Text>
-        </View>
-
-        <View>
-          <View style={styles.progressTextWrapper}>
-            <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 20}}>
-              Farming Progress
-            </Text>
-            <View style={{gap: 3}}>
-              <Text style={{fontFamily: 'Gilroy-Bold', fontSize: 14}}>
-                75% Completed
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontFamily: 'Gilroy-SemiBold', fontSize: 14}}>
-                  Day 219/
-                </Text>
-                <Text style={{color: '#808A75'}}>365</Text>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.timelineContentWrapper}
+          stickyHeaderIndices={[0]}>
+          <View style={mainStyles.stickyHeader}>
+            <Text style={mainStyles.titleText}>Timeline</Text>
+          </View>
+          <View>
+            <View style={styles.progressTextWrapper}>
+              <Text style={styles.farmingProgressText}>Farming Progress</Text>
+              <View style={styles.progressDetailsWrapper}>
+                <Text style={styles.progressPercentText}>75% Completed</Text>
+                <View style={styles.daysTextWrapper}>
+                  <Text style={styles.completedDaysText}>Day 219/</Text>
+                  <Text style={styles.totalDaysText}>365</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.progressBarWrapper}>
+              <ProgressBar
+                progress={0.6}
+                color="#6EAF1F"
+                style={styles.progressBar}
+              />
+            </View>
+          </View>
+          <View style={styles.statsCardContainer}>
+            <View style={styles.statsCardBg} />
+            <View style={styles.statsCardWrapper}>
+              <View style={styles.statsCardTextWrapper}>
+                <Text style={styles.labelText}>Progress</Text>
+                <Text style={styles.value}>75%</Text>
+              </View>
+              <View style={styles.statsCardTextWrapper}>
+                <Text style={styles.labelText}>Days Left</Text>
+                <Text style={styles.value}>146</Text>
+              </View>
+              <View style={styles.statsCardTextWrapper}>
+                <Text style={styles.labelText}>Fertilizers Used</Text>
+                <Text style={styles.value}>24 kg</Text>
+              </View>
+              <View style={styles.statsCardTextWrapper}>
+                <Text style={styles.labelText}>Total Cost</Text>
+                <Text style={styles.value}>25.6 K</Text>
               </View>
             </View>
           </View>
-
-          <View style={styles.progressBarWrapper}>
-            <ProgressBar
-              progress={0.6}
-              color="#6EAF1F"
-              style={styles.progressBar}
+          <View style={styles.timelineStackWrapper}>
+            <TimelineCardStack
+              startDate={'23 JAN'}
+              endDate={'23 MAY'}
+              year={2023}
+              title={'Title'}
+              description={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
+              }
+              stackLevel={2}
             />
           </View>
-        </View>
+          <View style={styles.timelineWrapper}>
+            <TimelineCard
+              startDate={'23 JAN'}
+              endDate={'23 MAY'}
+              year={2023}
+              title={'Title'}
+              description={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
+              }
+            />
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -117,9 +158,24 @@ const Timeline = ({navigation}) => {
 export default Timeline;
 
 const styles = StyleSheet.create({
+  timelineCardContainer: {
+    height: 312,
+    padding: '5%',
+  },
+  timelineCardWrapperCard: {
+    height: 96,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    elevation: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: (28, 32),
+    gap: 12,
+  },
   timelineContainer: {
     flex: 1,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 108,
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     color: '#151810',
@@ -127,7 +183,11 @@ const styles = StyleSheet.create({
   timelineWrapper: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 30,
+    paddingTop: 0,
+    gap: 30,
+  },
+  timelineContentWrapper: {
+    paddingTop: 45,
     gap: 30,
   },
 
@@ -155,16 +215,8 @@ const styles = StyleSheet.create({
     color: '#375C0A',
   },
 
-  farmBar: {
-    marginBottom: 16,
-    width: vw,
-    alignSelf: 'center',
-  },
-  farms: {
-    paddingLeft: 24,
-    flexDirection: 'row',
-    gap: 6,
-  },
+  farmBar: {marginBottom: 16, width: vw, alignSelf: 'center'},
+  farms: {paddingLeft: 24, flexDirection: 'row', gap: 6},
 
   progressTextWrapper: {
     flexDirection: 'row',
@@ -173,6 +225,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 15,
   },
+
+  farmingProgressText: {fontFamily: 'Gilroy-Bold', fontSize: 20},
+  progressDetailsWrapper: {gap: 3},
+  progressPercentText: {fontFamily: 'Gilroy-Bold', fontSize: 14},
+  daysTextWrapper: {flexDirection: 'row'},
+  completedDaysText: {fontFamily: 'Gilroy-SemiBold', fontSize: 14},
+  totalDaysText: {color: '#808A75'},
+
   progressBarWrapper: {
     height: 32,
     borderColor: '#588C19',
@@ -185,5 +245,46 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 30,
     backgroundColor: 'transparent',
+  },
+
+  labelText: {
+    fontSize: 12,
+    fontFamily: 'Gilroy-Medium',
+  },
+  value: {
+    fontSize: 18,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+
+  statsCardContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statsCardBg: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    backgroundColor: '#6EAF1F',
+    opacity: 0.1,
+    borderRadius: 12,
+  },
+  statsCardWrapper: {
+    position: 'relative',
+    flexDirection: 'row',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    gap: 20,
+  },
+  statsCardTextWrapper: {
+    gap: 5,
+  },
+
+  timelineStackWrapper: {
+    marginVertical: 24,
+  },
+  timelineFlowWrapper: {
+    alignItems: 'flex-end',
   },
 });

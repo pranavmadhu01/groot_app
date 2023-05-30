@@ -1,5 +1,6 @@
-import {Image, StyleSheet, View} from 'react-native';
-import Leaves from '../../components/logos/Leaves';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Leaves} from '../../components/logos';
 
 const Opener = () => {
   return (

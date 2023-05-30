@@ -6,9 +6,9 @@ import {
   NotificationIcon,
   SettingsIcon,
   SunWindIcon,
-} from '../../components/icons/Icons';
-import CustomButton from '../../components/CustomButton';
-import {NotificationModal} from '../../components/modals/Modals';
+} from '../../components/icons';
+import {CustomButton} from '../../components/buttons';
+import {NotificationModal} from '../../components/modals';
 
 const vw = Dimensions.get('window').width;
 
@@ -34,13 +34,11 @@ const Home = () => {
           </View>
         </View>
 
-        <View style={{flexDirection: 'row', gap: 5, marginVertical: 5}}>
-          <Text style={{fontWeight: 100, fontSize: 28}}>Hey</Text>
-          <Text style={{fontWeight: 900, fontSize: 28}}>Groot</Text>
+        <View style={styles.welcomeTextWrapper}>
+          <Text style={styles.heyText}>Hey</Text>
+          <Text style={styles.nameText}>Groot</Text>
         </View>
-        <Text style={{fontWeight: 100, fontSize: 18}}>
-          Your farms are all set!
-        </Text>
+        <Text style={styles.farmsReadyMessage}>Your farms are all set!</Text>
 
         <View style={styles.farmBar}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -95,14 +93,12 @@ const Home = () => {
           </ScrollView>
         </View>
 
-        <View style={{marginTop: 30}}>
-          <View style={styles.weatherCardBg}></View>
+        <View style={styles.weatherCardContainer}>
+          <View style={styles.weatherCardBg} />
 
           <View style={styles.weatherCardWrapper}>
             <View style={styles.topPart}>
-              <Text style={{fontSize: 48, fontFamily: 'Gilroy-SemiBold'}}>
-                24°C
-              </Text>
+              <Text style={styles.temperatureText}>24°C</Text>
               <View>
                 <Text style={styles.labelText}>H: 32°C</Text>
                 <Text style={styles.labelText}>L: 21°C</Text>
@@ -161,6 +157,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  welcomeTextWrapper: {flexDirection: 'row', gap: 5, marginVertical: 5},
+  heyText: {fontWeight: 100, fontSize: 28},
+  nameText: {fontWeight: 900, fontSize: 28},
+  farmsReadyMessage: {fontWeight: 100, fontSize: 18},
+
   farmBar: {
     marginVertical: 16,
     width: vw,
@@ -172,12 +173,14 @@ const styles = StyleSheet.create({
     gap: 6,
   },
 
+  weatherCardContainer: {fontWeight: 100, fontSize: 18},
   weatherCardWrapper: {
     position: 'relative',
     paddingHorizontal: 24,
     paddingVertical: 24,
     gap: 20,
   },
+  temperatureText: {fontSize: 48, fontFamily: 'Gilroy-SemiBold'},
   weatherCardBg: {
     position: 'absolute',
     width: '100%',

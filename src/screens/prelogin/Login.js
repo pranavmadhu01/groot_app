@@ -1,6 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
-import {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -11,15 +9,15 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
-import CustomButton from '../../components/CustomButton';
-import Leaves from '../../components/logos/Leaves';
+import {CustomButton} from '../../components/buttons';
 import {
   ArrowBackIcon,
   MailIcon,
   PhoneIcon,
   LockIcon,
   EyeIcon,
-} from '../../components/icons/Icons';
+} from '../../components/icons';
+import {FormTitleWrapper} from '../../components/elements';
 
 const Login = ({navigation}) => {
   const [formdata, setFormData] = useState({
@@ -76,23 +74,9 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
         <View style={styles.formWrapper}>
           {isKeyboardVisible ? (
-            <View style={styles.compactTopWrapper}>
-              <Leaves width={30} height={30} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Login
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Login'} isCompact={true} />
           ) : (
-            <View style={styles.topWrapper}>
-              <Leaves width={60} height={60} />
-              <Text
-                variant="headlineMedium"
-                style={{fontFamily: 'Gilroy-SemiBold'}}>
-                Login
-              </Text>
-            </View>
+            <FormTitleWrapper title={'Login'} isCompact={false} />
           )}
 
           <KeyboardAwareScrollView
@@ -115,7 +99,7 @@ const Login = ({navigation}) => {
                       setFormData({...formdata, email: text})
                     }
                     style={styles.textFieldStyle}
-                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineStyle={styles.textInputOutlineStyle}
                     outlineColor="#fff"
                     activeOutlineColor="#6EAF1F"
                     placeholderTextColor="#808A75"
@@ -126,14 +110,7 @@ const Login = ({navigation}) => {
                     }}
                   />
                 </View>
-                <Text
-                  variant="labelLarge"
-                  style={{
-                    textAlign: 'center',
-                    color: '#808A75',
-                    fontSize: 16,
-                    fontFamily: 'Gilroy-Medium',
-                  }}>
+                <Text variant="labelLarge" style={styles.orStyle}>
                   or
                 </Text>
                 <View style={styles.textInputWrapper}>
@@ -150,7 +127,7 @@ const Login = ({navigation}) => {
                       setFormData({...formdata, phone: text})
                     }
                     style={styles.textFieldStyle}
-                    outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                    outlineStyle={styles.textInputOutlineStyle}
                     outlineColor="#fff"
                     activeOutlineColor="#6EAF1F"
                     placeholderTextColor="#808A75"
@@ -179,15 +156,12 @@ const Login = ({navigation}) => {
                     setFormData({...formdata, password: text})
                   }
                   style={styles.textFieldStyle}
-                  outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                  outlineStyle={styles.textInputOutlineStyle}
                   outlineColor="#fff"
                   activeOutlineColor="#6EAF1F"
                   placeholderTextColor="#808A75"
                   ref={passwordRef}
-                  returnKeyType="next"
-                  onSubmitEditing={() => {
-                    confirmPasswordRef.current.focus();
-                  }}
+                  returnKeyType="done"
                 />
                 <TouchableOpacity
                   style={styles.rightIconWrapper}
@@ -212,23 +186,12 @@ const Login = ({navigation}) => {
               isNavigator={true}
               screenName={'Main Screen'}
             />
-            <View style={styles.buttontextWrapper}>
-              <Text
-                variant="labelMedium"
-                style={{
-                  color: 'black',
-                  fontFamily: 'Gilroy-Medium',
-                }}>
+            <View style={styles.buttonTextWrapper}>
+              <Text variant="labelMedium" style={styles.queryStyle}>
                 Not registered yet?
               </Text>
               <Pressable onPress={() => navigation.navigate('Sign Up')}>
-                <Text
-                  style={{
-                    color: '#6EAF1F',
-                    fontFamily: 'Gilroy-SemiBold',
-                    marginLeft: 5,
-                  }}
-                  variant="labelMedium">
+                <Text style={styles.queryLink} variant="labelMedium">
                   Sign Up
                 </Text>
               </Pressable>
@@ -268,14 +231,6 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 60,
   },
-  compactTopWrapper: {
-    position: 'relative',
-    bottom: 40,
-    flexDirection: 'row',
-    gap: 10,
-    alignSelf: 'center',
-    paddingBottom: 0,
-  },
 
   inputWrapper: {
     flex: 1,
@@ -296,6 +251,15 @@ const styles = StyleSheet.create({
     height: 64,
     paddingLeft: 40,
   },
+
+  textInputOutlineStyle: {borderRadius: 12, borderWidth: 3},
+  orStyle: {
+    textAlign: 'center',
+    color: '#808A75',
+    fontSize: 16,
+    fontFamily: 'Gilroy-Medium',
+  },
+
   rightIconWrapper: {
     position: 'absolute',
     right: 20,
@@ -313,8 +277,14 @@ const styles = StyleSheet.create({
   bottomWrapper: {
     gap: 20,
   },
-  buttontextWrapper: {
+  buttonTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  queryStyle: {color: 'black', fontFamily: 'Gilroy-Medium'},
+  queryLink: {
+    color: '#6EAF1F',
+    fontFamily: 'Gilroy-SemiBold',
+    marginLeft: 5,
   },
 });

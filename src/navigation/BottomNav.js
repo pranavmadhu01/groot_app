@@ -10,7 +10,7 @@ import {
   Timeline,
   ScanDisease,
   DiseaseInfo,
-} from '../screens/postlogin/PostLogin';
+} from '../screens/postlogin';
 
 import {
   HomeIcon,
@@ -18,87 +18,80 @@ import {
   AddIcon,
   TimelineIcon,
   ScanIcon,
-} from '../components/icons/Icons';
+} from '../components/icons';
 
-import NavbarLogo from '../components/logos/NavbarLogo';
+import {NavbarLogo} from '../components/logos';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const BottomNavScreen = ({navigation}) => (
-  <View style={styles.Container}>
-    <Tab.Navigator
-      initialRouteName="homescreen"
-      screenOptions={{
-        tabBarShowLabel: false,
-        headerShown: false,
-        tabBarStyle: styles.bottomNavWrapper,
-      }}>
-      <Tab.Screen
-        name="homescreen"
-        component={Home}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View>
+  <View style={styles.bottomNavContainer}>
+    <View style={styles.Container}>
+      <Tab.Navigator
+        initialRouteName="homescreen"
+        screenOptions={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarStyle: styles.bottomNavWrapper,
+        }}>
+        <Tab.Screen
+          name="homescreen"
+          component={Home}
+          options={{
+            tabBarIcon: ({focused}) => (
               <HomeIcon width={24} height={24} isFilled={focused} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="costestimatorscreen"
-        component={CostEstimatorForm}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="costestimatorscreen"
+          component={CostEstimatorForm}
+          options={{
+            tabBarIcon: ({focused}) => (
               <CalculatorIcon width={24} height={24} isFilled={focused} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="addfarmscreen"
-        component={FarmForm}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="addfarmscreen"
+          component={FarmForm}
+          options={{
+            tabBarIcon: ({focused}) => (
               <AddIcon width={32} height={32} isFilled={focused} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="timelinescreen"
-        component={Timeline}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="timelinescreen"
+          component={Timeline}
+          options={{
+            tabBarIcon: ({focused}) => (
               <TimelineIcon width={24} height={24} isFilled={focused} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="scandiseasescreen"
-        component={Home}
-        listeners={() => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate('ScanDisease');
-          },
-        })}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="scandiseasescreen"
+          component={Home}
+          listeners={() => ({
+            tabPress: e => {
+              e.preventDefault();
+              navigation.navigate('ScanDisease');
+            },
+          })}
+          options={{
+            tabBarIcon: ({focused}) => (
               <ScanIcon width={24} height={24} isFilled={focused} />
-            </View>
-          ),
-        }}
-      />
-    </Tab.Navigator>
-    <View style={styles.navbarLogoContainer}>
-      <NavbarLogo width={60} height={60} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+      <View style={styles.navbarLogoContainer}>
+        <NavbarLogo width={60} height={60} />
+      </View>
     </View>
+    <View style={styles.bottomNavBg} />
   </View>
 );
 
@@ -115,11 +108,9 @@ const BottomNav = () => {
 export default BottomNav;
 
 const styles = StyleSheet.create({
-  Container: {
-    flex: 1,
-  },
+  Container: {flex: 1},
   bottomNavWrapper: {
-    backgroundColor: 'rgba(110, 175, 31, 0.15)',
+    backgroundColor: 'rgba(110, 175, 31, 0.3)',
     position: 'absolute',
     bottom: 25,
     left: 20,
@@ -128,9 +119,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 90,
   },
-  navbarLogoContainer: {
+  navbarLogoContainer: {position: 'absolute', alignSelf: 'center', bottom: 100},
+  bottomNavContainer: {flex: 1},
+  bottomNavBg: {
+    backgroundColor: 'white',
     position: 'absolute',
-    alignSelf: 'center',
-    bottom: 100,
+    bottom: 25,
+    left: 20,
+    right: 20,
+    elevation: 1,
+    borderRadius: 15,
+    height: 90,
+    zIndex: -1,
   },
 });
