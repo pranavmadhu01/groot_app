@@ -15,18 +15,29 @@ const TimelineCard = ({
   logoSize,
   inTimeline,
   isHighlighted,
+  isLast,
 }) => {
   return (
     <View style={inTimeline && styles.timelineContainer}>
       {inTimeline && (
         <View style={styles.timelineIndicatorWrapper}>
           <NavbarLogo width={36} height={36} />
-          <TimelineIndicatorDotIcon
-            width={36}
-            height={36}
-            isHighlighted={isHighlighted || false}
-            style={styles.timelineIndicatorDot}
-          />
+          <View style={styles.timelineIndicatorDotWrapper}>
+            <TimelineIndicatorDotIcon
+              width={36}
+              height={36}
+              isHighlighted={isHighlighted || false}
+              style={styles.timelineIndicatorDot}
+            />
+            {isLast && (
+              <TimelineIndicatorDotIcon
+                width={36}
+                height={36}
+                isHighlighted={isHighlighted || false}
+                style={styles.timelineIndicatorDot}
+              />
+            )}
+          </View>
         </View>
       )}
       <View
@@ -76,11 +87,15 @@ const styles = StyleSheet.create({
   timelineIndicatorWrapper: {
     position: 'absolute',
     left: -20,
-    top: -40,
+    top: -38,
     alignItems: 'center',
     justifyContent: 'flex-start',
     gap: -3,
-    height: 54,
+    height: '135%',
+  },
+  timelineIndicatorDotWrapper: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   timelineIndicatorDot: {
     left: 11,

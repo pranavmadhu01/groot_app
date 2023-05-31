@@ -154,12 +154,13 @@ const Timeline = ({navigation}) => {
           <View style={styles.timelineWrapper}>
             <TimelineCard
               inTimeline={true}
+              isLast={true}
               startDate={'23 JAN'}
               endDate={'23 MAY'}
               year={2023}
               title={'Title'}
               description={
-                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit.'
               }
             />
           </View>
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   timelineContentWrapper: {
-    paddingTop: 45,
+    paddingVertical: 45,
     gap: 30,
   },
 
