@@ -19,117 +19,111 @@ const Home = () => {
   const hideModal = () => setisVisible(false);
 
   return (
-    <Provider>
-      <Portal>
-        <Modal visible={isVisible} onDismiss={hideModal}>
-          <NotificationModal />
-        </Modal>
-      </Portal>
-      <View style={styles.homeWrapper}>
-        <View style={styles.topBar}>
-          <Leaves width={61} height={60} />
-          <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} onPress={showModal} />
-            <SettingsIcon width={20} height={20} />
+    <View style={styles.homeWrapper}>
+      <NotificationModal hideModal={hideModal} isVisible={isVisible} />
+      <View style={styles.topBar}>
+        <Leaves width={61} height={60} />
+        <View style={styles.topBarIconWrapper}>
+          <NotificationIcon width={26} height={26} onPress={showModal} />
+          <SettingsIcon width={20} height={20} />
+        </View>
+      </View>
+
+      <View style={styles.welcomeTextWrapper}>
+        <Text style={styles.heyText}>Hey</Text>
+        <Text style={styles.nameText}>Groot</Text>
+      </View>
+      <Text style={styles.farmsReadyMessage}>Your farms are all set!</Text>
+
+      <View style={styles.farmBar}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.farms}>
+            <CustomButton
+              buttonColor={'#fff'}
+              textColor={'#000'}
+              title={'Grape Farm'}
+              padding={6}
+              mode={'outlined'}
+              borderRadius={50}
+              alignSelf={'center'}
+              margin={(0, 6, 0, 0)}
+            />
+            <CustomButton
+              buttonColor={'#fff'}
+              textColor={'#000'}
+              title={'Grape Farm'}
+              padding={6}
+              mode={'outlined'}
+              borderRadius={50}
+              alignSelf={'center'}
+            />
+            <CustomButton
+              buttonColor={'#fff'}
+              textColor={'#000'}
+              title={'Grape Farm'}
+              padding={6}
+              mode={'outlined'}
+              borderRadius={50}
+              alignSelf={'center'}
+            />
+            <CustomButton
+              buttonColor={'#fff'}
+              textColor={'#000'}
+              title={'Grape Farm'}
+              padding={6}
+              mode={'outlined'}
+              borderRadius={50}
+              alignSelf={'center'}
+            />
+            <CustomButton
+              buttonColor={'#6EAF1F'}
+              textColor={'#000'}
+              title={'+'}
+              padding={0}
+              mode={'outlined'}
+              borderRadius={200}
+              alignSelf={'center'}
+            />
           </View>
-        </View>
+        </ScrollView>
+      </View>
 
-        <View style={styles.welcomeTextWrapper}>
-          <Text style={styles.heyText}>Hey</Text>
-          <Text style={styles.nameText}>Groot</Text>
-        </View>
-        <Text style={styles.farmsReadyMessage}>Your farms are all set!</Text>
+      <View style={styles.weatherCardContainer}>
+        <View style={styles.weatherCardBg} />
 
-        <View style={styles.farmBar}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.farms}>
-              <CustomButton
-                buttonColor={'#fff'}
-                textColor={'#000'}
-                title={'Grape Farm'}
-                padding={6}
-                mode={'outlined'}
-                borderRadius={50}
-                alignSelf={'center'}
-                margin={(0, 6, 0, 0)}
-              />
-              <CustomButton
-                buttonColor={'#fff'}
-                textColor={'#000'}
-                title={'Grape Farm'}
-                padding={6}
-                mode={'outlined'}
-                borderRadius={50}
-                alignSelf={'center'}
-              />
-              <CustomButton
-                buttonColor={'#fff'}
-                textColor={'#000'}
-                title={'Grape Farm'}
-                padding={6}
-                mode={'outlined'}
-                borderRadius={50}
-                alignSelf={'center'}
-              />
-              <CustomButton
-                buttonColor={'#fff'}
-                textColor={'#000'}
-                title={'Grape Farm'}
-                padding={6}
-                mode={'outlined'}
-                borderRadius={50}
-                alignSelf={'center'}
-              />
-              <CustomButton
-                buttonColor={'#6EAF1F'}
-                textColor={'#000'}
-                title={'+'}
-                padding={0}
-                mode={'outlined'}
-                borderRadius={200}
-                alignSelf={'center'}
-              />
+        <View style={styles.weatherCardWrapper}>
+          <View style={styles.topPart}>
+            <Text style={styles.temperatureText}>24°C</Text>
+            <View>
+              <Text style={styles.labelText}>H: 32°C</Text>
+              <Text style={styles.labelText}>L: 21°C</Text>
             </View>
-          </ScrollView>
-        </View>
+            <SunWindIcon width={75} height={75} color={'#151810'} />
+          </View>
 
-        <View style={styles.weatherCardContainer}>
-          <View style={styles.weatherCardBg} />
+          <Divider />
 
-          <View style={styles.weatherCardWrapper}>
-            <View style={styles.topPart}>
-              <Text style={styles.temperatureText}>24°C</Text>
-              <View>
-                <Text style={styles.labelText}>H: 32°C</Text>
-                <Text style={styles.labelText}>L: 21°C</Text>
-              </View>
-              <SunWindIcon width={75} height={75} color={'#151810'} />
+          <View style={styles.bottomPart}>
+            <View style={styles.bottomPartTextWrapper}>
+              <Text style={styles.labelText}>Humidity</Text>
+              <Text style={styles.value}>30%</Text>
             </View>
-
-            <Divider />
-
-            <View style={styles.bottomPart}>
-              <View style={styles.bottomPartTextWrapper}>
-                <Text style={styles.labelText}>Humidity</Text>
-                <Text style={styles.value}>30%</Text>
-              </View>
-              <View style={styles.bottomPartTextWrapper}>
-                <Text style={styles.labelText}>Precipitation</Text>
-                <Text style={styles.value}>5.1ml</Text>
-              </View>
-              <View style={styles.bottomPartTextWrapper}>
-                <Text style={styles.labelText}>Pressure</Text>
-                <Text style={styles.value}>450hPa</Text>
-              </View>
-              <View style={styles.bottomPartTextWrapper}>
-                <Text style={styles.labelText}>Wind</Text>
-                <Text style={styles.value}>23m/s</Text>
-              </View>
+            <View style={styles.bottomPartTextWrapper}>
+              <Text style={styles.labelText}>Precipitation</Text>
+              <Text style={styles.value}>5.1ml</Text>
+            </View>
+            <View style={styles.bottomPartTextWrapper}>
+              <Text style={styles.labelText}>Pressure</Text>
+              <Text style={styles.value}>450hPa</Text>
+            </View>
+            <View style={styles.bottomPartTextWrapper}>
+              <Text style={styles.labelText}>Wind</Text>
+              <Text style={styles.value}>23m/s</Text>
             </View>
           </View>
         </View>
       </View>
-    </Provider>
+    </View>
   );
 };
 

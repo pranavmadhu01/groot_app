@@ -7,19 +7,24 @@ import {
   Dimensions,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+import {Modal, Portal} from 'react-native-paper';
 
 const vw = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
 
-const NotificationModal = () => {
+const NotificationModal = ({isVisible, hideModal}) => {
   return (
-    <TouchableOpacity disable={true} style={styles.notificationContainer}>
-      <View style={styles.modal}>
-        <Text style={styles.title}>Notifications</Text>
-        <Text style={styles.message}>No new notifications</Text>
-        <View style={styles.backgroundCard}></View>
-      </View>
-    </TouchableOpacity>
+    <Portal>
+      <Modal visible={isVisible} onDismiss={hideModal}>
+        <TouchableOpacity disable={true} style={styles.notificationContainer}>
+          <View style={styles.modal}>
+            <Text style={styles.title}>Notifications</Text>
+            <Text style={styles.message}>No new notifications</Text>
+            <View style={styles.backgroundCard}></View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+    </Portal>
   );
 };
 

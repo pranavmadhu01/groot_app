@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -9,9 +9,11 @@ import {
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
-
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
+import {getAllPlants} from '../../api';
+import {Dropdown} from 'react-native-element-dropdown';
+import CostEstimatorModal from '../../components/modals/CostEstimatorModal';
 
 const vw = Dimensions.get('window').width;
 
@@ -20,7 +22,9 @@ const CostEstimatorForm = ({navigation}) => {
     area: '',
     pH: '',
   });
-
+  const [plants, setPlants] = useState([]);
+  const [value, setValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const calculateCost = () => {
     const getLocation = async () => {
       try {
@@ -41,7 +45,15 @@ const CostEstimatorForm = ({navigation}) => {
     //   }
     // };
   };
-
+  useEffect(() => {
+    getAllPlants()
+      .then(response => {
+        setPlants(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
   return (
     <View style={styles.costFormContainer}>
       <View style={styles.topBar}>
@@ -56,7 +68,7 @@ const CostEstimatorForm = ({navigation}) => {
       </View>
 
       <View style={styles.farmBar}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.farms}>
             <CustomButton
               buttonColor={'#fff'}
@@ -105,16 +117,40 @@ const CostEstimatorForm = ({navigation}) => {
               alignSelf={'center'}
             />
           </View>
-        </ScrollView>
+        </ScrollView> */}
       </View>
 
-      <View style={styles.costFormWrapper}>
+      <CostEstimatorModal showModal={showModal} setShowModal={setShowModal} />
+
+      <ScrollView contentContainerStyle={styles.costFormWrapper}>
         <View style={styles.costEstimatorTextWrapper}>
           <Text variant="headlineMedium" style={styles.titleText}>
             Cost Estimator
           </Text>
         </View>
         <View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={plants.map(({name, _id}) => ({
+              value: _id,
+              label: name,
+            }))}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Select item"
+            searchPlaceholder="Search..."
+            value={value}
+            onChange={item => {
+              setValue(item.value);
+              console.log(item.value);
+            }}
+          />
           <TextInput
             mode="outlined"
             keyboardType="number-pad"
@@ -164,8 +200,9 @@ const CostEstimatorForm = ({navigation}) => {
           buttonColor="#6EAF1F"
           textColor="#fff"
           height={60}
+          onPress={() => setShowModal(true)}
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -173,6 +210,48 @@ const CostEstimatorForm = ({navigation}) => {
 export default CostEstimatorForm;
 
 const styles = StyleSheet.create({
+  dropdown: {
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+    height: 64,
+    backgroundColor: '#E2EFD2',
+    borderRadius: 12,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  item: {
+    padding: 17,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textItem: {
+    flex: 1,
+    fontSize: 16,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
   costFormContainer: {
     flex: 1,
     paddingVertical: 30,
@@ -181,7 +260,7 @@ const styles = StyleSheet.create({
     color: '#151810',
   },
   costFormWrapper: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
     paddingTop: 30,
     gap: 30,
