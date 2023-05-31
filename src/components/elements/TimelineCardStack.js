@@ -22,6 +22,7 @@ const TimelineCardStack = ({
           description={description}
           logoSize={logoSize}
           color={'#C5DFA5'}
+          inTimeline={false}
         />
         <View style={styles.timelineFirstBgCard} />
       </View>

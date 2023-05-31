@@ -14,6 +14,7 @@ import LockIcon from './LockIcon';
 import EyeIcon from './EyeIcon';
 import SunWindIcon from './SunWindIcon';
 import TimeCheckIcon from './TimeCheckIcon';
+import TimelineIndicatorDotIcon from './TimelineIndicatorDotIcon';
 
 export {
   HomeIcon,
@@ -32,4 +33,5 @@ export {
   EyeIcon,
   SunWindIcon,
   TimeCheckIcon,
+  TimelineIndicatorDotIcon,
 };

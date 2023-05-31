@@ -1,7 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {NavbarLogo} from '../logos';
-import {TimeCheckIcon} from '../icons';
+import {TimeCheckIcon, TimelineIndicatorDotIcon} from '../icons';
+import {Dimensions} from 'react-native';
+
+const vw = Dimensions.get('window').width;
 
 const TimelineCard = ({
   startDate,
@@ -10,23 +13,49 @@ const TimelineCard = ({
   title,
   description,
   logoSize,
+  inTimeline,
+  isHighlighted,
 }) => {
   return (
-    <View style={styles.timelineCardContainer}>
-      <View style={styles.timelineCardAbsoluteWrapper}>
-        <View style={styles.cardLogoWrapper}>
-          <NavbarLogo width={logoSize || 32} height={logoSize || 32} />
+    <View style={inTimeline && styles.timelineContainer}>
+      {inTimeline && (
+        <View style={styles.timelineIndicatorWrapper}>
+          <NavbarLogo width={36} height={36} />
+          <TimelineIndicatorDotIcon
+            width={36}
+            height={36}
+            isHighlighted={isHighlighted || false}
+            style={styles.timelineIndicatorDot}
+          />
         </View>
-        <TimeCheckIcon width={16} height={16} />
-      </View>
-
-      <View style={styles.timelineCardBg} />
-      <View style={styles.timelineCardWrapper}>
-        <Text style={styles.date}>
-          {startDate} - {endDate}, {year}
-        </Text>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+      )}
+      <View
+        style={
+          inTimeline
+            ? styles.timelineCardContainer
+            : styles.timelineStackCardContainer
+        }>
+        <View style={styles.timelineCardAbsoluteWrapper}>
+          <View style={styles.cardLogoWrapper}>
+            {!inTimeline && (
+              <NavbarLogo width={logoSize || 32} height={logoSize || 32} />
+            )}
+          </View>
+          {!inTimeline && <TimeCheckIcon width={16} height={16} />}
+        </View>
+        <View style={styles.timelineCardBg} />
+        <View
+          style={
+            inTimeline
+              ? styles.timelineCardWrapper
+              : styles.timelineStackCardWrapper
+          }>
+          <Text style={styles.date}>
+            {startDate} - {endDate}, {year}
+          </Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
+        </View>
       </View>
     </View>
   );
@@ -35,12 +64,45 @@ const TimelineCard = ({
 export default TimelineCard;
 
 const styles = StyleSheet.create({
-  timelineCardContainer: {
+  timelineContainer: {
+    width: vw,
+    // backgroundColor: 'red',
+    marginLeft: 16,
+    marginTop: 16,
+    paddingLeft: 24,
+    borderLeftWidth: 1,
+    borderLeftColor: 'green',
+  },
+  timelineIndicatorWrapper: {
+    position: 'absolute',
+    left: -20,
+    top: -40,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: -3,
+    height: 54,
+  },
+  timelineIndicatorDot: {
+    left: 11,
+  },
+  timelineStackCardContainer: {
     width: '85%',
+  },
+  timelineCardContainer: {
+    width: '80%',
   },
   timelineCardWrapper: {
     backgroundColor: 'transparent',
-    borderRadius: 25,
+    borderColor: 'green',
+    borderWidth: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    borderRadius: 12,
+    padding: 24,
+    gap: 6,
+  },
+  timelineStackCardWrapper: {
+    backgroundColor: 'transparent',
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingVertical: 24,

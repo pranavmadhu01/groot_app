@@ -140,6 +140,20 @@ const Timeline = ({navigation}) => {
           </View>
           <View style={styles.timelineWrapper}>
             <TimelineCard
+              inTimeline={true}
+              isHighlighted={true}
+              startDate={'23 JAN'}
+              endDate={'23 MAY'}
+              year={2023}
+              title={'Title'}
+              description={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
+              }
+            />
+          </View>
+          <View style={styles.timelineWrapper}>
+            <TimelineCard
+              inTimeline={true}
               startDate={'23 JAN'}
               endDate={'23 MAY'}
               year={2023}
@@ -282,7 +296,8 @@ const styles = StyleSheet.create({
   },
 
   timelineStackWrapper: {
-    marginVertical: 24,
+    marginTop: 24,
+    marginBottom: 32,
   },
   timelineFlowWrapper: {
     alignItems: 'flex-end',
