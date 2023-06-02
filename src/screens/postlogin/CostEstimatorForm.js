@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -9,17 +9,23 @@ import {
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
-
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
+import {getAllFertilizers, getAllPlants} from '../../api';
+import {Dropdown} from 'react-native-element-dropdown';
+import CostEstimatorModal from '../../components/modals/CostEstimatorModal';
 
 const vw = Dimensions.get('window').width;
 
 const CostEstimatorForm = ({navigation}) => {
   const [formdata, setFormData] = useState({
-    area: '',
-    pH: '',
+    plant_id: '',
+    area: 0,
+    pH: 0.0,
   });
+  const [plants, setPlants] = useState([]);
+  const [fertilizers, setFertilizers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const calculateCost = () => {
     const getLocation = async () => {
@@ -41,7 +47,17 @@ const CostEstimatorForm = ({navigation}) => {
     //   }
     // };
   };
-
+  console.log(formdata);
+  useEffect(() => {
+    Promise.all([getAllPlants(), getAllFertilizers()])
+      .then(response => {
+        setPlants(response[0].data.data);
+        setFertilizers(response[1].data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
   return (
     <View style={styles.costFormContainer}>
       <View style={styles.topBar}>
@@ -55,66 +71,41 @@ const CostEstimatorForm = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.farmBar}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.farms}>
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-              margin={(0, 6, 0, 0)}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#6EAF1F'}
-              textColor={'#000'}
-              title={'+'}
-              padding={0}
-              mode={'outlined'}
-              borderRadius={200}
-              alignSelf={'center'}
-            />
-          </View>
-        </ScrollView>
-      </View>
+      <CostEstimatorModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        plant={plants.filter(plant => plant._id === formdata.plant_id)}
+        fertilizers={fertilizers}
+      />
 
-      <View style={styles.costFormWrapper}>
+      <ScrollView contentContainerStyle={styles.costFormWrapper}>
         <View style={styles.costEstimatorTextWrapper}>
           <Text variant="headlineMedium" style={styles.titleText}>
             Cost Estimator
           </Text>
         </View>
         <View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={plants.map(({name, _id}) => ({
+              value: _id,
+              label: name,
+            }))}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Select crop"
+            searchPlaceholder="Search crop..."
+            value={formdata.plant_id}
+            onChange={item => {
+              setFormData({...formdata, plant_id: item.value});
+            }}
+          />
           <TextInput
             mode="outlined"
             keyboardType="number-pad"
@@ -164,8 +155,10 @@ const CostEstimatorForm = ({navigation}) => {
           buttonColor="#6EAF1F"
           textColor="#fff"
           height={60}
+          onPress={() => setShowModal(true)}
+          disabled={Object.keys(formdata).length === 0}
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -173,6 +166,48 @@ const CostEstimatorForm = ({navigation}) => {
 export default CostEstimatorForm;
 
 const styles = StyleSheet.create({
+  dropdown: {
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+    height: 64,
+    backgroundColor: '#E2EFD2',
+    borderRadius: 12,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  item: {
+    padding: 17,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textItem: {
+    flex: 1,
+    fontSize: 16,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
   costFormContainer: {
     flex: 1,
     paddingVertical: 30,
@@ -181,7 +216,7 @@ const styles = StyleSheet.create({
     color: '#151810',
   },
   costFormWrapper: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
     paddingTop: 30,
     gap: 30,
