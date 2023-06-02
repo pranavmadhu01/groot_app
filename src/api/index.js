@@ -23,5 +23,5 @@ export {getAllPlants};
 const getAllFertilizers = async () => {
   return await axios.get(fertilizerUrl);
 };
+export {getAllFertilizers};
 //timeline
-export {fertilizerUrl};

@@ -1,6 +1,6 @@
 import {Modal, Portal, Provider, Text} from 'react-native-paper';
-
-const CostEstimatorModal = ({showModal, setShowModal}) => {
+import {ScrollView, View} from 'react-native';
+const CostEstimatorModal = ({showModal, setShowModal, plant, fertilizers}) => {
   return (
     <Portal>
       <Modal
@@ -14,7 +14,10 @@ const CostEstimatorModal = ({showModal, setShowModal}) => {
           flex: 1,
           marginBottom: 150,
         }}>
-        <Text>Example Modal. Click outside this area to dismiss.</Text>
+        <ScrollView>
+          <View></View>
+          <View></View>
+        </ScrollView>
       </Modal>
     </Portal>
   );

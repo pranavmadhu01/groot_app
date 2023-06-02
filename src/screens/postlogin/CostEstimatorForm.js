@@ -11,7 +11,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
-import {getAllPlants} from '../../api';
+import {getAllFertilizers, getAllPlants} from '../../api';
 import {Dropdown} from 'react-native-element-dropdown';
 import CostEstimatorModal from '../../components/modals/CostEstimatorModal';
 
@@ -19,12 +19,14 @@ const vw = Dimensions.get('window').width;
 
 const CostEstimatorForm = ({navigation}) => {
   const [formdata, setFormData] = useState({
-    area: '',
-    pH: '',
+    plant_id: '',
+    area: 0,
+    pH: 0.0,
   });
   const [plants, setPlants] = useState([]);
-  const [value, setValue] = useState('');
+  const [fertilizers, setFertilizers] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
   const calculateCost = () => {
     const getLocation = async () => {
       try {
@@ -45,10 +47,12 @@ const CostEstimatorForm = ({navigation}) => {
     //   }
     // };
   };
+  console.log(formdata);
   useEffect(() => {
-    getAllPlants()
+    Promise.all([getAllPlants(), getAllFertilizers()])
       .then(response => {
-        setPlants(response.data.data);
+        setPlants(response[0].data.data);
+        setFertilizers(response[1].data.data);
       })
       .catch(error => {
         console.log(error);
@@ -67,60 +71,12 @@ const CostEstimatorForm = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.farmBar}>
-        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.farms}>
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-              margin={(0, 6, 0, 0)}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#6EAF1F'}
-              textColor={'#000'}
-              title={'+'}
-              padding={0}
-              mode={'outlined'}
-              borderRadius={200}
-              alignSelf={'center'}
-            />
-          </View>
-        </ScrollView> */}
-      </View>
-
-      <CostEstimatorModal showModal={showModal} setShowModal={setShowModal} />
+      <CostEstimatorModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        plant={plants.filter(plant => plant._id === formdata.plant_id)}
+        fertilizers={fertilizers}
+      />
 
       <ScrollView contentContainerStyle={styles.costFormWrapper}>
         <View style={styles.costEstimatorTextWrapper}>
@@ -143,12 +99,11 @@ const CostEstimatorForm = ({navigation}) => {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder="Select item"
-            searchPlaceholder="Search..."
-            value={value}
+            placeholder="Select crop"
+            searchPlaceholder="Search crop..."
+            value={formdata.plant_id}
             onChange={item => {
-              setValue(item.value);
-              console.log(item.value);
+              setFormData({...formdata, plant_id: item.value});
             }}
           />
           <TextInput
@@ -201,6 +156,7 @@ const CostEstimatorForm = ({navigation}) => {
           textColor="#fff"
           height={60}
           onPress={() => setShowModal(true)}
+          disabled={Object.keys(formdata).length === 0}
         />
       </ScrollView>
     </View>
