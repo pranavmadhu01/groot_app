@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {BlurView} from '@react-native-community/blur';
 
 const vw = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
