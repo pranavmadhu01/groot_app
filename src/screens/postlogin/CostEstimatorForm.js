@@ -38,14 +38,6 @@ const CostEstimatorForm = ({navigation}) => {
         return false;
       }
     };
-
-    // const getpH = async () => {
-    //   try {
-    //   }
-    //   catch (err) {
-    //     return false;
-    //   }
-    // };
   };
   console.log(formdata);
   useEffect(() => {

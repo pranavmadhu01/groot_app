@@ -1,10 +1,18 @@
 import axios from 'axios';
-const url = 'https://grootbackend-production.up.railway.app';
+const url = 'http://192.168.18.22:8000';
 const diseaseDetectionUrl = `${url}/detect`;
 const plantUrl = `${url}/plant`;
 const fertilizerUrl = `${url}/fertilizer`;
 const authUrl = `${url}/auth`;
 const userUrl = `${url}/user`;
+//auth apis
+const login = async data => {
+  return await axios.post(`${authUrl}/login`, data);
+};
+const signup = async data => {
+  return await axios.post(`${authUrl}/register`, data);
+};
+export {login, signup};
 //disease detection
 const diseaseDetection = async data => {
   return await axios.post(diseaseDetectionUrl, data, {

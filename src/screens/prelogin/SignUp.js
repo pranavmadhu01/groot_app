@@ -19,15 +19,17 @@ import {
   EyeIcon,
 } from '../../components/icons';
 import {FormTitleWrapper} from '../../components/elements';
+import {signup} from '../../api';
+import {Toast} from '../../utils/Toast.util';
 
 const SignUp = ({navigation}) => {
   const [formdata, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    phonenumber: '',
     password: '',
-    confirmPassword: '',
   });
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -71,7 +73,23 @@ const SignUp = ({navigation}) => {
   const handleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
-
+  console.log(formdata);
+  console.log(confirmPassword);
+  const handleSignup = () => {
+    if (formdata.password === confirmPassword) {
+      console.log('accepted');
+      signup(formdata)
+        .then(response => {
+          navigation.navigate('Login');
+          Toast(response.data.message);
+        })
+        .catch(error => {
+          Toast(error.response.data.message);
+        });
+    } else {
+      console.log('check your passwords');
+    }
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.formContainer}>
@@ -155,7 +173,7 @@ const SignUp = ({navigation}) => {
                     placeholder="Enter phone number"
                     value={formdata.phone}
                     onChangeText={text =>
-                      setFormData({...formdata, phone: text})
+                      setFormData({...formdata, phonenumber: text})
                     }
                     style={styles.textFieldStyle}
                     outlineStyle={styles.textInputOutlineStyle}
@@ -219,10 +237,8 @@ const SignUp = ({navigation}) => {
                   }
                   placeholder="Confirm password"
                   secureTextEntry={!isConfirmPasswordVisible}
-                  value={formdata.confirmPassword}
-                  onChangeText={text =>
-                    setFormData({...formdata, confirmPassword: text})
-                  }
+                  value={confirmPassword}
+                  onChangeText={text => setConfirmPassword(text)}
                   style={styles.textFieldStyle}
                   outlineStyle={styles.textInputOutlineStyle}
                   outlineColor="#fff"
@@ -251,8 +267,8 @@ const SignUp = ({navigation}) => {
               textColor="#fff"
               buttonColor="#6EAF1F"
               height={60}
-              isNavigator={true}
-              screenName={'Login'}
+              isNavigator={false}
+              onPress={() => handleSignup()}
             />
             <View style={styles.buttonTextWrapper}>
               <Text variant="labelMedium" style={styles.queryStyle}>
