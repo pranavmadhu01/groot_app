@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import {ImageBackground, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
+import {LoginContext} from '../../../App';
 import {LandingPageBg} from '../../assets/images/images';
 import {CustomButton} from '../../components/buttons';
 import {Leaves} from '../../components/logos';
+import {retriveFromAsyncStorage} from '../../utils/Asyncstorage.util';
 
 const LandingPage = ({navigation}) => {
+  const data = useContext(LoginContext);
+  useEffect(() => {
+    console.log('Hello');
+    console.log(data);
+    retriveFromAsyncStorage('@jwt_token').then(token => {
+      console.log(token);
+      // if()
+    });
+  }, []);
   return (
     <ImageBackground source={LandingPageBg} style={styles.bgImage}>
       <View style={styles.landingPageWrapper}>

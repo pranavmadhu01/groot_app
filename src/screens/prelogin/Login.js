@@ -18,11 +18,14 @@ import {
   EyeIcon,
 } from '../../components/icons';
 import {FormTitleWrapper} from '../../components/elements';
+import {loginWithFarmCheck} from '../../api';
+import {addToAsyncStorage} from '../../utils/Asyncstorage.util';
+import {Toast} from '../../utils/Toast.util';
 
 const Login = ({navigation}) => {
   const [formdata, setFormData] = useState({
-    email: '',
-    phone: '',
+    // email: '',
+    phonenumber: '',
     password: '',
   });
 
@@ -63,7 +66,26 @@ const Login = ({navigation}) => {
   const handlePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-
+  console.log(formdata);
+  const handleLogin = () => {
+    loginWithFarmCheck(formdata)
+      .then(response => {
+        addToAsyncStorage(
+          '@jwt_token',
+          response.data.data.userDetails.access_token,
+        );
+        if (response.data.data.isFarmPresent) {
+          Toast('farm present have a nice day  :)');
+          navigation.navigate('Main Screen');
+        } else {
+          Toast('farm not present add a farm to continue');
+          // navigation.navigate('farmadd');
+        }
+      })
+      .catch(error => {
+        Toast(error.response.data.message + '  :(');
+      });
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.formContainer}>
@@ -84,7 +106,8 @@ const Login = ({navigation}) => {
             showsVerticalScrollIndicator={false}>
             <View style={styles.inputWrapper}>
               <View style={styles.groupWrapper}>
-                <View style={styles.textInputWrapper}>
+                {/* TODO implement email effectively */}
+                {/* <View style={styles.textInputWrapper}>
                   <View style={styles.leftIconWrapper}>
                     <MailIcon width={20} height={20} />
                   </View>
@@ -109,10 +132,10 @@ const Login = ({navigation}) => {
                       phoneRef.current.focus();
                     }}
                   />
-                </View>
-                <Text variant="labelLarge" style={styles.orStyle}>
+                </View> */}
+                {/* <Text variant="labelLarge" style={styles.orStyle}>
                   or
-                </Text>
+                </Text> */}
                 <View style={styles.textInputWrapper}>
                   <View style={styles.leftIconWrapper}>
                     <PhoneIcon width={20} height={20} />
@@ -122,9 +145,9 @@ const Login = ({navigation}) => {
                     keyboardType="phone-pad"
                     textContentType="telephoneNumber"
                     placeholder="Enter phone number"
-                    value={formdata.phone}
+                    value={formdata.phonenumber}
                     onChangeText={text =>
-                      setFormData({...formdata, phone: text})
+                      setFormData({...formdata, phonenumber: text})
                     }
                     style={styles.textFieldStyle}
                     outlineStyle={styles.textInputOutlineStyle}
@@ -183,8 +206,8 @@ const Login = ({navigation}) => {
               textColor="#fff"
               buttonColor="#6EAF1F"
               height={60}
-              isNavigator={true}
-              screenName={'Main Screen'}
+              isNavigator={false}
+              onPress={() => handleLogin()}
             />
             <View style={styles.buttonTextWrapper}>
               <Text variant="labelMedium" style={styles.queryStyle}>

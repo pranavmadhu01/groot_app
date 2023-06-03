@@ -6,13 +6,13 @@ const fertilizerUrl = `${url}/fertilizer`;
 const authUrl = `${url}/auth`;
 const userUrl = `${url}/user`;
 //auth apis
-const login = async data => {
-  return await axios.post(`${authUrl}/login`, data);
+const loginWithFarmCheck = async data => {
+  return await axios.post(`${authUrl}/loginwithfarmcheck`, data);
 };
 const signup = async data => {
   return await axios.post(`${authUrl}/register`, data);
 };
-export {login, signup};
+export {loginWithFarmCheck, signup};
 //disease detection
 const diseaseDetection = async data => {
   return await axios.post(diseaseDetectionUrl, data, {
