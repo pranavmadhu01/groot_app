@@ -76,8 +76,9 @@ const CostEstimatorModal = ({
 
         <ScrollView
           contentContainerStyle={{paddingVertical: 5}}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.textBox}>
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[1]}>
+          <View style={{...styles.textBox, marginBottom: 24}}>
             <Text style={styles.totalSeeds}>
               Total Seeds Required : {seedquanity} g
             </Text>
@@ -85,7 +86,9 @@ const CostEstimatorModal = ({
               Total Seed Cost : Rs. {seedcost}
             </Text>
           </View>
-          <Text style={styles.fertilizerBreakdown}>Fertilizer per event</Text>
+          <View style={styles.stickyFertilizerPerEventText}>
+            <Text style={styles.fertilizerBreakdown}>Fertilizer per event</Text>
+          </View>
           <View style={styles.eventsWrapper}>
             {fertilizerData.map(({fertilizerRequired, title}, index) => (
               <View key={index} style={styles.eventDetailsWrapper}>
@@ -175,10 +178,18 @@ styles = StyleSheet.create({
 
   eventsWrapper: {gap: 16},
 
+  stickyFertilizerPerEventText: {
+    position: 'sticky',
+    top: 0,
+    backgroundColor: '#fff',
+    paddingTop: -10,
+    paddingBottom: 3,
+  },
+
   fertilizerBreakdown: {
     fontFamily: 'Gilroy-SemiBold',
     fontSize: 18,
-    paddingTop: 24,
+    paddingTop: 0,
     marginBottom: 12,
     alignSelf: 'center',
   },

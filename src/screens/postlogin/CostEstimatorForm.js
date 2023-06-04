@@ -86,7 +86,7 @@ const CostEstimatorForm = ({navigation}) => {
 
         <ScrollView contentContainerStyle={styles.costFormWrapper}>
           <View style={styles.costEstimatorTextWrapper}>
-            <Text variant="headlineMedium" style={styles.titleText}>
+            <Text variant="headlineLarge" style={styles.titleText}>
               Cost Estimator
             </Text>
           </View>
@@ -106,7 +106,7 @@ const CostEstimatorForm = ({navigation}) => {
               labelField="label"
               valueField="value"
               placeholder="Select crop"
-              searchPlaceholder="Search crop..."
+              searchPlaceholder="Search crop"
               value={formdata.plant_id}
               onChange={item => {
                 setFormData({...formdata, plant_id: item.value});
@@ -184,9 +184,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     height: 64,
-    backgroundColor: '#E2EFD2',
+    backgroundColor: '#C5DFA5',
     borderRadius: 12,
-    padding: 12,
+    padding: 24,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 17,
+    backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -209,17 +210,22 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: '#000',
   },
   selectedTextStyle: {
     fontSize: 16,
+    fontFamily: 'Gilroy-Medium',
+    color: '#000',
   },
   iconStyle: {
     width: 20,
     height: 20,
+    color: '#000',
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    borderRadius: 12,
   },
   costFormContainer: {
     flex: 1,
@@ -229,7 +235,6 @@ const styles = StyleSheet.create({
     color: '#151810',
   },
   costFormWrapper: {
-    // flex: 1,
     backgroundColor: '#fff',
     paddingTop: 30,
     gap: 30,
@@ -238,12 +243,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 15,
   },
+  titleText: {
+    fontFamily: 'Gilroy-SemiBold',
+  },
 
   textFieldStyle: {
     backgroundColor: '#E2EFD2',
     justifyContent: 'center',
     height: 64,
     marginBottom: 20,
+    paddingHorizontal: 10,
   },
   buttontextWrapper: {
     flexDirection: 'row',
