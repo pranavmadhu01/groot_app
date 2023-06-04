@@ -48,11 +48,11 @@ const App = () => {
         homereload: homereload,
         setHomeReload: setHomeReload,
       }}>
-      <Provider>
-        <NavigationContainer>
+      <NavigationContainer>
+        <Provider>
           {isLogin && token ? <BottomNav /> : <PreloginStack />}
-        </NavigationContainer>
-      </Provider>
+        </Provider>
+      </NavigationContainer>
     </LoginContext.Provider>
   );
 };

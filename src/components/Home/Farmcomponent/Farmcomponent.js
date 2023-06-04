@@ -22,6 +22,8 @@ const Farmcomponent = ({farms}) => {
               padding={6}
               mode={data.farmId === _id ? 'contained' : 'outlined'}
               borderRadius={50}
+              borderWidth={5}
+              borderColor={'#000'}
               fontFamily={
                 data.farmId === _id ? 'Gilroy-SemiBold' : 'Gilroy-Regular'
               }
@@ -56,7 +58,8 @@ const Farmcomponent = ({farms}) => {
 export default Farmcomponent;
 const styles = StyleSheet.create({
   farmBar: {
-    marginVertical: 16,
+    marginTop: 32,
+    marginBottom: 24,
     width: vw,
     alignSelf: 'center',
     flexDirection: 'row',
@@ -65,6 +68,6 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24,
     flexDirection: 'row',
-    gap: 6,
+    gap: 12,
   },
 });
