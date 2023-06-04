@@ -2,11 +2,11 @@ import {Modal, Portal, Text} from 'react-native-paper';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useState} from 'react';
 import {CustomButton} from '../buttons';
+import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 const CostEstimatorModal = ({
   showModal,
   setShowModal,
   plant,
-  fertilizers,
   estimatordata,
 }) => {
   const [fertilizerData, setFertilizerData] = useState(
@@ -14,10 +14,20 @@ const CostEstimatorModal = ({
   );
   const [seedcost, setSeedcost] = useState(estimatordata.totalseedcost);
   const [seedquanity, setSeedQuantity] = useState(estimatordata.totalseeds);
-  console.log(fertilizerData);
-  console.log(seedcost);
-  console.log(seedquanity);
-  console.log(plant);
+  const handleGenerateTimeline = selecteddate => {
+    console.log(
+      'selecetd date => ',
+      selecteddate.setDate(selecteddate.getDate() + 1),
+    );
+  };
+  const openDatePicker = () => {
+    DateTimePickerAndroid.open({
+      value: new Date(),
+      mode: 'date',
+      onChange: (event, selectedDate) => handleGenerateTimeline(selectedDate),
+      minimumDate: new Date().setDate(new Date().getDate() + 1),
+    });
+  };
   return (
     <Portal>
       <Modal
@@ -85,8 +95,8 @@ const CostEstimatorModal = ({
           textColor="#fff"
           height={60}
           marginTop={32}
-          // onPress={() => generateTimeline()}
-          // disabled={Object.keys(formdata).length === 0}
+          isNavigator={false}
+          onPress={() => openDatePicker()}
         />
       </Modal>
     </Portal>
