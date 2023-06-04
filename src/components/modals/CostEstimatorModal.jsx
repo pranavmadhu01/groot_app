@@ -1,8 +1,15 @@
 import {Modal, Portal, Text} from 'react-native-paper';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useState} from 'react';
 import {CustomButton} from '../buttons';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import {CloseIcon} from '../icons';
 const CostEstimatorModal = ({
   showModal,
   setShowModal,
@@ -28,6 +35,11 @@ const CostEstimatorModal = ({
       minimumDate: new Date().setDate(new Date().getDate() + 1),
     });
   };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <Portal>
       <Modal
@@ -38,37 +50,49 @@ const CostEstimatorModal = ({
           backgroundColor: '#fff',
           borderRadius: 25,
           padding: 24,
-          margin: 24,
+          margin: 16,
           flex: 1,
           gap: 16,
-          marginBottom: 150,
         }}>
+        <TouchableOpacity style={styles.closeBtnWrapper} onPress={handleClose}>
+          <CloseIcon width={32} height={32} />
+        </TouchableOpacity>
+
         <View style={styles.plantDetailsWrapper}>
           <Image
             source={{uri: plant.image}}
-            style={{width: 90, height: 90, borderRadius: 12}}
+            style={{width: 100, height: 100, borderRadius: 12}}
             resizeMode="cover"
           />
           <View style={styles.plantDetails}>
-            <Text>Name: {plant.name}</Text>
-            <Text>DefaultPh: {plant.defaultph}</Text>
-            <Text>cost: Rs {plant.seedcost}/g</Text>
-            <Text>Per cent : {plant.seedpercentingram} g/cent</Text>
+            <Text style={styles.plantDetailsText}>Name: {plant.name}</Text>
+            <Text style={styles.plantDetailsText}>
+              Default pH: {plant.defaultph}
+            </Text>
+            <Text style={styles.plantDetailsText}>
+              Seed Cost: Rs. {plant.seedcost}/g
+            </Text>
+            <Text style={styles.plantDetailsText}>
+              Seeds per cent: {plant.seedpercentingram} g/cent
+            </Text>
           </View>
         </View>
+
         <View style={styles.textBox}>
-          <Text style={styles.totalCost}>Total Cost: Rs.1000</Text>
+          <Text style={styles.totalCost}>Total Cost: Rs. 1000</Text>
         </View>
-        <Text style={styles.costBreakdown}>Cost Breakdown:</Text>
+
+        <Text style={styles.costBreakdown}>Cost Breakdown :</Text>
+
         <ScrollView
-          contentContainerStyle={{paddingVertical: 16}}
+          contentContainerStyle={{paddingVertical: 5}}
           showsVerticalScrollIndicator={false}>
           <View style={styles.textBox}>
             <Text style={styles.totalSeeds}>
-              Total seeds required : {seedquanity}g
+              Total Seeds Required : {seedquanity} g
             </Text>
             <Text style={styles.totalSeeds}>
-              Total cost of seeds : Rs.{seedcost}
+              Total Seed Cost : Rs. {seedcost}
             </Text>
           </View>
           <Text style={styles.fertilizerBreakdown}>Fertilizer per event</Text>
@@ -78,9 +102,13 @@ const CostEstimatorModal = ({
                 <Text style={styles.eventTitle}>{title}</Text>
                 {fertilizerRequired.map(({name, cost, quantity}, index) => (
                   <View key={index} style={styles.fertilizerDetailsWrapper}>
-                    <Text>Name : {name}</Text>
-                    <Text>Quantity : {quantity}Kg</Text>
-                    <Text>Cost : Rs{cost}</Text>
+                    <Text style={styles.eventDetailsText}>Name: {name}</Text>
+                    <Text style={styles.eventDetailsText}>
+                      Quantity: {quantity} kg
+                    </Text>
+                    <Text style={styles.eventDetailsText}>
+                      Cost: Rs. {cost}
+                    </Text>
                   </View>
                 ))}
               </View>
@@ -105,15 +133,25 @@ const CostEstimatorModal = ({
 export default CostEstimatorModal;
 
 styles = StyleSheet.create({
-  plantDetails: {gap: 3, alignItems: 'flex-start'},
+  closeBtnWrapper: {
+    position: 'relative',
+    alignSelf: 'flex-end',
+  },
+
+  plantDetails: {gap: 3},
+  plantDetailsText: {
+    fontSize: 14,
+    fontFamily: 'Gilroy-SemiBold',
+    maxWidth: '85%',
+    color: '#FFF',
+  },
   plantDetailsWrapper: {
     flexDirection: 'row',
-    gap: 16,
-    justifyContent: 'flex-start',
-    backgroundColor: '#9ECC66',
+    gap: 12,
+    backgroundColor: '#588C19',
     borderRadius: 15,
     padding: 16,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
 
   totalCost: {
@@ -134,7 +172,7 @@ styles = StyleSheet.create({
     borderColor: '#6EAF1F',
     borderWidth: 1,
     paddingVertical: 12,
-    gap: 8,
+    gap: 5,
     alignItems: 'center',
   },
 
@@ -142,7 +180,7 @@ styles = StyleSheet.create({
     fontFamily: 'Gilroy-SemiBold',
     fontSize: 16,
     alignSelf: 'flex-start',
-    paddingLeft: 24,
+    paddingHorizontal: 24,
   },
 
   eventsWrapper: {gap: 16},
@@ -151,13 +189,14 @@ styles = StyleSheet.create({
     fontFamily: 'Gilroy-SemiBold',
     fontSize: 18,
     paddingTop: 24,
-    marginBottom: 8,
+    marginBottom: 12,
+    alignSelf: 'center',
   },
 
   eventDetailsWrapper: {
     gap: 8,
     justifyContent: 'flex-start',
-    backgroundColor: '#9ECC66',
+    backgroundColor: '#CFE4B4',
     borderRadius: 15,
     padding: 10,
     alignItems: 'center',
@@ -175,8 +214,12 @@ styles = StyleSheet.create({
   },
 
   eventTitle: {
-    fontSize: 16,
-    fontFamily: 'Gilroy-SemiBold',
+    fontSize: 17,
+    fontFamily: 'Gilroy-Bold',
     paddingLeft: 16,
+  },
+  eventDetailsText: {
+    fontSize: 14,
+    fontFamily: 'Gilroy-Regular',
   },
 });
