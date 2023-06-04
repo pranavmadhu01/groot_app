@@ -1,53 +1,109 @@
-import {StyleSheet, View} from 'react-native';
-import {Divider, Text} from 'react-native-paper';
-import {SunWindIcon} from '../../icons';
-const Weathercomponent = ({weatherdata}) => {
+import {useContext, useEffect, useState} from 'react';
+import {StyleSheet, View, Image} from 'react-native';
+import {ActivityIndicator, Divider, Text} from 'react-native-paper';
+import {LoginContext} from '../../../../App';
+import {getFarmWeather} from '../../../api';
+import {Toast} from '../../../utils/Toast.util';
+const Weathercomponent = () => {
+  const data = useContext(LoginContext);
+  const [weather, setWeather] = useState({});
+  const [loading, setIsLoading] = useState(true);
+  useEffect(() => {
+    getFarmWeather(data.token, data.farmlatlng)
+      .then(response => {
+        setWeather(response.data.data.weather);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        Toast(error.response.data.message);
+      });
+  }, [data.reload]);
   return (
     <View style={styles.weatherCardContainer}>
-      <View style={styles.weatherCardBg} />
-      <View style={styles.weatherCardWrapper}>
-        <View style={styles.topPart}>
-          <Text style={styles.temperatureText}>24°C</Text>
-          <View>
-            <Text style={styles.labelText}>H: 32°C</Text>
-            <Text style={styles.labelText}>L: 21°C</Text>
+      {loading ? (
+        <ActivityIndicator color="#6EAF1F" />
+      ) : (
+        <>
+          <View style={styles.weatherCardBg} />
+          <View style={styles.weatherCardWrapper}>
+            <View style={styles.topPart}>
+              {weather.main && (
+                <>
+                  <Text style={styles.temperatureText}>
+                    {weather.main.temp.toFixed(2)} °C
+                  </Text>
+                  <View>
+                    <Text style={styles.labelText}>
+                      H : {weather.main.temp_max.toFixed(2)} °C
+                    </Text>
+                    <Text style={styles.labelText}>
+                      L : {weather.main.temp_min.toFixed(2)} °C
+                    </Text>
+                  </View>
+                </>
+              )}
+
+              <Image
+                style={{width: 50, height: 50}}
+                source={{
+                  uri: `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`,
+                }}
+              />
+            </View>
+            <Text>{weather.name}</Text>
+            <Divider style={{backgroundColor: '#000'}} />
+            <View style={styles.bottomPart}>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Humidity</Text>
+                {weather.main && (
+                  <Text style={styles.value}>
+                    {weather.main.humidity && weather.main.humidity.toFixed(2)}{' '}
+                    %
+                  </Text>
+                )}
+              </View>
+              {weather.precipitation && (
+                <View style={styles.bottomPartTextWrapper}>
+                  <Text style={styles.labelText}>Precipitation</Text>
+                  <Text style={styles.value}>
+                    {weather.precipitation.value} mm
+                  </Text>
+                </View>
+              )}
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Pressure</Text>
+                <Text style={styles.value}>{weather.main.pressure} hPa</Text>
+              </View>
+              <View style={styles.bottomPartTextWrapper}>
+                <Text style={styles.labelText}>Wind</Text>
+                <Text style={styles.value}>{weather.wind.speed} m/s</Text>
+              </View>
+            </View>
           </View>
-          <SunWindIcon width={75} height={75} color={'#151810'} />
-        </View>
-        <Divider style={{backgroundColor: '#000'}} />
-        <View style={styles.bottomPart}>
-          <View style={styles.bottomPartTextWrapper}>
-            <Text style={styles.labelText}>Humidity</Text>
-            <Text style={styles.value}>30%</Text>
-          </View>
-          <View style={styles.bottomPartTextWrapper}>
-            <Text style={styles.labelText}>Precipitation</Text>
-            <Text style={styles.value}>5.1ml</Text>
-          </View>
-          <View style={styles.bottomPartTextWrapper}>
-            <Text style={styles.labelText}>Pressure</Text>
-            <Text style={styles.value}>450hPa</Text>
-          </View>
-          <View style={styles.bottomPartTextWrapper}>
-            <Text style={styles.labelText}>Wind</Text>
-            <Text style={styles.value}>23m/s</Text>
-          </View>
-        </View>
-      </View>
+        </>
+      )}
     </View>
   );
 };
 
 export default Weathercomponent;
 const styles = StyleSheet.create({
-  weatherCardContainer: {fontWeight: 100, fontSize: 18},
+  weatherCardContainer: {
+    fontWeight: 100,
+    fontSize: 18,
+    borderColor: '#6EAF1F',
+    borderWidth: 0.3,
+    minHeight: 100,
+    borderRadius: 10,
+    justifyContent: 'center',
+  },
   weatherCardWrapper: {
     position: 'relative',
     paddingHorizontal: 24,
     paddingVertical: 24,
     gap: 20,
   },
-  temperatureText: {fontSize: 48, fontFamily: 'Gilroy-SemiBold'},
+  temperatureText: {fontSize: 35, fontFamily: 'Gilroy-SemiBold'},
   weatherCardBg: {
     position: 'absolute',
     width: '100%',

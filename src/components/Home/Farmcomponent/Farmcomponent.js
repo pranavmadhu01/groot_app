@@ -27,6 +27,7 @@ const Farmcomponent = ({farms}) => {
               isNavigator={false}
               onPress={() => {
                 data.setFarmId(_id);
+                data.setReload(!data.reload);
                 data.setfarmlatlng(locationvauge);
               }}
             />

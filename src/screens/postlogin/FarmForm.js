@@ -54,7 +54,8 @@ const FarmForm = ({navigation}) => {
         Toast(response.data.data.message);
         data.setLoading(false);
         if (data.isLogin) {
-          data.setReload(!data.reload);
+          // data.setReload(!data.reload);
+          data.setHomeReload(!data.homereload);
           navigation.goBack();
         } else {
           data.setIsLogin(true);
