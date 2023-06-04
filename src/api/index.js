@@ -23,12 +23,17 @@ const getFarmsByUser = async token => {
     headers: {Authorization: 'Bearer ' + token},
   });
 };
+const getFarmDataByUserId = async token => {
+  return await axios.get(`${farmUrl}/user/farmdata`, {
+    headers: {Authorization: 'Bearer ' + token},
+  });
+};
 const addFarm = async (data, token) => {
   return await axios.post(`${farmUrl}/addfarm`, data, {
     headers: {Authorization: 'Bearer ' + token},
   });
 };
-export {getFarmsByUser, addFarm};
+export {getFarmsByUser, getFarmDataByUserId, addFarm};
 //disease detection
 const diseaseDetection = async data => {
   return await axios.post(diseaseDetectionUrl, data, {
