@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Toast} from '../../utils/Toast.util';
 import {LoginContext} from '../../../App';
 import {addFarm} from '../../api';
-const FarmForm = () => {
+const FarmForm = ({navigation}) => {
   const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
     name: '',
@@ -53,7 +53,13 @@ const FarmForm = () => {
       .then(response => {
         Toast(response.data.data.message);
         data.setLoading(false);
-        data.setIsLogin(true);
+        if (data.isLogin) {
+          // data.setReload(!data.reload);
+          data.setHomeReload(!data.homereload);
+          navigation.goBack();
+        } else {
+          data.setIsLogin(true);
+        }
       })
       .catch(error => {
         data.setLoading(false);
