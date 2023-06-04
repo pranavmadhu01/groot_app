@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {ActionSheetIOS} from 'react-native/types';
-const url = 'http://192.168.18.22:8000';
+const url = 'http://192.168.0.169:8000';
+// 192.168.0.169
 const diseaseDetectionUrl = `${url}/detect`;
 const plantUrl = `${url}/plant`;
 const fertilizerUrl = `${url}/fertilizer`;
