@@ -9,6 +9,7 @@ import {
 import {useContext, useState} from 'react';
 import {CustomButton} from '../buttons';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import {Table, Row, Rows} from 'react-native-table-component';
 import {CloseIcon} from '../icons';
 import {Toast} from '../../utils/Toast.util';
 import {addUserTimeline} from '../../api';
@@ -125,17 +126,30 @@ const CostEstimatorModal = ({
             {fertilizerData.map(({fertilizerRequired, title}, index) => (
               <View key={index} style={styles.eventDetailsWrapper}>
                 <Text style={styles.eventTitle}>{title}</Text>
-                {fertilizerRequired.map(({name, cost, quantity}, index) => (
-                  <View key={index} style={styles.fertilizerDetailsWrapper}>
-                    <Text style={styles.eventDetailsText}>Name: {name}</Text>
-                    <Text style={styles.eventDetailsText}>
-                      Quantity: {quantity} kg
-                    </Text>
-                    <Text style={styles.eventDetailsText}>
-                      Cost: Rs. {cost}
-                    </Text>
+                <View key={index} style={styles.fertilizerDetailsWrapper}>
+                  <View style={styles.container}>
+                    <Table
+                      borderStyle={{
+                        borderWidth: 1,
+                        borderColor: '#CFE4B4',
+                      }}
+                      style={{borderRadius: 12}}>
+                      <Row
+                        data={['Name', 'Quantity', 'Cost']}
+                        style={styles.head}
+                        textStyle={styles.title}
+                      />
+                      {fertilizerRequired.map(
+                        ({name, cost, quantity}, index) => (
+                          <Row
+                            data={[name, quantity, cost]}
+                            textStyle={styles.text}
+                          />
+                        ),
+                      )}
+                    </Table>
                   </View>
-                ))}
+                </View>
               </View>
             ))}
           </View>
@@ -241,8 +255,8 @@ styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#FFF',
     borderRadius: 15,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
     alignItems: 'flex-start',
   },
 
@@ -255,4 +269,14 @@ styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Gilroy-Regular',
   },
+
+  container: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  head: {height: 40, backgroundColor: '#fff', borderRadius: 12},
+  title: {margin: 6, color: '#000', fontSize: 16, fontFamily: 'Gilroy-Bold'},
+  text: {margin: 6, color: '#000', fontSize: 14, fontFamily: 'Gilroy-Medium'},
 });
