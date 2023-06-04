@@ -22,6 +22,9 @@ const Farmcomponent = ({farms}) => {
               padding={6}
               mode={data.farmId === _id ? 'contained' : 'outlined'}
               borderRadius={50}
+              fontFamily={
+                data.farmId === _id ? 'Gilroy-SemiBold' : 'Gilroy-Regular'
+              }
               alignSelf={'center'}
               margin={(0, 6, 0, 0)}
               isNavigator={false}
@@ -34,7 +37,7 @@ const Farmcomponent = ({farms}) => {
           ))}
           <CustomButton
             buttonColor={'#6EAF1F'}
-            textColor={'#000'}
+            textColor={'#FFF'}
             height={55}
             title={'Add'}
             padding={0}
@@ -43,6 +46,7 @@ const Farmcomponent = ({farms}) => {
             alignSelf={'center'}
             isNavigator={true}
             screenName={'addfarmscreen'}
+            fontFamily={'Gilroy-SemiBold'}
           />
         </View>
       </ScrollView>
