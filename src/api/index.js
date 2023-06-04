@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {ActionSheetIOS} from 'react-native/types';
 const url = 'http://192.168.18.22:8000';
 const diseaseDetectionUrl = `${url}/detect`;
 const plantUrl = `${url}/plant`;
@@ -7,6 +6,7 @@ const fertilizerUrl = `${url}/fertilizer`;
 const authUrl = `${url}/auth`;
 const userUrl = `${url}/user`;
 const farmUrl = `${url}/farm`;
+const estimatorUrl = `${url}/estimate`;
 
 //auth apis
 const loginWithFarmCheck = async data => {
@@ -48,6 +48,13 @@ const diseaseDetection = async data => {
   });
 };
 export {diseaseDetection};
+//cost estimator
+const getCostEstimator = async (token, data) => {
+  return await axios.post(estimatorUrl, data, {
+    headers: {Authorization: 'Bearer ' + token},
+  });
+};
+export {getCostEstimator};
 //plants
 const getAllPlants = async () => {
   return await axios.get(plantUrl);

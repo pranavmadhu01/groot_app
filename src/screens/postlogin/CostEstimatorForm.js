@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -11,148 +11,169 @@ import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
-import {getAllFertilizers, getAllPlants} from '../../api';
+import {getAllFertilizers, getAllPlants, getCostEstimator} from '../../api';
 import {Dropdown} from 'react-native-element-dropdown';
 import CostEstimatorModal from '../../components/modals/CostEstimatorModal';
+import {Toast} from '../../utils/Toast.util';
+import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
+import {LoginContext} from '../../../App';
 
 const vw = Dimensions.get('window').width;
 
 const CostEstimatorForm = ({navigation}) => {
+  const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
     plant_id: '',
-    area: 0,
-    pH: 0.0,
+    area: null,
+    pH: null,
   });
   const [plants, setPlants] = useState([]);
   const [fertilizers, setFertilizers] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
-  const calculateCost = () => {
-    const getLocation = async () => {
-      try {
-        Geolocation.requestAuthorization();
-        Geolocation.getCurrentPosition(res => {
-          console.log(res);
-        });
-      } catch (err) {
-        return false;
-      }
-    };
-  };
+  const [estimatordata, setEstimatorData] = useState({});
   console.log(formdata);
+  const handleCalculate = () => {
+    data.setLoading(true);
+    getCostEstimator(data.token, formdata)
+      .then(response => {
+        setEstimatorData(response.data.data);
+        setShowModal(true);
+        data.setLoading(false);
+      })
+      .catch(error => {
+        Toast(error.response.data.message);
+        data.setLoading(false);
+      });
+  };
   useEffect(() => {
+    data.setLoading(true);
     Promise.all([getAllPlants(), getAllFertilizers()])
       .then(response => {
         setPlants(response[0].data.data);
         setFertilizers(response[1].data.data);
+        data.setLoading(false);
       })
       .catch(error => {
         console.log(error);
+        data.setLoading(false);
       });
   }, []);
-  return (
-    <View style={styles.costFormContainer}>
-      <View style={styles.topBar}>
-        <View style={styles.logoWrapper}>
-          <Leaves width={36} height={36} />
-          <Text style={styles.logoText}>Groot</Text>
+  if (data.loading) {
+    return <Loadingcomponent />;
+  } else {
+    return (
+      <View style={styles.costFormContainer}>
+        <View style={styles.topBar}>
+          <View style={styles.logoWrapper}>
+            <Leaves width={36} height={36} />
+            <Text style={styles.logoText}>Groot</Text>
+          </View>
+          <View style={styles.topBarIconWrapper}>
+            <NotificationIcon width={26} height={26} />
+            <SettingsIcon width={20} height={20} />
+          </View>
         </View>
-        <View style={styles.topBarIconWrapper}>
-          <NotificationIcon width={26} height={26} />
-          <SettingsIcon width={20} height={20} />
-        </View>
-      </View>
 
-      <CostEstimatorModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        plant={plants.filter(plant => plant._id === formdata.plant_id)}
-        fertilizers={fertilizers}
-      />
+        {showModal && (
+          <CostEstimatorModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            plant={plants.filter(plant => plant._id === formdata.plant_id)[0]}
+            fertilizers={fertilizers}
+            estimatordata={estimatordata}
+          />
+        )}
 
-      <ScrollView contentContainerStyle={styles.costFormWrapper}>
-        <View style={styles.costEstimatorTextWrapper}>
-          <Text variant="headlineMedium" style={styles.titleText}>
-            Cost Estimator
-          </Text>
-        </View>
-        <View>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={plants.map(({name, _id}) => ({
-              value: _id,
-              label: name,
-            }))}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder="Select crop"
-            searchPlaceholder="Search crop..."
-            value={formdata.plant_id}
-            onChange={item => {
-              setFormData({...formdata, plant_id: item.value});
-            }}
-          />
-          <TextInput
-            mode="outlined"
-            keyboardType="number-pad"
-            placeholder="Enter the area of cultivation"
-            value={formdata.area}
-            onChangeText={text => setFormData({...formdata, area: text})}
-            style={styles.textFieldStyle}
-            outlineStyle={{borderRadius: 12, borderWidth: 3}}
-            outlineColor="#fff"
-            activeOutlineColor="#6EAF1F"
-            placeholderTextColor="#808A75"
-          />
-          <TextInput
-            mode="outlined"
-            keyboardType="number-pad"
-            placeholder="Enter the pH value of soil"
-            value={formdata.pH}
-            onChangeText={text => setFormData({...formdata, pH: text})}
-            style={styles.textFieldStyle}
-            outlineStyle={{borderRadius: 12}}
-            outlineColor="#fff"
-            activeOutlineColor="#6EAF1F"
-            placeholderTextColor="#808A75"
-          />
-          <Text
-            variant="labelLarge"
-            style={{
-              textAlign: 'center',
-              color: '#808A75',
-              marginVertical: 10,
-              fontSize: 14,
-            }}>
-            or
-          </Text>
-          <Pressable onPress={calculateCost} style={{alignItems: 'center'}}>
-            <Text
-              style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}
-              variant="labelSmall">
-              Find pH value of soil
+        <ScrollView contentContainerStyle={styles.costFormWrapper}>
+          <View style={styles.costEstimatorTextWrapper}>
+            <Text variant="headlineMedium" style={styles.titleText}>
+              Cost Estimator
             </Text>
-          </Pressable>
-        </View>
-        <CustomButton
-          title="Calculate"
-          borderRadius={30}
-          mode="contained"
-          buttonColor="#6EAF1F"
-          textColor="#fff"
-          height={60}
-          onPress={() => setShowModal(true)}
-          disabled={Object.keys(formdata).length === 0}
-        />
-      </ScrollView>
-    </View>
-  );
+          </View>
+          <View>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={plants.map(({name, _id}) => ({
+                value: _id,
+                label: name,
+              }))}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="Select crop"
+              searchPlaceholder="Search crop..."
+              value={formdata.plant_id}
+              onChange={item => {
+                setFormData({...formdata, plant_id: item.value});
+              }}
+            />
+            <TextInput
+              mode="outlined"
+              keyboardType="number-pad"
+              placeholder="Enter the area of cultivation"
+              value={formdata.area && formdata.area.toString()}
+              onChangeText={text =>
+                setFormData({...formdata, area: parseFloat(text)})
+              }
+              style={styles.textFieldStyle}
+              outlineStyle={{borderRadius: 12, borderWidth: 3}}
+              outlineColor="#fff"
+              activeOutlineColor="#6EAF1F"
+              placeholderTextColor="#808A75"
+            />
+            <TextInput
+              mode="outlined"
+              keyboardType="number-pad"
+              placeholder="Enter the pH value of soil"
+              value={formdata.pH && formdata.pH.toString()}
+              onChangeText={text =>
+                setFormData({...formdata, pH: parseFloat(text)})
+              }
+              style={styles.textFieldStyle}
+              outlineStyle={{borderRadius: 12}}
+              outlineColor="#fff"
+              activeOutlineColor="#6EAF1F"
+              placeholderTextColor="#808A75"
+            />
+            <Text
+              variant="labelLarge"
+              style={{
+                textAlign: 'center',
+                color: '#808A75',
+                marginVertical: 10,
+                fontSize: 14,
+              }}>
+              or
+            </Text>
+            <Pressable
+              onPress={() => console.log('you pressed me')}
+              style={{alignItems: 'center'}}>
+              <Text
+                style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}
+                variant="labelSmall">
+                Find pH value of soil
+              </Text>
+            </Pressable>
+          </View>
+          <CustomButton
+            title="Calculate"
+            borderRadius={30}
+            mode="contained"
+            buttonColor="#6EAF1F"
+            textColor="#fff"
+            height={60}
+            onPress={() => handleCalculate()}
+            disabled={Object.keys(formdata).length === 0}
+          />
+        </ScrollView>
+      </View>
+    );
+  }
 };
 
 export default CostEstimatorForm;
