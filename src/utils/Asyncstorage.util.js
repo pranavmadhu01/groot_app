@@ -8,7 +8,6 @@ const addToAsyncStorage = async (key, value) => {
   }
 };
 const retriveFromAsyncStorage = async key => {
-  let result;
   try {
     return await AsyncStorage.getItem(key);
   } catch (error) {

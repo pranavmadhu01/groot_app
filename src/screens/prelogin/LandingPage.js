@@ -2,19 +2,46 @@ import React, {useEffect, useContext} from 'react';
 import {ImageBackground, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {LoginContext} from '../../../App';
+import {getFarmsByUser} from '../../api';
 import {LandingPageBg} from '../../assets/images/images';
 import {CustomButton} from '../../components/buttons';
 import {Leaves} from '../../components/logos';
 import {retriveFromAsyncStorage} from '../../utils/Asyncstorage.util';
-
+import {requestAllPermissions} from '../../utils/Permissions.util';
+import {Toast} from '../../utils/Toast.util';
 const LandingPage = ({navigation}) => {
   const data = useContext(LoginContext);
   useEffect(() => {
-    console.log('Hello');
-    console.log(data);
-    retriveFromAsyncStorage('@jwt_token').then(token => {
-      console.log(token);
-      // if()
+    requestAllPermissions().then(response => {
+      if (
+        Object.values(response).includes('denied') ||
+        Object.values(response).includes('never_ask_again')
+      ) {
+        Toast(
+          'Please accept all permissions befor login to the app or else some features may not be available',
+        );
+      } else {
+        retriveFromAsyncStorage('@jwt_token').then(token => {
+          if (token) {
+            data.setToken(token);
+            getFarmsByUser(token)
+              .then(response => {
+                if (response.data.data.isFarmPresent) {
+                  data.setToken(token);
+                  data.setIsLogin(true);
+                } else {
+                  Toast('Add a farm to continue');
+                  navigation.navigate('farmadd');
+                }
+              })
+              .catch(error => {
+                console.log('Error =>', error);
+              });
+          } else {
+            Toast('Login or signup to continue');
+          }
+        });
+      }
     });
   }, []);
   return (

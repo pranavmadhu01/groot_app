@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
@@ -7,37 +7,72 @@ import {CustomButton} from '../../components/buttons';
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
 import {FormTitleWrapper} from '../../components/elements';
-
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Toast} from '../../utils/Toast.util';
+import {LoginContext} from '../../../App';
+import {addFarm} from '../../api';
 const FarmForm = () => {
+  const data = useContext(LoginContext);
+  console.log(data);
   const [formdata, setFormData] = useState({
     name: '',
-    type: '',
-    location: '',
+    overall_area: null,
+    locationvauge: {
+      latitude: 0,
+      longitude: 0,
+      altitude: 0,
+    },
   });
-
+  console.log(formdata);
   const getLocation = async () => {
+    Geolocation.setRNConfiguration({locationProvider: 'android'});
     try {
       Geolocation.requestAuthorization();
-      Geolocation.getCurrentPosition(res => {
-        console.log(res);
-      });
+      Geolocation.getCurrentPosition(
+        success => {
+          setFormData({
+            ...formdata,
+            locationvauge: {
+              latitude: success.coords.latitude,
+              longitude: success.coords.longitude,
+              altitude: success.coords.altitude,
+            },
+          });
+        },
+        error => {
+          Toast('Check your location permission once again and try');
+          console.log(error);
+        },
+        {enableHighAccuracy: true},
+      );
     } catch (err) {
       return false;
     }
   };
-
+  const handleAddFarm = () => {
+    addFarm(formdata, data.token)
+      .then(response => {
+        Toast(response.data.data.message);
+        data.setIsLogin(true);
+      })
+      .catch(error => {
+        Toast(error.response.data.message);
+      });
+  };
   return (
     <View style={styles.farmFormContainer}>
-      <View style={styles.topBar}>
-        <View style={styles.logoWrapper}>
-          <Leaves width={36} height={36} />
-          <Text style={styles.logoText}>Groot</Text>
+      {data.isLogin && (
+        <View style={styles.topBar}>
+          <View style={styles.logoWrapper}>
+            <Leaves width={36} height={36} />
+            <Text style={styles.logoText}>Groot</Text>
+          </View>
+          <View style={styles.topBarIconWrapper}>
+            <NotificationIcon width={26} height={26} />
+            <SettingsIcon width={20} height={20} />
+          </View>
         </View>
-        <View style={styles.topBarIconWrapper}>
-          <NotificationIcon width={26} height={26} />
-          <SettingsIcon width={20} height={20} />
-        </View>
-      </View>
+      )}
       <View style={styles.farmFormWrapper}>
         <FormTitleWrapper title={'Create Farm'} isCompact={false} />
 
@@ -57,10 +92,12 @@ const FarmForm = () => {
             />
             <TextInput
               mode="outlined"
-              keyboardType="default"
-              placeholder="Enter the type of crop"
-              value={formdata.type}
-              onChangeText={text => setFormData({...formdata, type: text})}
+              keyboardType="number-pad"
+              placeholder="Enter the full area of the farm"
+              value={formdata.overall_area && formdata.overall_area.toString()}
+              onChangeText={text =>
+                setFormData({...formdata, overall_area: parseFloat(text)})
+              }
               style={styles.textFieldStyle}
               outlineStyle={{borderRadius: 12, borderWidth: 3}}
               outlineColor="#fff"
@@ -69,6 +106,7 @@ const FarmForm = () => {
             />
           </View>
           <TextInput
+            disabled={true}
             mode="outlined"
             keyboardType="default"
             placeholder="Enter location"
@@ -80,6 +118,17 @@ const FarmForm = () => {
             activeOutlineColor="#6EAF1F"
             placeholderTextColor="#808A75"
           />
+          <Text
+            variant="labelLarge"
+            style={{
+              textAlign: 'center',
+              color: 'indianred',
+              marginVertical: 10,
+              fontSize: 14,
+            }}>
+            <Icon name="exclamation-triangle" size={30} color="#900" />
+            Enter location functionality coming soon..
+          </Text>
           <Text
             variant="labelLarge"
             style={{
@@ -105,6 +154,8 @@ const FarmForm = () => {
           buttonColor="#6EAF1F"
           textColor="#fff"
           height={60}
+          isNavigator={false}
+          onPress={() => handleAddFarm()}
         />
       </View>
     </View>

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -23,6 +23,8 @@ import {addToAsyncStorage} from '../../utils/Asyncstorage.util';
 import {Toast} from '../../utils/Toast.util';
 
 const Login = ({navigation}) => {
+  const data = useContext();
+  console.log(data);
   const [formdata, setFormData] = useState({
     // email: '',
     phonenumber: '',
@@ -74,12 +76,13 @@ const Login = ({navigation}) => {
           '@jwt_token',
           response.data.data.userDetails.access_token,
         );
+        data.setToken(response.data.data.userDetails.access_token);
         if (response.data.data.isFarmPresent) {
           Toast('farm present have a nice day  :)');
           navigation.navigate('Main Screen');
         } else {
           Toast('farm not present add a farm to continue');
-          // navigation.navigate('farmadd');
+          navigation.navigate('farmadd');
         }
       })
       .catch(error => {
