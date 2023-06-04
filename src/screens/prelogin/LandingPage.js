@@ -5,6 +5,7 @@ import {LoginContext} from '../../../App';
 import {getFarmsByUser} from '../../api';
 import {LandingPageBg} from '../../assets/images/images';
 import {CustomButton} from '../../components/buttons';
+import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
 import {Leaves} from '../../components/logos';
 import {retriveFromAsyncStorage} from '../../utils/Asyncstorage.util';
 import {requestAllPermissions} from '../../utils/Permissions.util';
@@ -13,14 +14,17 @@ const LandingPage = ({navigation}) => {
   const data = useContext(LoginContext);
   useEffect(() => {
     requestAllPermissions().then(response => {
+      data.setLoading(true);
       if (
         Object.values(response).includes('denied') ||
         Object.values(response).includes('never_ask_again')
       ) {
+        data.setLoading(false);
         Toast(
           'Please accept all permissions befor login to the app or else some features may not be available',
         );
       } else {
+        data.setLoading(true);
         retriveFromAsyncStorage('@jwt_token').then(token => {
           if (token) {
             data.setToken(token);
@@ -29,58 +33,66 @@ const LandingPage = ({navigation}) => {
                 if (response.data.data.isFarmPresent) {
                   data.setToken(token);
                   data.setIsLogin(true);
+                  data.setLoading(false);
                 } else {
                   Toast('Add a farm to continue');
                   navigation.navigate('farmadd');
+                  data.setLoading(false);
                 }
               })
               .catch(error => {
                 console.log('Error =>', error);
+                data.setLoading(false);
               });
           } else {
             Toast('Login or signup to continue');
+            data.setLoading(false);
           }
         });
       }
     });
   }, []);
-  return (
-    <ImageBackground source={LandingPageBg} style={styles.bgImage}>
-      <View style={styles.landingPageWrapper}>
-        <View style={styles.leavesLogoWrapper}>
-          <Leaves width={60} height={60} hasBorder={true} />
-        </View>
-        <View style={styles.textWrapper}>
-          <Text variant="headlineLarge" style={styles.welcomeTextStyle}>
-            Welcome to
-          </Text>
-          <Text variant="displayMedium" style={styles.grootTextStyle}>
-            Groot
-          </Text>
-        </View>
-        <View style={styles.bottomWrapper}>
-          <CustomButton
-            title="Get Started"
-            textColor="#fff"
-            buttonColor="#6EAF1F"
-            height={60}
-            isNavigator={true}
-            screenName={'Sign Up'}
-          />
-          <View style={styles.buttontextWrapper}>
-            <Text variant="labelMedium" style={styles.queryStyle}>
-              Already registered?
+  if (data.loading) {
+    return <Loadingcomponent />;
+  } else {
+    return (
+      <ImageBackground source={LandingPageBg} style={styles.bgImage}>
+        <View style={styles.landingPageWrapper}>
+          <View style={styles.leavesLogoWrapper}>
+            <Leaves width={60} height={60} hasBorder={true} />
+          </View>
+          <View style={styles.textWrapper}>
+            <Text variant="headlineLarge" style={styles.welcomeTextStyle}>
+              Welcome to
             </Text>
-            <Pressable onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.queryLink} variant="labelMedium">
-                Login
+            <Text variant="displayMedium" style={styles.grootTextStyle}>
+              Groot
+            </Text>
+          </View>
+          <View style={styles.bottomWrapper}>
+            <CustomButton
+              title="Get Started"
+              textColor="#fff"
+              buttonColor="#6EAF1F"
+              height={60}
+              isNavigator={true}
+              screenName={'Sign Up'}
+            />
+            <View style={styles.buttontextWrapper}>
+              <Text variant="labelMedium" style={styles.queryStyle}>
+                Already registered?
               </Text>
-            </Pressable>
+              <Pressable onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.queryLink} variant="labelMedium">
+                  Login
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
-    </ImageBackground>
-  );
+      </ImageBackground>
+    );
+  }
 };
 export default LandingPage;
 

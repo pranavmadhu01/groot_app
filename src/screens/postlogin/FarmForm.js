@@ -13,7 +13,6 @@ import {LoginContext} from '../../../App';
 import {addFarm} from '../../api';
 const FarmForm = () => {
   const data = useContext(LoginContext);
-  console.log(data);
   const [formdata, setFormData] = useState({
     name: '',
     overall_area: null,
@@ -23,7 +22,6 @@ const FarmForm = () => {
       altitude: 0,
     },
   });
-  console.log(formdata);
   const getLocation = async () => {
     Geolocation.setRNConfiguration({locationProvider: 'android'});
     try {
@@ -38,10 +36,10 @@ const FarmForm = () => {
               altitude: success.coords.altitude,
             },
           });
+          Toast('Location captured');
         },
         error => {
           Toast('Check your location permission once again and try');
-          console.log(error);
         },
         {enableHighAccuracy: true},
       );
@@ -50,12 +48,15 @@ const FarmForm = () => {
     }
   };
   const handleAddFarm = () => {
+    data.setLoading(true);
     addFarm(formdata, data.token)
       .then(response => {
         Toast(response.data.data.message);
+        data.setLoading(false);
         data.setIsLogin(true);
       })
       .catch(error => {
+        data.setLoading(false);
         Toast(error.response.data.message);
       });
   };
@@ -105,7 +106,7 @@ const FarmForm = () => {
               placeholderTextColor="#808A75"
             />
           </View>
-          <TextInput
+          {/* <TextInput
             disabled={true}
             mode="outlined"
             keyboardType="default"
@@ -128,8 +129,8 @@ const FarmForm = () => {
             }}>
             <Icon name="exclamation-triangle" size={30} color="#900" />
             Enter location functionality coming soon..
-          </Text>
-          <Text
+          </Text> */}
+          {/* <Text
             variant="labelLarge"
             style={{
               textAlign: 'center',
@@ -138,7 +139,7 @@ const FarmForm = () => {
               fontSize: 14,
             }}>
             or
-          </Text>
+          </Text> */}
           <Pressable onPress={getLocation} style={{alignItems: 'center'}}>
             <Text
               style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -21,8 +21,10 @@ import {
 import {FormTitleWrapper} from '../../components/elements';
 import {signup} from '../../api';
 import {Toast} from '../../utils/Toast.util';
+import {LoginContext} from '../../../App';
 
 const SignUp = ({navigation}) => {
+  const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
     name: '',
     email: '',
@@ -73,21 +75,22 @@ const SignUp = ({navigation}) => {
   const handleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
-  console.log(formdata);
-  console.log(confirmPassword);
   const handleSignup = () => {
+    data.setLoading(true);
     if (formdata.password === confirmPassword) {
-      console.log('accepted');
       signup(formdata)
         .then(response => {
+          data.setLoading(false);
           navigation.navigate('Login');
           Toast(response.data.message);
         })
         .catch(error => {
           Toast(error.response.data.message);
+          data.setLoading(false);
         });
     } else {
-      console.log('check your passwords');
+      Toast('password and confirm password dont match');
+      data.setLoading(false);
     }
   };
   return (

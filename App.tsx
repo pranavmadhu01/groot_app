@@ -1,4 +1,4 @@
-import React, {useEffect, createContext, useState, useContext} from 'react';
+import React, {useEffect, createContext, useState} from 'react';
 
 import SplashScreen from 'react-native-splash-screen';
 
@@ -15,6 +15,7 @@ export const LoginContext = createContext();
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const hideSplashScreen = () => {
       SplashScreen.hide();
@@ -31,22 +32,12 @@ const App = () => {
         setIsLogin: setIsLogin,
         token: token,
         setToken: setToken,
+        loading: loading,
+        setLoading: setLoading,
       }}>
       <Provider>
         <NavigationContainer>
-          {isLogin && token ? (
-            <BottomNav />
-          ) : (
-            <Stack.Navigator
-              initialRouteName="preloginnavigation"
-              screenOptions={{headerShown: false}}>
-              <Stack.Screen
-                name="preloginnavigation"
-                component={PreloginStack}
-              />
-              <Stack.Screen name="Main Screen" component={BottomNav} />
-            </Stack.Navigator>
-          )}
+          {isLogin && token ? <BottomNav /> : <PreloginStack />}
         </NavigationContainer>
       </Provider>
     </LoginContext.Provider>
