@@ -6,32 +6,54 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {CustomButton} from '../buttons';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {CloseIcon} from '../icons';
+import {Toast} from '../../utils/Toast.util';
+import {addUserTimeline} from '../../api';
+import {LoginContext} from '../../../App';
+import {useNavigation} from '@react-navigation/native';
 const CostEstimatorModal = ({
   showModal,
   setShowModal,
   plant,
   estimatordata,
+  area,
 }) => {
+  const navigation = useNavigation();
+  const data = useContext(LoginContext);
   const [fertilizerData, setFertilizerData] = useState(
     estimatordata.fertilizerdata,
   );
   const [seedcost, setSeedcost] = useState(estimatordata.totalseedcost);
   const [seedquanity, setSeedQuantity] = useState(estimatordata.totalseeds);
-  const handleGenerateTimeline = selecteddate => {
-    console.log(
-      'selecetd date => ',
-      selecteddate.setDate(selecteddate.getDate() + 1),
-    );
+  const handleGenerateTimeline = (event, selecteddate) => {
+    if (event === 'set') {
+      const selectedDate = selecteddate.setDate(selecteddate.getDate());
+      addUserTimeline(data.token, {
+        area: area,
+        start_date: selectedDate,
+        farm_id: data.farmId,
+        plant_id: plant._id,
+      })
+        .then(response => {
+          data.setReload(!data.reload);
+          navigation.navigate('timelinescreen');
+          Toast(response.data.data.message);
+        })
+        .catch(error => Toast(error.response.data.message));
+    }
   };
   const openDatePicker = () => {
     DateTimePickerAndroid.open({
       value: new Date(),
       mode: 'date',
-      onChange: (event, selectedDate) => handleGenerateTimeline(selectedDate),
+      onChange: (event, selectedDate) => {
+        event.type !== 'dismissed'
+          ? handleGenerateTimeline(event.type, selectedDate)
+          : Toast('You just didnt pick the date  :(');
+      },
       minimumDate: new Date().setDate(new Date().getDate() + 1),
     });
   };

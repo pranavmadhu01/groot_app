@@ -31,7 +31,6 @@ const CostEstimatorForm = ({navigation}) => {
   const [fertilizers, setFertilizers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [estimatordata, setEstimatorData] = useState({});
-  console.log(formdata);
   const handleCalculate = () => {
     data.setLoading(true);
     getCostEstimator(data.token, formdata)
@@ -81,6 +80,7 @@ const CostEstimatorForm = ({navigation}) => {
             plant={plants.filter(plant => plant._id === formdata.plant_id)[0]}
             fertilizers={fertilizers}
             estimatordata={estimatordata}
+            area={formdata.area}
           />
         )}
 

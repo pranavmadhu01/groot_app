@@ -9,6 +9,7 @@ const authUrl = `${url}/auth`;
 const userUrl = `${url}/user`;
 const farmUrl = `${url}/farm`;
 const estimatorUrl = `${url}/estimate`;
+const userTimelineUrl = `${url}/usertimeline`;
 
 //auth apis
 const loginWithFarmCheck = async data => {
@@ -68,3 +69,19 @@ const getAllFertilizers = async () => {
 };
 export {getAllFertilizers};
 //timeline
+const addUserTimeline = async (token, data) => {
+  return await axios.post(userTimelineUrl, data, {
+    headers: {Authorization: 'Bearer ' + token},
+  });
+};
+const getTimelineByUser = async token => {
+  return await axios.get(`${userTimelineUrl}/parent`, {
+    headers: {Authorization: 'Bearer ' + token},
+  });
+};
+const getTimelineEventsByTimeline = async (token, data) => {
+  return await axios.post(`${userTimelineUrl}/children`, data, {
+    headers: {Authorization: 'Bearer ' + token},
+  });
+};
+export {addUserTimeline, getTimelineByUser, getTimelineEventsByTimeline};

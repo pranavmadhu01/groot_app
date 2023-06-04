@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import {Text, ProgressBar} from 'react-native-paper';
 import {CustomButton} from '../../components/buttons';
@@ -8,171 +8,281 @@ import {Leaves} from '../../components/logos';
 import {mainStyles} from '.';
 import {TimelineCard} from '../../components/cards';
 import {TimelineCardStack} from '../../components/elements';
+import {Dropdown} from 'react-native-element-dropdown';
+import {getTimelineByUser, getTimelineEventsByTimeline} from '../../api';
+import {LoginContext} from '../../../App';
+import {Toast} from '../../utils/Toast.util';
+import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
+import {date_diff_indays} from '../../helpers/date.helper';
 
 const vw = Dimensions.get('window').width;
 
 const Timeline = ({navigation}) => {
-  return (
-    <View style={styles.timelineContainer}>
-      <View style={styles.topBar}>
-        <View style={styles.logoWrapper}>
-          <Leaves width={36} height={36} />
-          <Text style={styles.logoText}>Groot</Text>
-        </View>
-        <View style={styles.topBarIconWrapper}>
-          <NotificationIcon width={26} height={26} />
-          <SettingsIcon width={20} height={20} />
-        </View>
-      </View>
-
-      <View style={styles.farmBar}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.farms}>
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-              margin={(0, 6, 0, 0)}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#fff'}
-              textColor={'#000'}
-              title={'Grape Farm'}
-              padding={6}
-              mode={'outlined'}
-              borderRadius={50}
-              alignSelf={'center'}
-            />
-            <CustomButton
-              buttonColor={'#6EAF1F'}
-              textColor={'#000'}
-              title={'+'}
-              padding={0}
-              mode={'outlined'}
-              borderRadius={200}
-              alignSelf={'center'}
-            />
+  const [alltimelines, setAllTimelines] = useState([]);
+  const [selectedtimelineId, setSelectedTimelineId] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [selectedTimeline, setSelectedTimeline] = useState([]);
+  const data = useContext(LoginContext);
+  useEffect(() => {
+    data.setLoading(true);
+    getTimelineByUser(data.token)
+      .then(response => {
+        setAllTimelines(response.data.data.timelines);
+        data.setLoading(false);
+      })
+      .catch(error => {
+        Toast(error.response.data.message);
+        data.setLoading(false);
+      });
+  }, [data.reload]);
+  const handleSelectTimeline = async timeline_id => {
+    setLoading(true);
+    await getTimelineEventsByTimeline(data.token, {timeline_id: timeline_id})
+      .then(response => {
+        setSelectedTimeline(response.data.data.timelines);
+        setLoading(false);
+      })
+      .catch(error => {
+        Toast(error.response.data.message);
+        setLoading(false);
+      });
+  };
+  if (data.loading) {
+    return <Loadingcomponent />;
+  } else {
+    return (
+      <View style={styles.timelineContainer}>
+        <View style={styles.topBar}>
+          <View style={styles.logoWrapper}>
+            <Leaves width={36} height={36} />
+            <Text style={styles.logoText}>Groot</Text>
           </View>
-        </ScrollView>
-      </View>
-
-      <View style={styles.timelineWrapper}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.timelineContentWrapper}
-          stickyHeaderIndices={[0]}>
-          <View style={mainStyles.stickyHeader}>
-            <Text style={mainStyles.titleText}>Timeline</Text>
+          <View style={styles.topBarIconWrapper}>
+            <NotificationIcon width={26} height={26} />
+            <SettingsIcon width={20} height={20} />
           </View>
-          <View>
-            <View style={styles.progressTextWrapper}>
-              <Text style={styles.farmingProgressText}>Farming Progress</Text>
-              <View style={styles.progressDetailsWrapper}>
-                <Text style={styles.progressPercentText}>75% Completed</Text>
-                <View style={styles.daysTextWrapper}>
-                  <Text style={styles.completedDaysText}>Day 219/</Text>
-                  <Text style={styles.totalDaysText}>365</Text>
+        </View>
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={alltimelines
+            .filter(aT => aT.farm_id === data.farmId)
+            .map(({_id}, index) => ({
+              value: _id,
+              label: `Timeline${index + 1}`,
+            }))}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Select Timeline"
+          searchPlaceholder="Search Timeline"
+          value={selectedtimelineId}
+          onChange={item => {
+            setSelectedTimelineId(item.value);
+            handleSelectTimeline(item.value);
+          }}
+        />
+        {selectedTimeline.length <= 0 ? (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text>Please select a timeline to view the stats and events</Text>
+          </View>
+        ) : (
+          <View style={styles.timelineWrapper}>
+            {loading ? (
+              <Loadingcomponent />
+            ) : (
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.timelineContentWrapper}
+                stickyHeaderIndices={[0]}>
+                <View style={mainStyles.stickyHeader}>
+                  <Text style={mainStyles.titleText}>Timeline</Text>
                 </View>
-              </View>
-            </View>
-            <View style={styles.progressBarWrapper}>
-              <ProgressBar
-                progress={0.6}
-                color="#6EAF1F"
-                style={styles.progressBar}
-              />
-            </View>
+                <View>
+                  <View style={styles.progressTextWrapper}>
+                    <Text style={styles.farmingProgressText}>
+                      Farming Progress
+                    </Text>
+                    <View style={styles.progressDetailsWrapper}>
+                      <Text style={styles.progressPercentText}>
+                        {(date_diff_indays(
+                          selectedTimeline[0].start_date,
+                          new Date(),
+                        ) /
+                          date_diff_indays(
+                            selectedTimeline[0].start_date,
+                            selectedTimeline[selectedTimeline.length - 1]
+                              .end_date,
+                          )) *
+                          100}
+                        % Completed
+                      </Text>
+                      <View style={styles.daysTextWrapper}>
+                        <Text style={styles.completedDaysText}>
+                          Day{' '}
+                          {date_diff_indays(
+                            selectedTimeline[0].start_date,
+                            new Date(),
+                          )}
+                          /
+                        </Text>
+                        <Text style={styles.totalDaysText}>
+                          {date_diff_indays(
+                            selectedTimeline[0].start_date,
+                            selectedTimeline[selectedTimeline.length - 1]
+                              .end_date,
+                          )}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.progressBarWrapper}>
+                    <ProgressBar
+                      progress={
+                        date_diff_indays(
+                          selectedTimeline[0].start_date,
+                          new Date(),
+                        ) /
+                        date_diff_indays(
+                          selectedTimeline[0].start_date,
+                          selectedTimeline[selectedTimeline.length - 1]
+                            .end_date,
+                        )
+                      }
+                      color="#6EAF1F"
+                      style={styles.progressBar}
+                    />
+                  </View>
+                </View>
+                <View style={styles.statsCardContainer}>
+                  <View style={styles.statsCardBg} />
+                  <View style={styles.statsCardWrapper}>
+                    <View style={styles.statsCardTextWrapper}>
+                      <Text style={styles.labelText}>Progress</Text>
+                      <Text style={styles.value}>
+                        {(date_diff_indays(
+                          selectedTimeline[0].start_date,
+                          new Date(),
+                        ) /
+                          date_diff_indays(
+                            selectedTimeline[0].start_date,
+                            selectedTimeline[selectedTimeline.length - 1]
+                              .end_date,
+                          )) *
+                          100}
+                        %
+                      </Text>
+                    </View>
+                    <View style={styles.statsCardTextWrapper}>
+                      <Text style={styles.labelText}>Days Left</Text>
+                      <Text style={styles.value}>
+                        {date_diff_indays(
+                          new Date(),
+                          selectedTimeline[selectedTimeline.length - 1]
+                            .end_date,
+                        )}
+                      </Text>
+                    </View>
+                    {/* <View style={styles.statsCardTextWrapper}>
+                      <Text style={styles.labelText}>Fertilizers Used</Text>
+                      <Text style={styles.value}>24 kg</Text>
+                    </View>
+                    <View style={styles.statsCardTextWrapper}>
+                      <Text style={styles.labelText}>Total Cost</Text>
+                      <Text style={styles.value}>25.6 K</Text>
+                    </View> */}
+                  </View>
+                </View>
+                {/* <View style={styles.timelineStackWrapper}>
+                  <TimelineCardStack
+                    startDate={'23 JAN'}
+                    endDate={'23 MAY'}
+                    year={2023}
+                    title={'Title'}
+                    description={
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
+                    }
+                    stackLevel={2}
+                  />
+                </View> */}
+                {selectedTimeline.map(
+                  ({name, start_date, end_date, description}, index) => (
+                    <View style={styles.timelineWrapper} key={index}>
+                      <TimelineCard
+                        inTimeline={true}
+                        isHighlighted={false}
+                        startDate={new Date(start_date).toDateString()}
+                        endDate={new Date(end_date).toDateString()}
+                        // year={2023}
+                        title={name}
+                        description={description}
+                      />
+                    </View>
+                  ),
+                )}
+              </ScrollView>
+            )}
           </View>
-          <View style={styles.statsCardContainer}>
-            <View style={styles.statsCardBg} />
-            <View style={styles.statsCardWrapper}>
-              <View style={styles.statsCardTextWrapper}>
-                <Text style={styles.labelText}>Progress</Text>
-                <Text style={styles.value}>75%</Text>
-              </View>
-              <View style={styles.statsCardTextWrapper}>
-                <Text style={styles.labelText}>Days Left</Text>
-                <Text style={styles.value}>146</Text>
-              </View>
-              <View style={styles.statsCardTextWrapper}>
-                <Text style={styles.labelText}>Fertilizers Used</Text>
-                <Text style={styles.value}>24 kg</Text>
-              </View>
-              <View style={styles.statsCardTextWrapper}>
-                <Text style={styles.labelText}>Total Cost</Text>
-                <Text style={styles.value}>25.6 K</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.timelineStackWrapper}>
-            <TimelineCardStack
-              startDate={'23 JAN'}
-              endDate={'23 MAY'}
-              year={2023}
-              title={'Title'}
-              description={
-                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
-              }
-              stackLevel={2}
-            />
-          </View>
-          <View style={styles.timelineWrapper}>
-            <TimelineCard
-              inTimeline={true}
-              isHighlighted={true}
-              startDate={'23 JAN'}
-              endDate={'23 MAY'}
-              year={2023}
-              title={'Title'}
-              description={
-                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet.'
-              }
-            />
-          </View>
-          <View style={styles.timelineWrapper}>
-            <TimelineCard
-              inTimeline={true}
-              isLast={true}
-              startDate={'23 JAN'}
-              endDate={'23 MAY'}
-              year={2023}
-              title={'Title'}
-              description={
-                'Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing. Consectetur adipiscing elit.'
-              }
-            />
-          </View>
-        </ScrollView>
+        )}
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 export default Timeline;
 
 const styles = StyleSheet.create({
+  dropdown: {
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+    height: 64,
+    backgroundColor: '#E2EFD2',
+    borderRadius: 12,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  item: {
+    padding: 17,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textItem: {
+    flex: 1,
+    fontSize: 16,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
   timelineCardContainer: {
     height: 312,
     padding: '5%',
@@ -229,10 +339,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     color: '#375C0A',
   },
-
-  farmBar: {marginBottom: 16, width: vw, alignSelf: 'center'},
-  farms: {paddingLeft: 24, flexDirection: 'row', gap: 6},
-
   progressTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
