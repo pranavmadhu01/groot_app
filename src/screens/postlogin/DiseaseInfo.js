@@ -1,11 +1,23 @@
 import React from 'react';
 import DiseaseCard from '../../components/cards/DiseaseCard';
+import {ArrowBackIcon} from '../../components/icons';
 
-const {View, Image, StyleSheet, Dimensions} = require('react-native');
+const {
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} = require('react-native');
 
 const DiseaseInfo = ({route, navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.goBackBtn}
+        onPress={() => navigation.goBack()}>
+        <ArrowBackIcon width={32} height={32} color="black" />
+      </TouchableOpacity>
       <Image
         source={{uri: `${route.params.image}`}}
         style={styles.diseaseImage}
@@ -44,6 +56,23 @@ const DiseaseInfo = ({route, navigation}) => {
 export default DiseaseInfo;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  goBackBtn: {
+    position: 'absolute',
+    top: 35,
+    left: -12,
+    paddingVertical: 3,
+    paddingRight: 8,
+    paddingLeft: 36,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 15,
+    zIndex: 1,
+  },
+
   diseaseImage: {
     alignItems: 'center',
     width: Dimensions.get('window').width,
