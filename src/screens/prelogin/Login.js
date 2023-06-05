@@ -12,7 +12,6 @@ import {Text, TextInput} from 'react-native-paper';
 import {CustomButton} from '../../components/buttons';
 import {
   ArrowBackIcon,
-  MailIcon,
   PhoneIcon,
   LockIcon,
   EyeIcon,
@@ -28,8 +27,8 @@ const Login = ({navigation}) => {
   const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
     // email: '',
-    phonenumber: '',
-    password: '',
+    phonenumber: null,
+    password: null,
   });
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -219,6 +218,10 @@ const Login = ({navigation}) => {
                 height={60}
                 isNavigator={false}
                 onPress={() => handleLogin()}
+                disabled={
+                  Object.values(formdata).includes(null) ||
+                  Object.values(formdata).includes('')
+                }
               />
               <View style={styles.buttonTextWrapper}>
                 <Text variant="labelMedium" style={styles.queryStyle}>

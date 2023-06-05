@@ -123,7 +123,19 @@ const Timeline = ({navigation}) => {
                             selectedTimeline[selectedTimeline.length - 1]
                               .end_date,
                           )) *
-                          100}
+                          100 <=
+                        0
+                          ? '0'
+                          : (date_diff_indays(
+                              selectedTimeline[0].start_date,
+                              new Date(),
+                            ) /
+                              date_diff_indays(
+                                selectedTimeline[0].start_date,
+                                selectedTimeline[selectedTimeline.length - 1]
+                                  .end_date,
+                              )) *
+                            100}
                         % Completed
                       </Text>
                       <View style={styles.daysTextWrapper}>
@@ -152,11 +164,22 @@ const Timeline = ({navigation}) => {
                           selectedTimeline[0].start_date,
                           new Date(),
                         ) /
-                        date_diff_indays(
-                          selectedTimeline[0].start_date,
-                          selectedTimeline[selectedTimeline.length - 1]
-                            .end_date,
-                        )
+                          date_diff_indays(
+                            selectedTimeline[0].start_date,
+                            selectedTimeline[selectedTimeline.length - 1]
+                              .end_date,
+                          ) <=
+                        0
+                          ? '0'
+                          : date_diff_indays(
+                              selectedTimeline[0].start_date,
+                              new Date(),
+                            ) /
+                            date_diff_indays(
+                              selectedTimeline[0].start_date,
+                              selectedTimeline[selectedTimeline.length - 1]
+                                .end_date,
+                            )
                       }
                       color="#6EAF1F"
                       style={styles.progressBar}
@@ -178,7 +201,19 @@ const Timeline = ({navigation}) => {
                             selectedTimeline[selectedTimeline.length - 1]
                               .end_date,
                           )) *
-                          100}
+                          100 <=
+                        0
+                          ? '0'
+                          : (date_diff_indays(
+                              selectedTimeline[0].start_date,
+                              new Date(),
+                            ) /
+                              date_diff_indays(
+                                selectedTimeline[0].start_date,
+                                selectedTimeline[selectedTimeline.length - 1]
+                                  .end_date,
+                              )) *
+                            100}
                         %
                       </Text>
                     </View>

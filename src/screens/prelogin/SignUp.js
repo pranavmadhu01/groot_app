@@ -240,6 +240,7 @@ const SignUp = ({navigation}) => {
                   }
                   placeholder="Confirm password"
                   secureTextEntry={!isConfirmPasswordVisible}
+                  error={!(confirmPassword === formdata.password)}
                   value={confirmPassword}
                   onChangeText={text => setConfirmPassword(text)}
                   style={styles.textFieldStyle}
@@ -272,6 +273,11 @@ const SignUp = ({navigation}) => {
               height={60}
               isNavigator={false}
               onPress={() => handleSignup()}
+              disabled={
+                Object.values(formdata).includes(null) ||
+                Object.values(formdata).includes('') ||
+                formdata.password !== confirmPassword
+              }
             />
             <View style={styles.buttonTextWrapper}>
               <Text variant="labelMedium" style={styles.queryStyle}>

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View, Animated} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
@@ -7,7 +7,6 @@ import {CustomButton} from '../../components/buttons';
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
 import {FormTitleWrapper} from '../../components/elements';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Toast} from '../../utils/Toast.util';
 import {LoginContext} from '../../../App';
 import {addFarm} from '../../api';
@@ -17,9 +16,9 @@ const FarmForm = ({navigation}) => {
     name: '',
     overall_area: null,
     locationvauge: {
-      latitude: 0,
-      longitude: 0,
-      altitude: 0,
+      latitude: null,
+      longitude: null,
+      altitude: null,
     },
   });
   const getLocation = async () => {
@@ -148,7 +147,13 @@ const FarmForm = ({navigation}) => {
           </Text> */}
           <Pressable onPress={getLocation} style={{alignItems: 'center'}}>
             <Text
-              style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}
+              style={{
+                color: Object.values(formdata.locationvauge).includes(null)
+                  ? 'red'
+                  : '#6EAF1F',
+                fontWeight: '900',
+                fontSize: 13,
+              }}
               variant="labelSmall">
               Get current location
             </Text>
@@ -163,6 +168,11 @@ const FarmForm = ({navigation}) => {
           height={60}
           isNavigator={false}
           onPress={() => handleAddFarm()}
+          disabled={
+            Object.values(formdata).includes(null) ||
+            Object.values(formdata).includes('') ||
+            Object.values(formdata.locationvauge).includes(null)
+          }
         />
       </View>
     </View>

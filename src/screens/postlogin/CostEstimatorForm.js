@@ -168,7 +168,10 @@ const CostEstimatorForm = ({navigation}) => {
             textColor="#fff"
             height={60}
             onPress={() => handleCalculate()}
-            disabled={Object.keys(formdata).length === 0}
+            disabled={
+              Object.values(formdata).includes(null) ||
+              Object.values(formdata).includes('')
+            }
           />
         </ScrollView>
       </View>

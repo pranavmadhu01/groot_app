@@ -74,7 +74,7 @@ const LandingPage = ({navigation}) => {
               title="Get Started"
               textColor="#fff"
               buttonColor="#6EAF1F"
-              height={60}
+              width={'100%'}
               isNavigator={true}
               screenName={'Sign Up'}
             />

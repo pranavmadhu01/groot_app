@@ -39,24 +39,18 @@ const CustomButton = ({
       mode={mode}
       style={{
         width: width,
-        height: height,
+        height: height || 60,
         borderRadius: borderRadius || 10,
         padding: padding || 0,
         margin: margin,
         alignSelf: alignSelf,
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
-      }}>
-      <Text
-        style={{
-          fontSize: fontSize || 15,
-          fontFamily: fontFamily || 'Gilroy-Semibold',
-          color: textColor || 'white',
-          width: 'fit-content',
-        }}>
-        {title}
-      </Text>
+        borderWidth: 1,
+        borderColor: '#6EAF1F',
+      }}
+      textColor={textColor || 'white'}>
+      {title}
     </Button>
   );
 };
