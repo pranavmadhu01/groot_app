@@ -16,6 +16,8 @@ import SunWindIcon from './SunWindIcon';
 import TimeCheckIcon from './TimeCheckIcon';
 import TimelineIndicatorDotIcon from './TimelineIndicatorDotIcon';
 import CloseIcon from './CloseIcon';
+import DetectionRippleIcon from './DetectionRippleIcon';
+import DropdownIcon from './DropdownIcon';
 
 export {
   HomeIcon,
@@ -36,4 +38,6 @@ export {
   TimeCheckIcon,
   TimelineIndicatorDotIcon,
   CloseIcon,
+  DetectionRippleIcon,
+  DropdownIcon,
 };

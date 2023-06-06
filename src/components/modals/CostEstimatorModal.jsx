@@ -156,7 +156,6 @@ const CostEstimatorModal = ({
         </ScrollView>
         <CustomButton
           title="Generate Timeline"
-          borderRadius={30}
           mode="contained"
           buttonColor="#6EAF1F"
           textColor="#fff"

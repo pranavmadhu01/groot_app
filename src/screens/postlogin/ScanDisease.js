@@ -54,7 +54,7 @@ const ScanDisease = ({navigation}) => {
           if (response.data.success) {
             navigation.navigate('DiseaseInfo', {
               scanData: response.data.data,
-              image: response.data.uri,
+              image: response.data.data.uri,
             });
             setCameraClicked(false);
           }
