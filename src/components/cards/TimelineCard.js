@@ -24,15 +24,15 @@ const TimelineCard = ({
           <NavbarLogo width={36} height={36} />
           <View style={styles.timelineIndicatorDotWrapper}>
             <TimelineIndicatorDotIcon
-              width={36}
-              height={36}
+              width={18}
+              height={18}
               isHighlighted={isHighlighted || false}
               style={styles.timelineIndicatorDot}
             />
             {isLast && (
               <TimelineIndicatorDotIcon
-                width={36}
-                height={36}
+                width={18}
+                height={18}
                 isHighlighted={isHighlighted || false}
                 style={styles.timelineIndicatorDot}
               />
@@ -62,7 +62,7 @@ const TimelineCard = ({
               : styles.timelineStackCardWrapper
           }>
           <Text style={styles.date}>
-            {startDate} - {endDate}, {year}
+            {startDate} - {endDate}
           </Text>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
@@ -98,7 +98,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   timelineIndicatorDot: {
-    left: 11,
+    left: 1,
+    top: 0.5,
+    justifyContent: 'flex-end',
+    alignSelf: 'center',
   },
   timelineStackCardContainer: {
     width: '85%',

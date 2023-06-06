@@ -10,6 +10,7 @@ import {FormTitleWrapper} from '../../components/elements';
 import {Toast} from '../../utils/Toast.util';
 import {LoginContext} from '../../../App';
 import {addFarm} from '../../api';
+import {mainStyles} from '.';
 const FarmForm = ({navigation}) => {
   const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
@@ -22,6 +23,7 @@ const FarmForm = ({navigation}) => {
     },
   });
   const getLocation = async () => {
+    console.log('Hello');
     Geolocation.setRNConfiguration({locationProvider: 'android'});
     try {
       Geolocation.requestAuthorization();
@@ -80,7 +82,11 @@ const FarmForm = ({navigation}) => {
         </View>
       )}
       <View style={styles.farmFormWrapper}>
-        <FormTitleWrapper title={'Create Farm'} isCompact={false} />
+        <FormTitleWrapper
+          title={'Create Farm'}
+          isCompact={false}
+          isHeavy={true}
+        />
 
         <View>
           <View style={styles.groupWrapper}>
@@ -149,10 +155,11 @@ const FarmForm = ({navigation}) => {
             <Text
               style={{
                 color: Object.values(formdata.locationvauge).includes(null)
-                  ? 'red'
+                  ? '#B3BCA9'
                   : '#6EAF1F',
                 fontWeight: '900',
                 fontSize: 13,
+                marginBottom: 30,
               }}
               variant="labelSmall">
               Get current location
@@ -160,17 +167,16 @@ const FarmForm = ({navigation}) => {
           </Pressable>
         </View>
         <CustomButton
-          title="Create Farm"
-          borderRadius={30}
-          mode="contained"
+          title="Create"
           buttonColor="#6EAF1F"
           textColor="#fff"
+          borderRadius={30}
           height={60}
-          isNavigator={false}
           onPress={() => handleAddFarm()}
           disabled={
             Object.values(formdata).includes(null) ||
             Object.values(formdata).includes('') ||
+            Object.values(formdata).includes(NaN) ||
             Object.values(formdata.locationvauge).includes(null)
           }
         />
@@ -215,15 +221,16 @@ const styles = StyleSheet.create({
   farmFormWrapper: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 24,
-    gap: 30,
+    paddingTop: 40,
+    gap: 0,
   },
   textFieldStyle: {
     backgroundColor: '#E2EFD2',
     height: 64,
   },
   groupWrapper: {
-    marginBottom: 20,
+    marginBottom: 30,
+    marginTop: 15,
   },
   buttontextWrapper: {
     flexDirection: 'row',

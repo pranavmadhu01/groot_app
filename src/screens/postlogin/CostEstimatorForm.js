@@ -8,8 +8,8 @@ import {
   Keyboard,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {mainStyles} from '.';
 import {Text, TextInput} from 'react-native-paper';
-import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
@@ -124,9 +124,7 @@ const CostEstimatorForm = ({navigation}) => {
           contentContainerStyle={styles.costFormWrapper}>
           <View style={styles.costInputWrapper}>
             <View style={styles.costEstimatorTextWrapper}>
-              <Text variant="headlineLarge" style={styles.titleText}>
-                Cost Estimator
-              </Text>
+              <Text style={mainStyles.titleText}>Cost Estimator</Text>
             </View>
             <View>
               <Dropdown
@@ -161,7 +159,7 @@ const CostEstimatorForm = ({navigation}) => {
                   setFormData({...formdata, area: parseFloat(text)})
                 }
                 style={styles.textFieldStyle}
-                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineStyle={{borderRadius: 12}}
                 outlineColor="#fff"
                 activeOutlineColor="#6EAF1F"
                 placeholderTextColor="#808A75"
@@ -213,6 +211,7 @@ const CostEstimatorForm = ({navigation}) => {
             title="Calculate"
             buttonColor="#6EAF1F"
             textColor="#fff"
+            borderRadius={30}
             height={60}
             onPress={() => handleCalculate()}
             disabled={
@@ -231,22 +230,13 @@ export default CostEstimatorForm;
 
 const styles = StyleSheet.create({
   dropdown: {
-    marginLeft: 5,
-    marginRight: 5,
     height: 64,
-    backgroundColor: 'white',
+    width: '100%',
+    backgroundColor: '#C5DFA5',
     borderWidth: 1,
     borderColor: '#6EAF1F',
     borderRadius: 12,
     padding: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
     elevation: 2,
   },
   item: {
@@ -288,10 +278,11 @@ const styles = StyleSheet.create({
   costFormWrapper: {
     flex: 1,
     justifyContent: 'space-between',
-    marginBottom: 120,
+    marginBottom: 190,
     marginTop: 30,
+    paddingTop: 80,
   },
-  costInputWrapper: {gap: 60},
+  costInputWrapper: {gap: 30},
   costEstimatorTextWrapper: {
     alignItems: 'center',
   },

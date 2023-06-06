@@ -30,7 +30,8 @@ const mainStyles = StyleSheet.create({
   stickyHeader: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingBottom: 24,
+    paddingTop: 16,
+    paddingBottom: 20,
     elevation: 0,
     zIndex: 2,
   },

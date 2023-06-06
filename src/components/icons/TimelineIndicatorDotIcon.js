@@ -7,7 +7,7 @@ function TimelineIndicatorDotIcon({width, height, isHighlighted, style}) {
       width={width}
       height={height}
       style={style}
-      viewBox="0 0 26 26"
+      viewBox="0 0 12 12"
       fill="none">
       <Defs>
         <LinearGradient

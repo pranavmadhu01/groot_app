@@ -1,13 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import {Text, ProgressBar} from 'react-native-paper';
-import {CustomButton} from '../../components/buttons';
 
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
 import {Leaves} from '../../components/logos';
 import {mainStyles} from '.';
 import {TimelineCard} from '../../components/cards';
-import {TimelineCardStack} from '../../components/elements';
 import {Dropdown} from 'react-native-element-dropdown';
 import {getTimelineByUser, getTimelineEventsByTimeline} from '../../api';
 import {LoginContext} from '../../../App';
@@ -254,10 +252,10 @@ const Timeline = ({navigation}) => {
                     <View style={styles.timelineWrapper} key={index}>
                       <TimelineCard
                         inTimeline={true}
-                        isHighlighted={false}
+                        isHighlighted={index === 0}
+                        isLast={index === selectedTimeline.length - 1}
                         startDate={new Date(start_date).toDateString()}
                         endDate={new Date(end_date).toDateString()}
-                        // year={2023}
                         title={name}
                         description={description}
                       />
@@ -277,21 +275,13 @@ export default Timeline;
 
 const styles = StyleSheet.create({
   dropdown: {
-    marginBottom: 20,
-    marginLeft: 5,
-    marginRight: 5,
     height: 64,
-    backgroundColor: '#E2EFD2',
+    width: '100%',
+    backgroundColor: '#C5DFA5',
+    borderWidth: 1,
+    borderColor: '#6EAF1F',
     borderRadius: 12,
-    padding: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
+    padding: 24,
     elevation: 2,
   },
   item: {
@@ -306,17 +296,22 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: '#000',
   },
   selectedTextStyle: {
     fontSize: 16,
+    fontFamily: 'Gilroy-Medium',
+    color: '#000',
   },
   iconStyle: {
     width: 20,
     height: 20,
+    color: '#000',
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    borderRadius: 12,
   },
   timelineCardContainer: {
     height: 312,

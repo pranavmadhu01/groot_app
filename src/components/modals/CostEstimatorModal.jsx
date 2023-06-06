@@ -159,6 +159,7 @@ const CostEstimatorModal = ({
           mode="contained"
           buttonColor="#6EAF1F"
           textColor="#fff"
+          borderRadius={15}
           height={60}
           marginTop={32}
           isNavigator={false}
