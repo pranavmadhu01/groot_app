@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -54,6 +54,10 @@ const CostEstimatorForm = ({navigation}) => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const plantRef = useRef();
+  const areaRef = useRef();
+  const pHRef = useRef();
 
   const [plants, setPlants] = useState([]);
   const [fertilizers, setFertilizers] = useState([]);
@@ -114,82 +118,96 @@ const CostEstimatorForm = ({navigation}) => {
           />
         )}
 
-        <ScrollView contentContainerStyle={styles.costFormWrapper}>
-          <View style={styles.costEstimatorTextWrapper}>
-            <Text variant="headlineLarge" style={styles.titleText}>
-              Cost Estimator
-            </Text>
-          </View>
-          <View>
-            <Dropdown
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={plants.map(({name, _id}) => ({
-                value: _id,
-                label: name,
-              }))}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder="Select crop"
-              searchPlaceholder="Search crop"
-              value={formdata.plant_id}
-              onChange={item => {
-                setFormData({...formdata, plant_id: item.value});
-              }}
-            />
-            <TextInput
-              mode="outlined"
-              keyboardType="number-pad"
-              placeholder="Enter the area of cultivation"
-              value={formdata.area && formdata.area.toString()}
-              onChangeText={text =>
-                setFormData({...formdata, area: parseFloat(text)})
-              }
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12, borderWidth: 3}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
-            <TextInput
-              mode="outlined"
-              keyboardType="number-pad"
-              placeholder="Enter the pH value of soil"
-              value={formdata.pH && formdata.pH.toString()}
-              onChangeText={text =>
-                setFormData({...formdata, pH: parseFloat(text)})
-              }
-              style={styles.textFieldStyle}
-              outlineStyle={{borderRadius: 12}}
-              outlineColor="#fff"
-              activeOutlineColor="#6EAF1F"
-              placeholderTextColor="#808A75"
-            />
-            {/* TODO: Fetching pH value of that location's soil */}
-            {/* <Text
-              variant="labelLarge"
-              style={{
-                textAlign: 'center',
-                color: '#808A75',
-                marginVertical: 10,
-                fontSize: 14,
-              }}>
-              or
-            </Text>
-            <Pressable
-              onPress={() => console.log('you pressed me')}
-              style={{alignItems: 'center'}}>
-              <Text
-                style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}
-                variant="labelSmall">
-                Find pH value of soil
+        <KeyboardAwareScrollView
+          enableAutomaticScroll={true}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.costFormWrapper}>
+          <View style={styles.costInputWrapper}>
+            <View style={styles.costEstimatorTextWrapper}>
+              <Text variant="headlineLarge" style={styles.titleText}>
+                Cost Estimator
               </Text>
-            </Pressable> */}
+            </View>
+            <View>
+              <Dropdown
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={plants.map(({name, _id}) => ({
+                  value: _id,
+                  label: name,
+                }))}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Select crop"
+                searchPlaceholder="Search crop"
+                value={formdata.plant_id}
+                onChange={item => {
+                  setFormData({...formdata, plant_id: item.value});
+                  areaRef.current.focus();
+                }}
+                ref={plantRef}
+              />
+              <TextInput
+                mode="outlined"
+                keyboardType="number-pad"
+                placeholder="Enter the area of cultivation"
+                value={formdata.area && formdata.area.toString()}
+                onChangeText={text =>
+                  setFormData({...formdata, area: parseFloat(text)})
+                }
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12, borderWidth: 3}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+                ref={areaRef}
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  pHRef.current.focus();
+                }}
+              />
+              <TextInput
+                mode="outlined"
+                keyboardType="number-pad"
+                placeholder="Enter the pH value of soil"
+                value={formdata.pH && formdata.pH.toString()}
+                onChangeText={text =>
+                  setFormData({...formdata, pH: parseFloat(text)})
+                }
+                style={styles.textFieldStyle}
+                outlineStyle={{borderRadius: 12}}
+                outlineColor="#fff"
+                activeOutlineColor="#6EAF1F"
+                placeholderTextColor="#808A75"
+                ref={pHRef}
+                returnKeyType="done"
+              />
+              {/* TODO: Fetching pH value of that location's soil */}
+              {/* <Text
+                variant="labelLarge"
+                style={{
+                  textAlign: 'center',
+                  color: '#808A75',
+                  marginVertical: 10,
+                  fontSize: 14,
+                }}>
+                or
+              </Text>
+              <Pressable
+                onPress={() => console.log('you pressed me')}
+                style={{alignItems: 'center'}}>
+                <Text
+                  style={{color: '#6EAF1F', fontWeight: '900', fontSize: 13}}
+                  variant="labelSmall">
+                  Find pH value of soil
+                </Text>
+              </Pressable> */}
+            </View>
           </View>
           <CustomButton
             title="Calculate"
@@ -203,7 +221,7 @@ const CostEstimatorForm = ({navigation}) => {
               Object.values(formdata).includes(NaN)
             }
           />
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -213,7 +231,6 @@ export default CostEstimatorForm;
 
 const styles = StyleSheet.create({
   dropdown: {
-    marginBottom: 20,
     marginLeft: 5,
     marginRight: 5,
     height: 64,
@@ -269,13 +286,14 @@ const styles = StyleSheet.create({
     color: '#151810',
   },
   costFormWrapper: {
-    backgroundColor: '#fff',
-    paddingTop: 30,
-    gap: 30,
+    flex: 1,
+    justifyContent: 'space-between',
+    marginBottom: 120,
+    marginTop: 30,
   },
+  costInputWrapper: {gap: 60},
   costEstimatorTextWrapper: {
     alignItems: 'center',
-    gap: 15,
   },
   titleText: {
     fontFamily: 'Gilroy-SemiBold',
@@ -285,7 +303,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2EFD2',
     justifyContent: 'center',
     height: 64,
-    marginBottom: 20,
     paddingHorizontal: 10,
   },
   buttontextWrapper: {

@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 90,
   },
-  navbarLogoContainer: {position: 'absolute', alignSelf: 'center', bottom: 100},
+  navbarLogoContainer: {position: 'absolute', alignSelf: 'center', bottom: 90},
   bottomNavContainer: {flex: 1},
   bottomNavBg: {
     backgroundColor: 'white',
