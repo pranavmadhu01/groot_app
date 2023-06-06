@@ -6,6 +6,7 @@ import {
   ScrollView,
   Dimensions,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {mainStyles} from '.';
@@ -19,6 +20,8 @@ import CostEstimatorModal from '../../components/modals/CostEstimatorModal';
 import {Toast} from '../../utils/Toast.util';
 import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
 import {LoginContext} from '../../../App';
+import {NotificationModal} from '../../components/modals';
+import SettingsModal from '../../components/modals/SettingsModal';
 
 const vw = Dimensions.get('window').width;
 
@@ -29,6 +32,13 @@ const CostEstimatorForm = ({navigation}) => {
     area: null,
     pH: null,
   });
+
+  const [isVisible, setisVisible] = useState(false);
+  const showNotificationModal = () => setisVisible(true);
+  const hideNotificationModal = () => setisVisible(false);
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+  const showSettingsModal = () => setIsSettingsVisible(true);
+  const hideSettingsModal = () => setIsSettingsVisible(false);
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   useEffect(() => {
@@ -95,14 +105,29 @@ const CostEstimatorForm = ({navigation}) => {
   } else {
     return (
       <View style={styles.costFormContainer}>
+        <NotificationModal
+          hideModal={hideNotificationModal}
+          isVisible={isVisible}
+        />
+        <SettingsModal
+          hideModal={hideSettingsModal}
+          isVisible={isSettingsVisible}
+        />
+
         <View style={styles.topBar}>
           <View style={styles.logoWrapper}>
             <Leaves width={36} height={36} />
             <Text style={styles.logoText}>Groot</Text>
           </View>
           <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} />
-            <SettingsIcon width={20} height={20} />
+            <NotificationIcon
+              width={26}
+              height={26}
+              onPress={showNotificationModal}
+            />
+            <TouchableOpacity onPress={showSettingsModal}>
+              <SettingsIcon width={20} height={20} />
+            </TouchableOpacity>
           </View>
         </View>
 

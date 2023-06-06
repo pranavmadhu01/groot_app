@@ -18,6 +18,7 @@ import TimelineIndicatorDotIcon from './TimelineIndicatorDotIcon';
 import CloseIcon from './CloseIcon';
 import DetectionRippleIcon from './DetectionRippleIcon';
 import DropdownIcon from './DropdownIcon';
+import LogoutIcon from './LogoutIcon';
 
 export {
   HomeIcon,
@@ -40,4 +41,5 @@ export {
   CloseIcon,
   DetectionRippleIcon,
   DropdownIcon,
+  LogoutIcon,
 };

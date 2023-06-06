@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Svg, {Path, G, Defs, ClipPath, Rect} from 'react-native-svg';
 
-function SettingsIcon({width, height}) {
+function SettingsIcon({width, height, onPress}) {
+  onPress = {onPress};
   return (
     <Svg width={width} height={height} viewBox="0 0 20 20" fill="none">
       <G>
