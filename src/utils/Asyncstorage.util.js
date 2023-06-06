@@ -14,4 +14,12 @@ const retriveFromAsyncStorage = async key => {
     Toast('error while getting token , try again later');
   }
 };
-export {addToAsyncStorage, retriveFromAsyncStorage};
+const removeFromAsyncStorage = async key => {
+  try {
+    console.log('done');
+    await AsyncStorage.removeItem(key);
+  } catch {
+    Toast('error while removing token , try again later');
+  }
+};
+export {addToAsyncStorage, retriveFromAsyncStorage, removeFromAsyncStorage};

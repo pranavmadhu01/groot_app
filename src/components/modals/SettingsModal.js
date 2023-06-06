@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,13 +7,25 @@ import {
   Dimensions,
 } from 'react-native';
 import {Modal, Portal} from 'react-native-paper';
+import {LoginContext} from '../../../App';
+import {removeFromAsyncStorage} from '../../utils/Asyncstorage.util';
+import {Toast} from '../../utils/Toast.util';
 import {LogoutIcon} from '../icons';
 
 const SettingsModal = ({isVisible, hideModal}) => {
+  const data = useContext(LoginContext);
   return (
     <Portal>
       <Modal visible={isVisible} onDismiss={hideModal} dismissable>
-        <TouchableOpacity disable={true} style={styles.settingsContainer}>
+        <TouchableOpacity
+          disable={true}
+          style={styles.settingsContainer}
+          onPress={() => {
+            console.log('hello');
+            removeFromAsyncStorage('@jwt_token');
+            data.setIsLogin(false);
+            Toast('see you again :)');
+          }}>
           <View style={styles.modal}>
             <View style={styles.logout}>
               <LogoutIcon size={18} />
