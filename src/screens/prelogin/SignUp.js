@@ -268,6 +268,7 @@ const SignUp = ({navigation}) => {
           <View style={styles.bottomWrapper}>
             <CustomButton
               title="Register"
+              borderRadius={30}
               textColor="#fff"
               buttonColor="#6EAF1F"
               height={60}
@@ -276,6 +277,7 @@ const SignUp = ({navigation}) => {
               disabled={
                 Object.values(formdata).includes(null) ||
                 Object.values(formdata).includes('') ||
+                Object.values(formdata).includes(NaN) ||
                 formdata.password !== confirmPassword
               }
             />
