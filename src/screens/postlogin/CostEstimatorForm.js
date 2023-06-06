@@ -5,7 +5,9 @@ import {
   View,
   ScrollView,
   Dimensions,
+  Keyboard,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
@@ -27,10 +29,37 @@ const CostEstimatorForm = ({navigation}) => {
     area: null,
     pH: null,
   });
+
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   const [plants, setPlants] = useState([]);
   const [fertilizers, setFertilizers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [estimatordata, setEstimatorData] = useState({});
+
   const handleCalculate = () => {
     data.setLoading(true);
     getCostEstimator(data.token, formdata)
@@ -44,6 +73,7 @@ const CostEstimatorForm = ({navigation}) => {
         data.setLoading(false);
       });
   };
+
   useEffect(() => {
     data.setLoading(true);
     Promise.all([getAllPlants(), getAllFertilizers()])
@@ -140,7 +170,8 @@ const CostEstimatorForm = ({navigation}) => {
               activeOutlineColor="#6EAF1F"
               placeholderTextColor="#808A75"
             />
-            <Text
+            {/* TODO: Fetching pH value of that location's soil */}
+            {/* <Text
               variant="labelLarge"
               style={{
                 textAlign: 'center',
@@ -158,11 +189,10 @@ const CostEstimatorForm = ({navigation}) => {
                 variant="labelSmall">
                 Find pH value of soil
               </Text>
-            </Pressable>
+            </Pressable> */}
           </View>
           <CustomButton
             title="Calculate"
-            borderRadius={30}
             buttonColor="#6EAF1F"
             textColor="#fff"
             height={60}

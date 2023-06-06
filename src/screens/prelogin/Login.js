@@ -113,7 +113,8 @@ const Login = ({navigation}) => {
 
             <KeyboardAwareScrollView
               enableAutomaticScroll={true}
-              showsVerticalScrollIndicator={false}>
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{paddingTop: 30}}>
               <View style={styles.inputWrapper}>
                 <View style={styles.groupWrapper}>
                   {/* TODO implement email effectively */}

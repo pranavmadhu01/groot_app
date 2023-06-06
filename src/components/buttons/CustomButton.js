@@ -37,18 +37,21 @@ const CustomButton = ({
       }
       disabled={disabled}
       mode={mode}
-      style={{
-        width: width,
-        height: height || 60,
-        borderRadius: borderRadius || 10,
-        padding: padding || 0,
-        margin: margin,
-        alignSelf: alignSelf,
-        display: 'flex',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#6EAF1F',
-      }}
+      style={[
+        {
+          width: width,
+          height: height || 60,
+          borderRadius: borderRadius || 10,
+          padding: padding || 0,
+          margin: margin,
+          alignSelf: alignSelf,
+          display: 'flex',
+          justifyContent: 'center',
+          borderWidth: 1,
+          borderColor: '#6EAF1F',
+        },
+        disabled && {borderColor: '#808A75'},
+      ]}
       textColor={textColor || 'white'}>
       {title}
     </Button>
