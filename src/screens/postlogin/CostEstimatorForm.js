@@ -163,14 +163,14 @@ const CostEstimatorForm = ({navigation}) => {
           <CustomButton
             title="Calculate"
             borderRadius={30}
-            mode="contained"
             buttonColor="#6EAF1F"
             textColor="#fff"
             height={60}
             onPress={() => handleCalculate()}
             disabled={
               Object.values(formdata).includes(null) ||
-              Object.values(formdata).includes('')
+              Object.values(formdata).includes('') ||
+              Object.values(formdata).includes(NaN)
             }
           />
         </ScrollView>
@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     height: 64,
-    backgroundColor: '#C5DFA5',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#6EAF1F',
     borderRadius: 12,
     padding: 24,
     shadowColor: '#000',
@@ -202,7 +204,6 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 17,
-    backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -214,6 +214,7 @@ const Login = ({navigation}) => {
               <CustomButton
                 title="Continue"
                 textColor="#fff"
+                borderRadius={30}
                 buttonColor="#6EAF1F"
                 height={60}
                 isNavigator={false}
