@@ -1,10 +1,11 @@
-import {Modal, Portal, Text} from 'react-native-paper';
+import {Modal, Portal, Switch, Text} from 'react-native-paper';
 import {
   Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import {useContext, useState} from 'react';
 import {CustomButton} from '../buttons';
@@ -15,12 +16,15 @@ import {Toast} from '../../utils/Toast.util';
 import {addUserTimeline} from '../../api';
 import {LoginContext} from '../../../App';
 import {useNavigation} from '@react-navigation/native';
+import {LineChart} from 'react-native-chart-kit';
+import {averageFunction} from '../../helpers/array.helper';
 const CostEstimatorModal = ({
   showModal,
   setShowModal,
   plant,
   estimatordata,
   area,
+  chartEssentials,
 }) => {
   const navigation = useNavigation();
   const data = useContext(LoginContext);
@@ -29,6 +33,7 @@ const CostEstimatorModal = ({
   );
   const [seedcost, setSeedcost] = useState(estimatordata.totalseedcost);
   const [seedquanity, setSeedQuantity] = useState(estimatordata.totalseeds);
+  const [toggleChart, setToggleChart] = useState(false);
   const handleGenerateTimeline = (event, selecteddate) => {
     if (event === 'set') {
       const selectedDate = selecteddate.setDate(selecteddate.getDate());
@@ -62,7 +67,40 @@ const CostEstimatorModal = ({
   const handleClose = () => {
     setShowModal(false);
   };
-
+  const chartConfig = {
+    backgroundGradientFrom: '#fff',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#fff',
+    backgroundGradientToOpacity: 0.1,
+    backgroundGradientToOffset: 1,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: true, // optional
+  };
+  const datass = {
+    labels: chartEssentials.chartlabels,
+    datasets: [
+      {
+        data: chartEssentials.chartdata,
+        color: (opacity = 1) => `rgba(88, 140, 25,${opacity})`, // optional
+        strokeWidth: 1, // optional
+      },
+      {
+        data: Array(chartEssentials.chartdata.length).fill(
+          averageFunction(chartEssentials.chartdata),
+        ),
+        color: (opacity = 1) => `rgba(255, 0, 0,${opacity})`,
+        withDots: false,
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: [
+      'Cost per Event',
+      `Avg Rs${averageFunction(chartEssentials.chartdata).toFixed(1)}`,
+    ], // optional
+  };
+  const screenWidth = Dimensions.get('screen').width;
   return (
     <Portal>
       <Modal
@@ -71,6 +109,8 @@ const CostEstimatorModal = ({
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={{
           backgroundColor: '#fff',
+          display: 'flex',
+          justifyContent: 'space-between',
           borderRadius: 25,
           padding: 24,
           margin: 16,
@@ -102,58 +142,106 @@ const CostEstimatorModal = ({
         </View>
 
         <View style={styles.textBox}>
-          <Text style={styles.totalCost}>Total Cost: Rs. 1000</Text>
+          <Text style={styles.totalCost}>
+            Total Cost: Rs. {estimatordata.totalcost}
+          </Text>
         </View>
 
         <Text style={styles.costBreakdown}>Cost Breakdown :</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}>
+          <Text style={{fontFamily: 'Gilroy-Bold'}}>
+            {toggleChart ? 'Hide chart' : 'Show chart'}
+          </Text>
+          <Switch
+            color="#6EAF1F"
+            value={toggleChart}
+            onValueChange={() => setToggleChart(!toggleChart)}
+          />
+        </View>
 
-        <ScrollView
-          contentContainerStyle={{paddingVertical: 5}}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[1]}>
-          <View style={{...styles.textBox, marginBottom: 24}}>
-            <Text style={styles.totalSeeds}>
-              Total Seeds Required : {seedquanity} g
-            </Text>
-            <Text style={styles.totalSeeds}>
-              Total Seed Cost : Rs. {seedcost}
-            </Text>
-          </View>
-          <View style={styles.stickyFertilizerPerEventText}>
-            <Text style={styles.fertilizerBreakdown}>Fertilizer per event</Text>
-          </View>
-          <View style={styles.eventsWrapper}>
-            {fertilizerData.map(({fertilizerRequired, title}, index) => (
-              <View key={index} style={styles.eventDetailsWrapper}>
-                <Text style={styles.eventTitle}>{title}</Text>
-                <View key={index} style={styles.fertilizerDetailsWrapper}>
-                  <View style={styles.container}>
-                    <Table
-                      borderStyle={{
-                        borderWidth: 1,
-                        borderColor: '#CFE4B4',
-                      }}
-                      style={{borderRadius: 12}}>
-                      <Row
-                        data={['Name', 'Quantity', 'Cost']}
-                        style={styles.head}
-                        textStyle={styles.title}
-                      />
-                      {fertilizerRequired.map(
-                        ({name, cost, quantity}, index) => (
-                          <Row
-                            data={[name, quantity, cost]}
-                            textStyle={styles.text}
-                          />
-                        ),
-                      )}
-                    </Table>
+        {console.log(averageFunction(chartEssentials.chartdata))}
+        <View style={{flex: 1}}>
+          {toggleChart && (
+            <LineChart
+              data={datass}
+              width={screenWidth - 80}
+              height={220}
+              chartConfig={chartConfig}
+              style={{
+                borderRadius: 10,
+                borderWidth: 0.2,
+                borderColor: '#6EAF1F',
+                padding: 2,
+                marginTop: 24,
+              }}
+              fromZero={true}
+              formatXLabel={label => label.slice(0, 5) + '..'}
+              verticalLabelRotation={-15}
+              onDataPointClick={(value, dataset, getColor) => {
+                console.log(value);
+                console.log(dataset);
+                console.log(getColor);
+              }}
+            />
+          )}
+        </View>
+        {!toggleChart && (
+          <ScrollView
+            contentContainerStyle={{paddingVertical: 5}}
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[1]}>
+            <View style={{...styles.textBox, marginBottom: 24}}>
+              <Text style={styles.totalSeeds}>
+                Total Seeds Required : {seedquanity} g
+              </Text>
+              <Text style={styles.totalSeeds}>
+                Total Seed Cost : Rs. {seedcost}
+              </Text>
+            </View>
+            <View style={styles.stickyFertilizerPerEventText}>
+              <Text style={styles.fertilizerBreakdown}>
+                Fertilizer per event
+              </Text>
+            </View>
+            <View style={styles.eventsWrapper}>
+              {fertilizerData.map(({fertilizerRequired, title}, index) => (
+                <View key={index} style={styles.eventDetailsWrapper}>
+                  <Text style={styles.eventTitle}>{title}</Text>
+                  <View key={index} style={styles.fertilizerDetailsWrapper}>
+                    <View style={styles.container}>
+                      <Table
+                        borderStyle={{
+                          borderWidth: 1,
+                          borderColor: '#CFE4B4',
+                        }}
+                        style={{borderRadius: 12}}>
+                        <Row
+                          data={['Name', 'Quantity', 'Cost']}
+                          style={styles.head}
+                          textStyle={styles.title}
+                        />
+                        {fertilizerRequired.map(
+                          ({name, cost, quantity}, index) => (
+                            <Row
+                              data={[name, quantity, cost]}
+                              textStyle={styles.text}
+                            />
+                          ),
+                        )}
+                      </Table>
+                    </View>
                   </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+              ))}
+            </View>
+          </ScrollView>
+        )}
         <CustomButton
           title="Generate Timeline"
           mode="contained"
