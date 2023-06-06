@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text, Divider} from 'react-native-paper';
 import Leaves from '../../components/logos/Leaves';
 import {
@@ -13,13 +13,19 @@ import {getFarmDataByUserId} from '../../api';
 import {LoginContext} from '../../../App';
 import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
 import Weathercomponent from '../../components/Home/Weathercomponent/Weathercomponent';
+import SettingsModal from '../../components/modals/SettingsModal';
 
 const Home = () => {
   const data = useContext(LoginContext);
   const [isVisible, setisVisible] = useState(false);
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+
   const [farms, setFarms] = useState([]);
-  const showModal = () => setisVisible(true);
-  const hideModal = () => setisVisible(false);
+  const showNotificationModal = () => setisVisible(true);
+  const hideNotificationModal = () => setisVisible(false);
+  const showSettingsModal = () => setIsSettingsVisible(true);
+  const hideSettingsModal = () => setIsSettingsVisible(false);
+
   useEffect(() => {
     data.setLoading(true);
     getFarmDataByUserId(data.token).then(response => {
@@ -34,14 +40,28 @@ const Home = () => {
   } else {
     return (
       <View style={styles.homeWrapper}>
-        <NotificationModal hideModal={hideModal} isVisible={isVisible} />
+        <NotificationModal
+          hideModal={hideNotificationModal}
+          isVisible={isVisible}
+        />
+        <SettingsModal
+          hideModal={hideSettingsModal}
+          isVisible={isSettingsVisible}
+        />
         <View style={styles.topBar}>
           <Leaves width={61} height={60} />
           <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} onPress={showModal} />
-            <SettingsIcon width={20} height={20} />
+            <NotificationIcon
+              width={26}
+              height={26}
+              onPress={showNotificationModal}
+            />
+            <TouchableOpacity onPress={showSettingsModal}>
+              <SettingsIcon width={20} height={20} />
+            </TouchableOpacity>
           </View>
         </View>
+
         <View style={styles.welcomeTextWrapper}>
           <Text style={styles.heyText}>Hey</Text>
           <Text style={styles.nameText}>Groot</Text>

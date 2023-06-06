@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {Text, ProgressBar} from 'react-native-paper';
 
 import {NotificationIcon, SettingsIcon} from '../../components/icons';
@@ -12,6 +18,8 @@ import {LoginContext} from '../../../App';
 import {Toast} from '../../utils/Toast.util';
 import Loadingcomponent from '../../components/Loadingcomponent/Loadingcomponent';
 import {date_diff_indays} from '../../helpers/date.helper';
+import {NotificationModal} from '../../components/modals';
+import SettingsModal from '../../components/modals/SettingsModal';
 
 const vw = Dimensions.get('window').width;
 
@@ -21,6 +29,16 @@ const Timeline = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [selectedTimeline, setSelectedTimeline] = useState([]);
   const data = useContext(LoginContext);
+
+  const [isVisible, setisVisible] = useState(false);
+  const showNotificationModal = () => setisVisible(true);
+  const hideNotificationModal = () => setisVisible(false);
+
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+
+  const showSettingsModal = () => setIsSettingsVisible(true);
+  const hideSettingsModal = () => setIsSettingsVisible(false);
+
   useEffect(() => {
     data.setLoading(true);
     getTimelineByUser(data.token)
@@ -50,14 +68,29 @@ const Timeline = ({navigation}) => {
   } else {
     return (
       <View style={styles.timelineContainer}>
+        <NotificationModal
+          hideModal={hideNotificationModal}
+          isVisible={isVisible}
+        />
+        <SettingsModal
+          hideModal={hideSettingsModal}
+          isVisible={isSettingsVisible}
+        />
+
         <View style={styles.topBar}>
           <View style={styles.logoWrapper}>
             <Leaves width={36} height={36} />
             <Text style={styles.logoText}>Groot</Text>
           </View>
           <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} />
-            <SettingsIcon width={20} height={20} />
+            <NotificationIcon
+              width={26}
+              height={26}
+              onPress={showNotificationModal}
+            />
+            <TouchableOpacity onPress={showSettingsModal}>
+              <SettingsIcon width={20} height={20} />
+            </TouchableOpacity>
           </View>
         </View>
         <Dropdown

@@ -66,7 +66,7 @@ const CostEstimatorModal = ({
   return (
     <Portal>
       <Modal
-        dismissable
+        dismissable={false}
         visible={showModal}
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={{
@@ -156,10 +156,10 @@ const CostEstimatorModal = ({
         </ScrollView>
         <CustomButton
           title="Generate Timeline"
+          borderRadius={30}
           mode="contained"
           buttonColor="#6EAF1F"
           textColor="#fff"
-          borderRadius={15}
           height={60}
           marginTop={32}
           isNavigator={false}

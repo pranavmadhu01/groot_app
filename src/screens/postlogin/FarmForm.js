@@ -1,5 +1,11 @@
 import React, {useContext, useState} from 'react';
-import {Pressable, StyleSheet, View, Animated} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  View,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import {CustomButton} from '../../components/buttons';
@@ -11,6 +17,8 @@ import {Toast} from '../../utils/Toast.util';
 import {LoginContext} from '../../../App';
 import {addFarm} from '../../api';
 import {mainStyles} from '.';
+import {NotificationModal} from '../../components/modals';
+import SettingsModal from '../../components/modals/SettingsModal';
 const FarmForm = ({navigation}) => {
   const data = useContext(LoginContext);
   const [formdata, setFormData] = useState({
@@ -48,6 +56,17 @@ const FarmForm = ({navigation}) => {
       return false;
     }
   };
+
+  const [isVisible, setisVisible] = useState(false);
+
+  const showNotificationModal = () => setisVisible(true);
+  const hideNotificationModal = () => setisVisible(false);
+
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+
+  const showSettingsModal = () => setIsSettingsVisible(true);
+  const hideSettingsModal = () => setIsSettingsVisible(false);
+
   const handleAddFarm = () => {
     data.setLoading(true);
     addFarm(formdata, data.token)
@@ -69,6 +88,15 @@ const FarmForm = ({navigation}) => {
   };
   return (
     <View style={styles.farmFormContainer}>
+      <NotificationModal
+        hideModal={hideNotificationModal}
+        isVisible={isVisible}
+      />
+      <SettingsModal
+        hideModal={hideSettingsModal}
+        isVisible={isSettingsVisible}
+      />
+
       {data.isLogin && (
         <View style={styles.topBar}>
           <View style={styles.logoWrapper}>
@@ -76,8 +104,14 @@ const FarmForm = ({navigation}) => {
             <Text style={styles.logoText}>Groot</Text>
           </View>
           <View style={styles.topBarIconWrapper}>
-            <NotificationIcon width={26} height={26} />
-            <SettingsIcon width={20} height={20} />
+            <NotificationIcon
+              width={26}
+              height={26}
+              onPress={showNotificationModal}
+            />
+            <TouchableOpacity onPress={showSettingsModal}>
+              <SettingsIcon width={20} height={20} />
+            </TouchableOpacity>
           </View>
         </View>
       )}
