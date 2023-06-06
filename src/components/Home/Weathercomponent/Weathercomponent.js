@@ -30,14 +30,14 @@ const Weathercomponent = () => {
               {weather.main && (
                 <>
                   <Text style={styles.temperatureText}>
-                    {weather.main.temp.toFixed(1)} °C
+                    {weather.main.temp.toFixed(0)} °C
                   </Text>
                   <View>
                     <Text style={styles.labelText}>
-                      H : {weather.main.temp_max.toFixed(1)} °C
+                      H : {weather.main.temp_max.toFixed(2)} °C
                     </Text>
                     <Text style={{...styles.labelText, letterSpacing: 0.54}}>
-                      L : {weather.main.temp_min.toFixed(1)} °C
+                      L : {weather.main.temp_min.toFixed(2)} °C
                     </Text>
                   </View>
                 </>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     gap: 20,
   },
-  temperatureText: {fontSize: 40, fontFamily: 'Gilroy-SemiBold'},
+  temperatureText: {fontSize: 44, fontFamily: 'Gilroy-SemiBold'},
   weatherCardBg: {
     position: 'absolute',
     width: '100%',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  locationText: {fontSize: 14, marginVertical: -10},
+  locationText: {fontSize: 14, marginVertical: -12},
   labelText: {
     fontSize: 12,
     fontFamily: 'Gilroy-Medium',
