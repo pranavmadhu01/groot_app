@@ -221,7 +221,8 @@ const Login = ({navigation}) => {
                 onPress={() => handleLogin()}
                 disabled={
                   Object.values(formdata).includes(null) ||
-                  Object.values(formdata).includes('')
+                  Object.values(formdata).includes('') ||
+                  Object.values(formdata).includes(NaN)
                 }
               />
               <View style={styles.buttonTextWrapper}>
