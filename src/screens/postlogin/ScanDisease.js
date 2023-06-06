@@ -32,7 +32,6 @@ const ScanDisease = ({navigation}) => {
 
   const checkPermission = async () => {
     const newCameraPermission = await Camera.requestCameraPermission();
-    console.log(newCameraPermission);
   };
 
   if (device == null) {

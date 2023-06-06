@@ -77,7 +77,6 @@ const Login = ({navigation}) => {
           response.data.data.userDetails.access_token,
         );
         data.setToken(response.data.data.userDetails.access_token);
-        console.log(response.data);
         if (response.data.data.isFarmPresent) {
           Toast('farm present have a nice day  :)');
           data.setLoading(false);

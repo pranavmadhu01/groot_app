@@ -21,7 +21,6 @@ const SettingsModal = ({isVisible, hideModal}) => {
           disable={true}
           style={styles.settingsContainer}
           onPress={() => {
-            console.log('hello');
             removeFromAsyncStorage('@jwt_token');
             data.setIsLogin(false);
             Toast('see you again :)');

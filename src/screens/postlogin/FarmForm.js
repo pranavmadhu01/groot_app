@@ -31,7 +31,6 @@ const FarmForm = ({navigation}) => {
     },
   });
   const getLocation = async () => {
-    console.log('Hello');
     Geolocation.setRNConfiguration({locationProvider: 'android'});
     try {
       Geolocation.requestAuthorization();

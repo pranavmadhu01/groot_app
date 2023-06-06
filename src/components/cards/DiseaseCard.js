@@ -12,7 +12,6 @@ import {ProgressBar} from 'react-native-paper';
 import {NavbarLogo} from '../logos';
 
 const DiseaseCard = ({isDetected, name, score, index, predictedDisease}) => {
-  console.log(predictedDisease);
   const [openCard, setOpenCard] = useState({condition: false, index: null});
   const [color, setColor] = useState(
     name === 'Healthy' ? '#6EAF1F' : name === 'Unknown' ? 'orange' : 'red',

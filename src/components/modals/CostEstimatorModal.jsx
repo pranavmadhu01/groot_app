@@ -185,8 +185,6 @@ const CostEstimatorModal = ({
               verticalLabelRotation={-15}
               onDataPointClick={(value, dataset, getColor) => {
                 console.log(value);
-                console.log(dataset);
-                console.log(getColor);
               }}
             />
           )}
