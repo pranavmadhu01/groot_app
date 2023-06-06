@@ -41,7 +41,10 @@ const LandingPage = ({navigation}) => {
                 }
               })
               .catch(error => {
-                console.log('Error =>', error);
+                console.log('Error =>', error.message);
+                if (error.message.includes('Network Error')) {
+                  Toast('Please check your network connection');
+                }
                 data.setLoading(false);
               });
           } else {
